@@ -24,5 +24,6 @@
         <!-- Customize your theme here. -->
 
         <item name="materialButtonStyle">@style/Button</item>
+        <item name="textInputStyle">@style/MyTextInputLayout</item>
     </style>
 </resources>

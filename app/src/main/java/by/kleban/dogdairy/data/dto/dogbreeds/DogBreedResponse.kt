@@ -5,14 +5,14 @@ import com.google.gson.annotations.SerializedName
 
 data class DogBreedResponse(
     @SerializedName("id")
-    val id: Int?,
+    val id: Int,
     @SerializedName("image")
-    val image: Image?,
+    val image: Image,
     @SerializedName("name")
-    val breed: String?,
+    val breed: String,
 ) {
     data class Image(
         @SerializedName("url")
-        val url: String?,
+        val url: String,
     )
 }

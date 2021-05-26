@@ -1,4 +1,4 @@
-package com.bignerdranch.android.a1305network.mappers
+package by.kleban.dogdairy.mappers
 
 
 interface Mapper<F, T> {
