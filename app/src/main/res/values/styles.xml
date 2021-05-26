@@ -5,4 +5,11 @@
         <item name="cornerRadius">8dp</item>
     </style>
 
+    <style name="MyTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="cornerRadius">16dp</item>
+        <item name="colorError">?colorError</item>
+        <item name="android:textColorHint">?colorPrimaryVariant</item>
+
+    </style>
+
 </resources>
