@@ -18,6 +18,15 @@
         android:id="@+id/registrationFragment"
         android:name="by.kleban.dogdairy.RegistrationFragment"
         android:label="RegistrationFragment"
-        tools:layout="@layout/fragment_registration"/>
+        tools:layout="@layout/fragment_registration">
+        <action
+            android:id="@+id/showShowBreedsFragment"
+            app:destination="@id/showBreedsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/showBreedsFragment"
+        android:name="by.kleban.dogdairy.ShowBreedsFragment"
+        android:label="show_breeds_fragment"
+        tools:layout="@layout/show_breeds_fragment" />
 
 </navigation>
