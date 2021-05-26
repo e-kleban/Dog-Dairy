@@ -2,6 +2,10 @@ package by.kleban.dogdairy
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import by.kleban.dogdairy.repositories.dogbreed.DogBreedRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
