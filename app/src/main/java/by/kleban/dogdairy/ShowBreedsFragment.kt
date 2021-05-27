@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import by.kleban.dogdairy.adapter.ShowBreedsAdapter
 
 class ShowBreedsFragment : Fragment() {
 
@@ -22,5 +25,16 @@ class ShowBreedsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val recycler = view.findViewById<RecyclerView>(R.id.show_recycler)
+        recycler.layoutManager = LinearLayoutManager(requireContext())
+
+        val showBreedAdapter = ShowBreedsAdapter()
+
+        recycler.adapter = showBreedAdapter
+
+        viewModel.breedListLiveData.observe(viewLifecycleOwner) {
+            showBreedAdapter.setItems(it)
+        }
+        viewModel.loadListBreed()
     }
 }

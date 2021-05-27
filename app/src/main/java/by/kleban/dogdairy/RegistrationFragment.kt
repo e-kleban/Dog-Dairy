@@ -14,7 +14,6 @@ class RegistrationFragment : Fragment() {
 
     private lateinit var inputLayoutName: TextInputLayout
     private lateinit var inputLayoutBreed: TextInputLayout
-    private lateinit var breedButton: Button
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,10 +28,15 @@ class RegistrationFragment : Fragment() {
 
         inputLayoutName = view.findViewById(R.id.txt_input_registration_name)
         inputLayoutBreed = view.findViewById(R.id.txt_input_registration_breed)
-        breedButton = view.findViewById(R.id.btn_choose_breed)
 
-        breedButton.setOnClickListener {
-            findNavController().navigate(R.id.showShowBreedsFragment)
+        inputLayoutBreed.onClickListenerNavigate(R.id.showShowBreedsFragment)
+        inputLayoutBreed.editText?.onClickListenerNavigate(R.id.showShowBreedsFragment)
+    }
+
+
+    private fun View.onClickListenerNavigate(resId:Int){
+        this.setOnClickListener {
+            findNavController().navigate(resId)
         }
     }
 }
