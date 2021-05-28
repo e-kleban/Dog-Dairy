@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -21,6 +22,35 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <ImageView
+        android:id="@+id/img_registration"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_marginHorizontal="70dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@id/txt_input_registration_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appbar"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:src="@drawable/test_dolka" />
+
+    <TextView
+        android:id="@+id/txt_click_choose_img"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:lines="2"
+        android:text="Click for choosing image"
+        android:textColor="?colorPrimaryVariant"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/img_registration"
+        app:layout_constraintEnd_toEndOf="@id/img_registration"
+        app:layout_constraintStart_toStartOf="@id/img_registration"
+        app:layout_constraintTop_toTopOf="@id/img_registration" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txt_input_registration_name"
         android:layout_width="0dp"
@@ -28,11 +58,13 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
         android:hint="Input name"
+        app:layout_constraintBottom_toTopOf="@id/txt_input_registration_age"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appbar">
+        app:layout_constraintTop_toBottomOf="@id/img_registration">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
@@ -47,11 +79,13 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
         android:hint="Input age"
+        app:layout_constraintBottom_toTopOf="@id/radio_group_sex_registration"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txt_input_registration_name">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_age"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
@@ -79,6 +113,7 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/txt_input_registration_breed"
         app:layout_constraintStart_toEndOf="@id/txt_choose_registration_sex"
         app:layout_constraintTop_toBottomOf="@id/txt_input_registration_age">
 
@@ -107,36 +142,17 @@
         android:layout_marginTop="8dp"
         android:focusable="false"
         android:hint="Input breed"
+        app:layout_constraintBottom_toTopOf="@id/txt_input_registration_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/radio_group_sex_registration">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_breed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:focusable="false"
             android:clickable="true"
-            android:maxLines="1"
-            android:textColor="?android:textColorPrimary" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txt_input_registration_image"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp"
-        android:clickable="true"
-        android:hint="Choose image"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txt_input_registration_breed">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:focusable="false"
             android:maxLines="1"
             android:textColor="?android:textColorPrimary" />
 
@@ -149,20 +165,23 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
         android:hint="Input description"
+        app:layout_constraintBottom_toTopOf="@id/create_dog"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txt_input_registration_image">
+        app:layout_constraintTop_toBottomOf="@id/txt_input_registration_breed">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:lines="5"
-            android:maxLines="5"
+            android:lines="3"
+            android:maxLines="3"
             android:textColor="?android:textColorPrimary" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
+        android:id="@+id/create_dog"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -170,6 +189,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,14 +19,23 @@ class ShowBreedsViewModel : ViewModel() {
     val breedListLiveData: LiveData<List<DogBreed>>
         get() = _breedListLiveData
 
+    private val _breedListWithFilter = MutableLiveData<List<DogBreed>>()
+    val breedListWithFilter: LiveData<List<DogBreed>>
+        get() = _breedListWithFilter
+
     fun loadListBreed() {
         ioScope.launch {
             try {
                 _breedListLiveData.postValue(repository.loadBreeds())
             } catch (e: Exception) {
-                Log.e("tag", e.message.toString())
+                Log.e(ShowBreedsViewModel::class.java.simpleName, e.message.toString())
             }
         }
+    }
+
+    fun filter(string: String) {
+        _breedListWithFilter.value =
+            _breedListLiveData.value?.filter { it.breed.startsWith(string, true) }
     }
 
 }
