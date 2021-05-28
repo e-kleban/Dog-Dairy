@@ -19,7 +19,7 @@ class SplashScreenViewModel : ViewModel() {
 
     init {
         ioScope.launch {
-            delay(4000)
+            delay(3000)
             _startNextFragment.postValue(true)
         }
     }
