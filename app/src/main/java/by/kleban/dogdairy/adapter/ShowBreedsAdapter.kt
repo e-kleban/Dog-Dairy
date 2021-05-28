@@ -11,7 +11,8 @@ import by.kleban.dogdairy.data.entities.dogbreeds.DogBreed
 import com.squareup.picasso.Picasso
 
 
-class ShowBreedsAdapter : RecyclerView.Adapter<ShowBreedsAdapter.ShowBreedsViewHolder>() {
+class ShowBreedsAdapter(val listener: OnItemClickListener) :
+    RecyclerView.Adapter<ShowBreedsAdapter.ShowBreedsViewHolder>() {
 
     private val breedList = mutableListOf<DogBreed>()
 
@@ -42,10 +43,27 @@ class ShowBreedsAdapter : RecyclerView.Adapter<ShowBreedsAdapter.ShowBreedsViewH
         return breedList.size
     }
 
-    inner class ShowBreedsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    interface OnItemClickListener {
+        fun onItemCLick(breed: String)
+    }
+
+    inner class ShowBreedsViewHolder(view: View) : RecyclerView.ViewHolder(view),
+        View.OnClickListener {
+
+        init {
+            view.setOnClickListener(this)
+        }
 
         val breedImage: ImageView = view.findViewById(R.id.item_image)
         val breedText: TextView = view.findViewById(R.id.item_breed)
 
+        override fun onClick(v: View?) {
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                listener.onItemCLick(
+                    breedList[position].breed
+                )
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 package by.kleban.dogdairy
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,7 +24,7 @@ class ShowBreedsViewModel : ViewModel() {
             try {
                 _breedListLiveData.postValue(repository.loadBreeds())
             } catch (e: Exception) {
-
+                Log.e("tag", e.message.toString())
             }
         }
     }

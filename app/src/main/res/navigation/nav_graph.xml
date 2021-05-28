@@ -12,7 +12,9 @@
         tools:layout="@layout/fragment_splash_screen" >
         <action
             android:id="@+id/showRegistrationFragment"
-            app:destination="@id/registrationFragment" />
+            app:destination="@id/registrationFragment"
+            app:popUpTo="@id/splashScreenFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"
@@ -27,6 +29,10 @@
         android:id="@+id/showBreedsFragment"
         android:name="by.kleban.dogdairy.ShowBreedsFragment"
         android:label="show_breeds_fragment"
-        tools:layout="@layout/show_breeds_fragment" />
+        tools:layout="@layout/show_breeds_fragment" >
+        <action
+            android:id="@+id/from_showBreedsFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
+    </fragment>
 
 </navigation>

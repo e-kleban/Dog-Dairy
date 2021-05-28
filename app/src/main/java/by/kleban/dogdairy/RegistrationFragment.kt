@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
@@ -31,12 +30,20 @@ class RegistrationFragment : Fragment() {
 
         inputLayoutBreed.onClickListenerNavigate(R.id.showShowBreedsFragment)
         inputLayoutBreed.editText?.onClickListenerNavigate(R.id.showShowBreedsFragment)
+        getBreed()
     }
 
 
-    private fun View.onClickListenerNavigate(resId:Int){
+    private fun View.onClickListenerNavigate(resId: Int) {
         this.setOnClickListener {
             findNavController().navigate(resId)
+        }
+    }
+
+    private fun getBreed() {
+        val breed = arguments?.getString(ShowBreedsFragment.BUNDLE_BREED)
+        if (!breed.isNullOrEmpty()) {
+            inputLayoutBreed.editText?.setText(breed)
         }
     }
 }
