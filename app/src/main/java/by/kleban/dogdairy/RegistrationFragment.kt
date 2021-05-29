@@ -47,7 +47,7 @@ class RegistrationFragment : Fragment() {
         inputLayoutAge = view.findViewById(R.id.txt_input_registration_age)
         inputLayoutDescription = view.findViewById(R.id.txt_input_registration_description)
         dogImage = view.findViewById(R.id.img_registration)
-        dogImageLabel = view.findViewById(R.id.txt_click_choose_img)
+        dogImageLabel = view.findViewById(R.id.btn_choose_img)
         sexRadioGroup = view.findViewById(R.id.radio_group_sex_registration)
 
         inputLayoutBreed.setOnClickListener { findNavController().navigate(R.id.showShowBreedsFragment) }
