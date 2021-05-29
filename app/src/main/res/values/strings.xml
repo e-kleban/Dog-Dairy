@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Dog Dairy</string>
+    <string name="input_description">Input description</string>
+    <string name="create">create</string>
+    <string name="input_breed">Input breed</string>
+    <string name="f">F</string>
+    <string name="m">M</string>
+    <string name="choose_sex">Choose sex:</string>
+    <string name="input_age">Input age</string>
+    <string name="input_name">Input name</string>
+    <string name="click_for_choosing_image">Click for choosing image</string>
+    <string name="registration">Registration</string>
+    <string name="breeds">Breeds</string>
 </resources>
