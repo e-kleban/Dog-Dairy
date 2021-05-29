@@ -67,14 +67,15 @@ class ShowBreedsFragment : Fragment(), ShowBreedsAdapter.OnItemClickListener {
     }
 
     override fun onItemCLick(breed: String) {
-        val bundle = Bundle().apply { putString(BUNDLE_BREED, breed) }
-        findNavController().navigate(
-            R.id.from_showBreedsFragment_to_registrationFragment,
-            bundle
-        )
+        findNavController()
+            .previousBackStackEntry
+            ?.savedStateHandle
+            ?.set(EXTRA_BREED, breed)
+
+        findNavController().navigateUp()
     }
 
     companion object {
-        const val BUNDLE_BREED = "bundle breed"
+        const val EXTRA_BREED = "breed"
     }
 }
