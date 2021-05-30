@@ -67,7 +67,9 @@ class RegistrationFragment : Fragment() {
 
     private fun setupImagePicker() {
         val pickImages = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-            viewModel.saveImage(uri.toString())
+            if (uri != null) {
+                viewModel.saveImage(uri.toString())
+            }
         }
         binding.txtImgLabelRegistration.setOnClickListener {
             pickImages.launch("image/*")
