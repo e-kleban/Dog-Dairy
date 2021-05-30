@@ -5,13 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import by.kleban.dogdairy.adapter.ShowBreedsAdapter
+import by.kleban.dogdairy.databinding.ShowBreedsFragmentBinding
 
 class ShowBreedsFragment : Fragment(), ShowBreedsAdapter.OnItemClickListener {
 
@@ -21,21 +20,26 @@ class ShowBreedsFragment : Fragment(), ShowBreedsAdapter.OnItemClickListener {
         ViewModelProvider(this).get(ShowBreedsViewModel::class.java)
     }
 
+    private var _binding : ShowBreedsFragmentBinding? = null
+    private val binding get() = _binding!!
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.show_breeds_fragment, container, false)
+    ): View {
+        _binding = ShowBreedsFragmentBinding.inflate(inflater,container,false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val recycler = view.findViewById<RecyclerView>(R.id.show_recycler)
+        val recycler = binding.showRecycler
         recycler.layoutManager = LinearLayoutManager(requireContext())
         recycler.adapter = showBreedAdapter
 
-        setupSearchView(view)
+        setupSearchView()
 
         viewModel.breedListLiveData.observe(viewLifecycleOwner) {
             showBreedAdapter.setItems(it)
@@ -46,8 +50,8 @@ class ShowBreedsFragment : Fragment(), ShowBreedsAdapter.OnItemClickListener {
         viewModel.loadListBreed()
     }
 
-    private fun setupSearchView(view: View) {
-        val toolbar = view.findViewById<Toolbar>(R.id.topAppBar_breed)
+    private fun setupSearchView() {
+        val toolbar = binding.topAppBarBreed
         val searchItem = toolbar.menu.findItem(R.id.search)
         val searchView: SearchView = searchItem?.actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
