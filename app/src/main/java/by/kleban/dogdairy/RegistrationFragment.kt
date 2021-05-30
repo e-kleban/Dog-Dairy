@@ -4,28 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.RadioGroup
-import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import by.kleban.dogdairy.ShowBreedsFragment.Companion.EXTRA_BREED
-import com.google.android.material.textfield.TextInputLayout
+import by.kleban.dogdairy.databinding.FragmentRegistrationBinding
 import com.squareup.picasso.Picasso
 
 
 class RegistrationFragment : Fragment() {
 
-    private lateinit var inputLayoutName: TextInputLayout
-    private lateinit var inputLayoutBreed: TextInputLayout
-    private lateinit var inputLayoutAge: TextInputLayout
-    private lateinit var inputLayoutDescription: TextInputLayout
-    private lateinit var dogImage: ImageView
-    private lateinit var dogImageLabel: TextView
-    private lateinit var sexRadioGroup: RadioGroup
+    private var _binding: FragmentRegistrationBinding? = null
+    private val binding get() = _binding!!
 
     private val viewModel by lazy {
         ViewModelProvider(this).get(RegistrationViewModel::class.java)
@@ -35,23 +27,16 @@ class RegistrationFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_registration, container, false)
+    ): View {
+        _binding = FragmentRegistrationBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        inputLayoutName = view.findViewById(R.id.txt_input_registration_name)
-        inputLayoutBreed = view.findViewById(R.id.txt_input_registration_breed)
-        inputLayoutAge = view.findViewById(R.id.txt_input_registration_age)
-        inputLayoutDescription = view.findViewById(R.id.txt_input_registration_description)
-        dogImage = view.findViewById(R.id.img_registration)
-        dogImageLabel = view.findViewById(R.id.btn_choose_img)
-        sexRadioGroup = view.findViewById(R.id.radio_group_sex_registration)
-
-        inputLayoutBreed.setOnClickListener { findNavController().navigate(R.id.showShowBreedsFragment) }
-        inputLayoutBreed.editText?.setOnClickListener { findNavController().navigate(R.id.showShowBreedsFragment) }
+        binding.txtInputRegistrationBreed.setOnClickListener { findNavController().navigate(R.id.showShowBreedsFragment) }
+        binding.edtBreed.setOnClickListener { findNavController().navigate(R.id.showShowBreedsFragment) }
         setupImagePicker()
 
 //        sexRadioGroup.setOnCheckedChangeListener { group, checkedId ->
@@ -60,34 +45,35 @@ class RegistrationFragment : Fragment() {
 //                    R.id.radio_btn_male->
 //            }
 //        }
-        inputLayoutName.editText?.doAfterTextChanged { name -> if (name != null) viewModel.saveName(name.toString()) }
-        inputLayoutAge.editText?.doAfterTextChanged { age -> if (age != null) viewModel.saveAge(age.toString()) }
-        inputLayoutDescription.editText?.doAfterTextChanged { desc -> if (desc != null) viewModel.saveDescription(desc.toString()) }
+        binding.edtName.doAfterTextChanged { name -> if (name != null) viewModel.saveName(name.toString()) }
+        binding.edtAge.doAfterTextChanged { age -> if (age != null) viewModel.saveAge(age.toString()) }
+        binding.edtDescription.doAfterTextChanged { desc -> if (desc != null) viewModel.saveDescription(desc.toString()) }
 
         viewModel.imageLiveData.observe(viewLifecycleOwner) { uri ->
-            Picasso.get()
-                .load(uri)
-                .error(R.drawable.error_image)
-                .into(dogImage)
+            if (!uri.isNullOrEmpty()) {
+                Picasso.get()
+                    .load(uri)
+                    .error(R.drawable.error_image)
+                    .into(binding.imgRegistration)
+                binding.txtImgLabelRegistration.visibility = View.GONE
+            }
         }
 
         findNavController().currentBackStackEntry
             ?.savedStateHandle
             ?.getLiveData<String>(EXTRA_BREED)
-            ?.observe(viewLifecycleOwner) { result -> inputLayoutBreed.editText?.setText(result) }
+            ?.observe(viewLifecycleOwner) { result -> binding.edtBreed.setText(result) }
     }
 
     private fun setupImagePicker() {
         val pickImages = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             viewModel.saveImage(uri.toString())
         }
-        dogImageLabel.setOnClickListener {
+        binding.txtImgLabelRegistration.setOnClickListener {
             pickImages.launch("image/*")
-            dogImageLabel.visibility = View.GONE
         }
-        dogImage.setOnClickListener {
+        binding.imgRegistration.setOnClickListener {
             pickImages.launch("image/*")
-            dogImageLabel.visibility = View.GONE
         }
     }
 
