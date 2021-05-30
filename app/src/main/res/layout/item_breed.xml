@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="132dp">
+    android:layout_height="144dp">
 
     <TextView
         android:id="@+id/item_breed"
@@ -13,14 +13,14 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:gravity="start"
-        android:lines="1"
-        android:maxLines="1"
+        android:maxLines="2"
         android:textAppearance="?textAppearanceHeadline6"
         app:layout_constraintBottom_toTopOf="@id/item_group"
         app:layout_constraintEnd_toStartOf="@id/item_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintVertical_bias="0"
         tools:text="African Hunting Dog" />
 
     <TextView

@@ -11,4 +11,6 @@
     <string name="click_for_choosing_image">Click for choosing image</string>
     <string name="registration">Registration</string>
     <string name="breeds">Breeds</string>
+    <string name="breed_height">height: %1$s cm</string>
+    <string name="breed_weight">weight: %1$s kg</string>
 </resources>

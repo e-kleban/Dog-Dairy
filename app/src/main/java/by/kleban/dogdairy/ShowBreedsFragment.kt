@@ -14,13 +14,15 @@ import by.kleban.dogdairy.databinding.ShowBreedsFragmentBinding
 
 class ShowBreedsFragment : Fragment(), ShowBreedsAdapter.OnItemClickListener {
 
-    private val showBreedAdapter = ShowBreedsAdapter(this)
+    private val showBreedAdapter by lazy {
+        ShowBreedsAdapter(requireContext(), this)
+    }
 
     private val viewModel by lazy {
         ViewModelProvider(this).get(ShowBreedsViewModel::class.java)
     }
 
-    private var _binding : ShowBreedsFragmentBinding? = null
+    private var _binding: ShowBreedsFragmentBinding? = null
     private val binding get() = _binding!!
 
 
@@ -28,7 +30,7 @@ class ShowBreedsFragment : Fragment(), ShowBreedsAdapter.OnItemClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = ShowBreedsFragmentBinding.inflate(inflater,container,false)
+        _binding = ShowBreedsFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
