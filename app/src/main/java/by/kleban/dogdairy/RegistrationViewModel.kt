@@ -23,8 +23,8 @@ class RegistrationViewModel : ViewModel() {
     val descriptionLiveData: LiveData<String>
         get() = _descriptionLiveData
 
-    private val _sexLiveData = MutableLiveData<Int>()
-    val sexLiveData: LiveData<Int>
+    private val _sexLiveData = MutableLiveData<String>()
+    val sexLiveData: LiveData<String>
         get() = _sexLiveData
 
 
@@ -44,8 +44,8 @@ class RegistrationViewModel : ViewModel() {
         _imageLiveData.value = image
     }
 
-    fun saveSex(sexId: Int) {
-        _sexLiveData.value = sexId
+    fun saveSex(sex: String) {
+        _sexLiveData.value = sex
     }
 
     companion object {

@@ -41,8 +41,8 @@ class RegistrationFragment : Fragment() {
 
         binding.radioGroupSexRegistration.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
-                R.id.radio_btn_female -> viewModel.saveSex(checkedId)
-                R.id.radio_btn_male -> viewModel.saveSex(checkedId)
+                R.id.radio_btn_female -> viewModel.saveSex("female")
+                R.id.radio_btn_male -> viewModel.saveSex("male")
             }
         }
 
