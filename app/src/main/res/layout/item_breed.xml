@@ -3,24 +3,74 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="120dp">
+    android:layout_height="144dp">
 
     <TextView
         android:id="@+id/item_breed"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="8dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:gravity="center"
-        android:maxLines="3"
-        android:textColor="?android:textColorPrimary"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@id/item_line"
+        android:gravity="start"
+        android:maxLines="2"
+        android:textAppearance="?textAppearanceHeadline6"
+        app:layout_constraintBottom_toTopOf="@id/item_group"
         app:layout_constraintEnd_toStartOf="@id/item_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintVertical_bias="0"
         tools:text="African Hunting Dog" />
+
+    <TextView
+        android:id="@+id/item_group"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="start"
+        android:lines="1"
+        android:maxLines="1"
+        android:textAppearance="?textAppearanceSubtitle2"
+        app:layout_constraintBottom_toTopOf="@id/item_height"
+        app:layout_constraintEnd_toStartOf="@id/item_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_breed"
+        tools:text="Terrier" />
+
+    <TextView
+        android:id="@+id/item_height"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="start"
+        android:lines="1"
+        android:maxLines="1"
+        android:textAppearance="?textAppearanceCaption"
+        app:layout_constraintBottom_toTopOf="@id/item_weight"
+        app:layout_constraintEnd_toStartOf="@id/item_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_group"
+        tools:text="height: 20 cm" />
+
+    <TextView
+        android:id="@+id/item_weight"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="start"
+        android:lines="1"
+        android:maxLines="1"
+        android:textAppearance="?textAppearanceCaption"
+        app:layout_constraintBottom_toTopOf="@id/item_line"
+        app:layout_constraintEnd_toStartOf="@id/item_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_height"
+        tools:text="weight: 10 kg" />
 
     <ImageView
         android:id="@+id/item_image"
@@ -41,6 +91,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
