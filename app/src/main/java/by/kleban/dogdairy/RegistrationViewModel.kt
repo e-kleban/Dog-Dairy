@@ -44,6 +44,10 @@ class RegistrationViewModel : ViewModel() {
         _imageLiveData.value = image
     }
 
+    fun saveSex(sex: String) {
+        _sexLiveData.value = sex
+    }
+
     companion object {
         private val TAG = RegistrationViewModel::class.java.simpleName
     }
