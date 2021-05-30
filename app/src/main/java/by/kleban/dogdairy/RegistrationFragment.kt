@@ -39,12 +39,13 @@ class RegistrationFragment : Fragment() {
         binding.edtBreed.setOnClickListener { findNavController().navigate(R.id.showShowBreedsFragment) }
         setupImagePicker()
 
-//        sexRadioGroup.setOnCheckedChangeListener { group, checkedId ->
-//            when (checkedId) {
-//                R.id.radio_btn_female ->viewModel.sexLiveData
-//                    R.id.radio_btn_male->
-//            }
-//        }
+        binding.radioGroupSexRegistration.setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                R.id.radio_btn_female -> viewModel.saveSex(checkedId)
+                R.id.radio_btn_male -> viewModel.saveSex(checkedId)
+            }
+        }
+
         binding.edtName.doAfterTextChanged { name -> if (name != null) viewModel.saveName(name.toString()) }
         binding.edtAge.doAfterTextChanged { age -> if (age != null) viewModel.saveAge(age.toString()) }
         binding.edtDescription.doAfterTextChanged { desc -> if (desc != null) viewModel.saveDescription(desc.toString()) }
