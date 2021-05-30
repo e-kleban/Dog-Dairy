@@ -38,11 +38,11 @@
         android:id="@+id/show_breeds_progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:indeterminateTint="?colorPrimary"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:indeterminateTint ="?colorPrimary"
-        android:visibility="gone"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
