@@ -5,7 +5,7 @@ data class DogBreed(
     val id: Int,
     val image: Image,
     val breed: String,
-    val bredFor: String,
+    val breedGroup: String,
     val height: Height,
     val weight: Weight
 ) {

@@ -11,7 +11,7 @@ class DogBreedMapper : Mapper<DogBreedResponse, DogBreed> {
             id = from.id,
             image = imageMap(from.image),
             breed = from.breed,
-            bredFor = from.bredFor.orEmpty(),
+            breedGroup = from.bredGroup.orEmpty(),
             height = heightMap(from.height),
             weight = weightMap(from.weight)
         )

@@ -10,8 +10,8 @@ data class DogBreedResponse(
     val image: Image,
     @SerializedName("name")
     val breed: String,
-    @SerializedName("bred_for")
-    val bredFor: String?,
+    @SerializedName("breed_group")
+    val bredGroup: String?,
     @SerializedName("height")
     val height: Height?,
     @SerializedName("weight")
