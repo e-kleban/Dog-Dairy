@@ -50,10 +50,10 @@ class ShowBreedsFragment : Fragment(), ShowBreedsAdapter.OnItemClickListener {
             showBreedAdapter.setItems(it)
         }
         viewModel.isLoadingLiveData.observe(viewLifecycleOwner) {
-            if (it == true) {
-                binding.showBreedsProgressBar.visibility = View.VISIBLE
+            binding.showBreedsProgressBar.visibility = if (it == true) {
+                View.VISIBLE
             } else {
-                binding.showBreedsProgressBar.visibility = View.GONE
+                View.GONE
             }
         }
         viewModel.loadListBreed(requireContext())
