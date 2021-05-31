@@ -10,8 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object DogBreedServiceProvider {
 
-    fun provideDogBreedService(): IDogBreedService {
-
+    fun provideDogBreedService(): DogBreedService {
         val interceptor = HttpLoggingInterceptor().apply {
             if (BuildConfig.DEBUG) {
                 level = HttpLoggingInterceptor.Level.BODY
@@ -29,6 +28,6 @@ object DogBreedServiceProvider {
             .client(client)
             .build()
 
-        return retrofit.create(IDogBreedService::class.java)
+        return retrofit.create(DogBreedService::class.java)
     }
 }
