@@ -7,32 +7,42 @@
 
     <fragment
         android:id="@+id/splashScreenFragment"
-        android:name="by.kleban.dogdairy.SplashScreenFragment"
+        android:name="by.kleban.dogdairy.ui.SplashScreenFragment"
         android:label="SplashScreenFragment"
-        tools:layout="@layout/fragment_splash_screen" >
+        tools:layout="@layout/fragment_splash_screen">
         <action
             android:id="@+id/showRegistrationFragment"
             app:destination="@id/registrationFragment"
             app:popUpTo="@id/splashScreenFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"
-        android:name="by.kleban.dogdairy.RegistrationFragment"
+        android:name="by.kleban.dogdairy.ui.RegistrationFragment"
         android:label="RegistrationFragment"
         tools:layout="@layout/fragment_registration">
         <action
             android:id="@+id/showShowBreedsFragment"
             app:destination="@id/showBreedsFragment" />
+        <action
+            android:id="@+id/from_registrationFragment_to_dogPageFragment"
+            app:destination="@id/dogPageFragment"
+            app:popUpTo="@id/registrationFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/showBreedsFragment"
-        android:name="by.kleban.dogdairy.ShowBreedsFragment"
+        android:name="by.kleban.dogdairy.ui.ShowBreedsFragment"
         android:label="show_breeds_fragment"
-        tools:layout="@layout/show_breeds_fragment" >
+        tools:layout="@layout/show_breeds_fragment">
         <action
             android:id="@+id/from_showBreedsFragment_to_registrationFragment"
             app:destination="@id/registrationFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/dogPageFragment"
+        android:name="by.kleban.dogdairy.ui.DogPageFragment"
+        android:label="DogPageFragment"
+        tools:layout="@layout/fragment_dog_page" />
 
 </navigation>

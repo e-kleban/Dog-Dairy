@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import by.kleban.dogdairy.R
-import by.kleban.dogdairy.data.entities.dogbreeds.DogBreed
+import by.kleban.dogdairy.entities.DogBreed
 import com.squareup.picasso.Picasso
 
 
