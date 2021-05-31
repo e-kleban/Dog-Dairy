@@ -51,6 +51,7 @@ class RegistrationFragment : Fragment() {
         binding.edtName.doAfterTextChanged { name -> if (name != null) viewModel.saveName(name.toString()) }
         binding.edtAge.doAfterTextChanged { age -> if (age != null) viewModel.saveAge(age.toString()) }
         binding.edtDescription.doAfterTextChanged { desc -> if (desc != null) viewModel.saveDescription(desc.toString()) }
+        binding.edtBreed.doAfterTextChanged { breed -> if (breed != null) viewModel.saveDescription(breed.toString()) }
 
         binding.btnCreateDog.setOnClickListener {
             viewModel.registration()
@@ -72,7 +73,6 @@ class RegistrationFragment : Fragment() {
             ?.getLiveData<String>(EXTRA_BREED)
             ?.observe(viewLifecycleOwner) { result ->
                 binding.edtBreed.setText(result)
-                viewModel.saveBreed(result)
             }
         viewModel.validationNameLiveData.observe(viewLifecycleOwner) { validation -> checkValidationName(validation) }
         viewModel.validationAgeLiveData.observe(viewLifecycleOwner) { validation -> checkValidationAge(validation) }
@@ -81,7 +81,7 @@ class RegistrationFragment : Fragment() {
         viewModel.validationBreedLiveData.observe(viewLifecycleOwner) { validation -> checkValidationBreed(validation) }
         viewModel.validationDescriptionLiveData.observe(viewLifecycleOwner) { validation -> checkValidationDescription(validation) }
 
-        viewModel.registrationLiveData.observe(viewLifecycleOwner){
+        viewModel.registrationLiveData.observe(viewLifecycleOwner) {
 
         }
     }
