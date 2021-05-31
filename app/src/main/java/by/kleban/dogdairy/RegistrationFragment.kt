@@ -65,7 +65,10 @@ class RegistrationFragment : Fragment() {
         findNavController().currentBackStackEntry
             ?.savedStateHandle
             ?.getLiveData<String>(EXTRA_BREED)
-            ?.observe(viewLifecycleOwner) { result -> binding.edtBreed.setText(result) }
+            ?.observe(viewLifecycleOwner) { result ->
+                binding.edtBreed.setText(result)
+                viewModel.saveBreed(result)
+            }
     }
 
     private fun setupImagePicker() {
