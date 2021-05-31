@@ -6,18 +6,18 @@ import com.squareup.picasso.Transformation
 
 class CircleTransform : Transformation {
     override fun transform(source: Bitmap?): Bitmap {
-        source as Bitmap
+        val newSource = source as Bitmap
 
-        val size: Int = Math.min(source.width, source.height)
+        val size: Int = Math.min(newSource.width, newSource.height)
 
-        val x: Int = (source.width - size) / 2
-        val y: Int = (source.height - size) / 2
+        val x: Int = (newSource.width - size) / 2
+        val y: Int = (newSource.height - size) / 2
 
-        val squareBitmap = Bitmap.createBitmap(source, x, y, size, size)
-        if (squareBitmap != source) {
-            source.recycle()
+        val squareBitmap = Bitmap.createBitmap(newSource, x, y, size, size)
+        if (squareBitmap != newSource) {
+            newSource.recycle()
         }
-        val bitmap = Bitmap.createBitmap(size, size, source.config)
+        val bitmap = Bitmap.createBitmap(size, size, newSource.config)
         val canvas = Canvas(bitmap)
         val paint = Paint()
         val shader = BitmapShader(squareBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
@@ -29,9 +29,7 @@ class CircleTransform : Transformation {
 
         squareBitmap.recycle()
         return bitmap
-
     }
-
 
     override fun key(): String {
         return "circle"

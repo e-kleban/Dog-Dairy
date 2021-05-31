@@ -56,7 +56,7 @@ class ShowBreedsFragment : Fragment(), ShowBreedsAdapter.OnItemClickListener {
                 binding.showBreedsProgressBar.visibility = View.GONE
             }
         }
-        viewModel.loadListBreed()
+        viewModel.loadListBreed(requireContext())
     }
 
     private fun setupSearchView() {
