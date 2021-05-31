@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import by.kleban.dogdairy.ShowBreedsFragment.Companion.EXTRA_BREED
 import by.kleban.dogdairy.databinding.FragmentRegistrationBinding
 import by.kleban.dogdairy.picasso.transformation.CircleTransform
+import by.kleban.dogdairy.validation.Validation
 import com.squareup.picasso.Picasso
 
 
@@ -51,6 +52,10 @@ class RegistrationFragment : Fragment() {
         binding.edtAge.doAfterTextChanged { age -> if (age != null) viewModel.saveAge(age.toString()) }
         binding.edtDescription.doAfterTextChanged { desc -> if (desc != null) viewModel.saveDescription(desc.toString()) }
 
+        binding.btnCreateDog.setOnClickListener {
+            viewModel.registration()
+        }
+
         viewModel.imageLiveData.observe(viewLifecycleOwner) { uri ->
             if (!uri.isNullOrEmpty()) {
                 Picasso.get()
@@ -69,6 +74,16 @@ class RegistrationFragment : Fragment() {
                 binding.edtBreed.setText(result)
                 viewModel.saveBreed(result)
             }
+        viewModel.validationNameLiveData.observe(viewLifecycleOwner) { validation -> checkValidationName(validation) }
+        viewModel.validationAgeLiveData.observe(viewLifecycleOwner) { validation -> checkValidationAge(validation) }
+        viewModel.validationImageLiveData.observe(viewLifecycleOwner) { validation -> checkValidationImage(validation) }
+        viewModel.validationSexLiveData.observe(viewLifecycleOwner) { validation -> checkValidationSex(validation) }
+        viewModel.validationBreedLiveData.observe(viewLifecycleOwner) { validation -> checkValidationBreed(validation) }
+        viewModel.validationDescriptionLiveData.observe(viewLifecycleOwner) { validation -> checkValidationDescription(validation) }
+
+        viewModel.registrationLiveData.observe(viewLifecycleOwner){
+
+        }
     }
 
     private fun setupImagePicker() {
@@ -82,6 +97,76 @@ class RegistrationFragment : Fragment() {
         }
         binding.imgRegistration.setOnClickListener {
             pickImages.launch("image/*")
+        }
+    }
+
+    private fun checkValidationName(validation: Validation) {
+        when (validation) {
+            Validation.EMPTY -> {
+                binding.txtInputRegistrationName.isErrorEnabled = true
+                binding.txtInputRegistrationName.error = "Field can not be empty!"
+            }
+            else -> {
+                binding.txtInputRegistrationName.isErrorEnabled = false
+            }
+        }
+    }
+
+    private fun checkValidationAge(validation: Validation) {
+        when (validation) {
+            Validation.EMPTY -> {
+                binding.txtInputRegistrationAge.isErrorEnabled = true
+                binding.txtInputRegistrationAge.error = "Field can not be empty!"
+            }
+            else -> {
+                binding.txtInputRegistrationAge.isErrorEnabled = false
+            }
+        }
+    }
+
+    private fun checkValidationSex(validation: Validation) {
+        when (validation) {
+            Validation.EMPTY -> {
+                binding.txtChooseRegistrationSex.setTextColor(resources.getColor(R.color.red, null))
+            }
+            else -> {
+                binding.txtChooseRegistrationSex.setTextColor(resources.getColor(R.color.black, null))
+            }
+        }
+    }
+
+    private fun checkValidationImage(validation: Validation) {
+        when (validation) {
+            Validation.EMPTY -> {
+                binding.txtImgLabelRegistration.setTextColor(resources.getColor(R.color.red, null))
+            }
+            else -> {
+                binding.txtImgLabelRegistration.setTextColor(resources.getColor(R.color.black, null))
+            }
+        }
+    }
+
+    private fun checkValidationBreed(validation: Validation) {
+        when (validation) {
+            Validation.EMPTY -> {
+                binding.txtInputRegistrationBreed.isErrorEnabled = true
+                binding.txtInputRegistrationBreed.error = "Field can not be empty!"
+            }
+            else -> {
+                binding.txtInputRegistrationBreed.isErrorEnabled = false
+            }
+        }
+    }
+
+    private fun checkValidationDescription(validation: Validation) {
+        when (validation) {
+            Validation.EMPTY -> {
+                binding.txtInputRegistrationDescription.isErrorEnabled = true
+                binding.txtInputRegistrationDescription.error = "Field can not be empty!"
+            }
+            else -> {
+                binding.txtInputRegistrationDescription.isErrorEnabled = false
+            }
         }
     }
 
