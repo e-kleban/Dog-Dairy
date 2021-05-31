@@ -1,6 +1,8 @@
 package by.kleban.dogdairy
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,12 +25,20 @@ class ShowBreedsViewModel : ViewModel() {
     val breedListWithFilter: LiveData<List<DogBreed>>
         get() = _breedListWithFilter
 
-    fun loadListBreed() {
+    private val _isLoadingLiveData = MutableLiveData<Boolean>()
+    val isLoadingLiveData: LiveData<Boolean>
+        get() = _isLoadingLiveData
+
+    fun loadListBreed(context: Context) {
+        _isLoadingLiveData.value = true
         ioScope.launch {
             try {
                 _breedListLiveData.postValue(repository.loadBreeds())
+                _isLoadingLiveData.postValue(false)
             } catch (e: Exception) {
                 Log.e(ShowBreedsViewModel::class.java.simpleName, e.message.toString())
+                _isLoadingLiveData.postValue(false)
+                Toast.makeText(context, "Problem with loading", Toast.LENGTH_SHORT).show()
             }
         }
     }

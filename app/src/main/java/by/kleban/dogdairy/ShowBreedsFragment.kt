@@ -49,7 +49,14 @@ class ShowBreedsFragment : Fragment(), ShowBreedsAdapter.OnItemClickListener {
         viewModel.breedListWithFilter.observe(viewLifecycleOwner) {
             showBreedAdapter.setItems(it)
         }
-        viewModel.loadListBreed()
+        viewModel.isLoadingLiveData.observe(viewLifecycleOwner) {
+            binding.showBreedsProgressBar.visibility = if (it == true) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+        }
+        viewModel.loadListBreed(requireContext())
     }
 
     private fun setupSearchView() {
