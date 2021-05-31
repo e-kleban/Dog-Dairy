@@ -13,4 +13,6 @@
     <string name="breeds">Breeds</string>
     <string name="breed_height">height: %1$s cm</string>
     <string name="breed_weight">weight: %1$s kg</string>
+    <string name="search">search</string>
+    <string name="problem_toast">Problem with loading</string>
 </resources>

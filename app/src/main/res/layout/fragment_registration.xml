@@ -94,6 +94,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_age"
                     android:layout_width="match_parent"
+                    android:inputType="number"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:textColor="?android:textColorPrimary" />
