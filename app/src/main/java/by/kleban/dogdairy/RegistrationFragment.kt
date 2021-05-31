@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import by.kleban.dogdairy.ShowBreedsFragment.Companion.EXTRA_BREED
 import by.kleban.dogdairy.databinding.FragmentRegistrationBinding
+import by.kleban.dogdairy.picasso.transformation.CircleTransform
 import com.squareup.picasso.Picasso
 
 
@@ -55,6 +56,7 @@ class RegistrationFragment : Fragment() {
                 Picasso.get()
                     .load(uri)
                     .error(R.drawable.error_image)
+                    .transform(CircleTransform())
                     .into(binding.imgRegistration)
                 binding.txtImgLabelRegistration.visibility = View.GONE
             }

@@ -31,8 +31,8 @@ class ShowBreedsViewModel : ViewModel() {
         _isLoadingLiveData.value = true
         ioScope.launch {
             try {
-                _isLoadingLiveData.postValue(false)
                 _breedListLiveData.postValue(repository.loadBreeds())
+                _isLoadingLiveData.postValue(false)
             } catch (e: Exception) {
                 Log.e(ShowBreedsViewModel::class.java.simpleName, e.message.toString())
             }
