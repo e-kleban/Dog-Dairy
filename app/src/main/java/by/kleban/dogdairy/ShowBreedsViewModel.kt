@@ -38,7 +38,7 @@ class ShowBreedsViewModel : ViewModel() {
             } catch (e: Exception) {
                 Log.e(ShowBreedsViewModel::class.java.simpleName, e.message.toString())
                 _isLoadingLiveData.postValue(false)
-                Toast.makeText(context, "Problem with loading", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, context.getString(R.string.problem_toast), Toast.LENGTH_SHORT).show()
             }
         }
     }
