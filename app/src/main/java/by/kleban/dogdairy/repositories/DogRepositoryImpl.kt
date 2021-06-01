@@ -23,14 +23,13 @@ class DogRepositoryImpl(
         return dogApi.loadBreeds()
     }
 
-    override suspend fun getAllDog(): List<Dog> {
-        return dogDb.getAllDog()
+    override suspend fun getDog(): Dog {
+        return dogDb.getAllDog().first()
     }
 
     override suspend fun saveDog(dog: Dog) {
         dogDb.saveDog(dog)
     }
-
 
     companion object {
         private var INSTANCE: DogRepositoryImpl? = null

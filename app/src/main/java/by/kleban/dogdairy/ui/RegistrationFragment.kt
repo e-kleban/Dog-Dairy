@@ -43,7 +43,7 @@ class RegistrationFragment : Fragment() {
         binding.edtBreed.setOnClickListener { findNavController().navigate(R.id.showShowBreedsFragment) }
         setupImagePicker()
 
-        radioGroupOnCheckedChangeListener()
+        setRadioGroupOnCheckedChangeListener()
 
         binding.edtName.doAfterTextChanged { name -> if (name != null) viewModel.saveName(name.toString()) }
         binding.edtAge.doAfterTextChanged { age -> if (age != null) viewModel.saveAge(age.toString().toIntOrNull() ?: -1) }
@@ -89,7 +89,7 @@ class RegistrationFragment : Fragment() {
         }
     }
 
-    private fun radioGroupOnCheckedChangeListener() {
+    private fun setRadioGroupOnCheckedChangeListener() {
         binding.radioGroupSexRegistration.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.radio_btn_female -> viewModel.saveSex("female")
