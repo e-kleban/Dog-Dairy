@@ -7,4 +7,6 @@ interface DogDb {
 
     suspend fun getAllDog(): List<Dog>
 
+    suspend fun saveDog(dog: Dog)
+
 }

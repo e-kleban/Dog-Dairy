@@ -43,12 +43,7 @@ class RegistrationFragment : Fragment() {
         binding.edtBreed.setOnClickListener { findNavController().navigate(R.id.showShowBreedsFragment) }
         setupImagePicker()
 
-        binding.radioGroupSexRegistration.setOnCheckedChangeListener { group, checkedId ->
-            when (checkedId) {
-                R.id.radio_btn_female -> viewModel.saveSex("female")
-                R.id.radio_btn_male -> viewModel.saveSex("male")
-            }
-        }
+        setRadioGroupOnCheckedChangeListener()
 
         binding.edtName.doAfterTextChanged { name -> if (name != null) viewModel.saveName(name.toString()) }
         binding.edtAge.doAfterTextChanged { age -> if (age != null) viewModel.saveAge(age.toString().toIntOrNull() ?: -1) }
@@ -60,14 +55,7 @@ class RegistrationFragment : Fragment() {
         }
 
         viewModel.imageLiveData.observe(viewLifecycleOwner) { uri ->
-            if (!uri.isNullOrEmpty()) {
-                Picasso.get()
-                    .load(uri)
-                    .error(R.drawable.error_image)
-                    .transform(CircleTransform())
-                    .into(binding.imgRegistration)
-                binding.txtImgLabelRegistration.visibility = View.GONE
-            }
+            loadImageFromUri(uri)
         }
 
         findNavController().currentBackStackEntry
@@ -86,6 +74,26 @@ class RegistrationFragment : Fragment() {
         viewModel.registrationLiveData.observe(viewLifecycleOwner) {
             if (it == Registration.POSSIBLE) {
                 findNavController().navigate(R.id.from_registrationFragment_to_dogPageFragment)
+            }
+        }
+    }
+
+    private fun loadImageFromUri(uri: String?) {
+        if (!uri.isNullOrEmpty()) {
+            Picasso.get()
+                .load(uri)
+                .error(R.drawable.error_image)
+                .transform(CircleTransform())
+                .into(binding.imgRegistration)
+            binding.txtImgLabelRegistration.visibility = View.GONE
+        }
+    }
+
+    private fun setRadioGroupOnCheckedChangeListener() {
+        binding.radioGroupSexRegistration.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.radio_btn_female -> viewModel.saveSex("female")
+                R.id.radio_btn_male -> viewModel.saveSex("male")
             }
         }
     }
