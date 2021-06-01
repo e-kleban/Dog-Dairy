@@ -3,11 +3,21 @@ package by.kleban.dogdairy.ui
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import by.kleban.dogdairy.DogDiaryApplication
+import by.kleban.dogdairy.entities.Dog
 import by.kleban.dogdairy.entities.Registration
 import by.kleban.dogdairy.entities.Validation
+import by.kleban.dogdairy.repositories.DogRepository
+import by.kleban.dogdairy.repositories.DogRepositoryImpl
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class RegistrationViewModel : ViewModel() {
+
+    private val ioScope = CoroutineScope(Dispatchers.IO)
+    private val repository: DogRepository = DogRepositoryImpl.getDogBreedRepository(DogDiaryApplication.instance)
 
     private val _nameLiveData = MutableLiveData<String>()
     val nameLiveData: LiveData<String>
@@ -93,7 +103,7 @@ class RegistrationViewModel : ViewModel() {
         _validationSexLiveData.value = validateSex()
         _validationBreedLiveData.value = validateBreed()
         _validationDescriptionLiveData.value = validateDescription()
-        registerUser()
+        registerDog()
     }
 
     private fun validateName(): Validation {
@@ -140,7 +150,7 @@ class RegistrationViewModel : ViewModel() {
         }
     }
 
-    private fun registerUser() {
+    private fun registerDog() {
         val validationName = _validationNameLiveData.value
         val validationAge = _validationAgeLiveData.value
         val validationImage = _validationImageLiveData.value
@@ -156,9 +166,21 @@ class RegistrationViewModel : ViewModel() {
             validationDescription == Validation.VALID
         ) {
             _registrationLiveData.value = Registration.POSSIBLE
+            ioScope.launch { repository.saveDog(createDog()) }
         } else {
             _registrationLiveData.value = Registration.IMPOSSIBLE
         }
+    }
+
+    private fun createDog(): Dog {
+        return Dog(
+            name = _nameLiveData.value!!,
+            image = _imageLiveData.value!!,
+            age = _ageLiveData.value!!,
+            sex = _sexLiveData.value!!,
+            breed = _breedLiveData.value!!,
+            description = _descriptionLiveData.value!!
+        )
     }
 
     companion object {
