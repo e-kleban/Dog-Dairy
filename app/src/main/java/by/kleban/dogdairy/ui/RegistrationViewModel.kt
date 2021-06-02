@@ -1,11 +1,13 @@
 package by.kleban.dogdairy.ui
 
+import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import by.kleban.dogdairy.DogDiaryApplication
+import by.kleban.dogdairy.R
 import by.kleban.dogdairy.entities.Dog
-import by.kleban.dogdairy.entities.Registration
 import by.kleban.dogdairy.entities.Validation
 import by.kleban.dogdairy.repositories.DogRepository
 import by.kleban.dogdairy.repositories.DogRepositoryImpl
@@ -100,14 +102,14 @@ class RegistrationViewModel : ViewModel() {
         _breedLiveData.value = breed
     }
 
-    fun registration() {
+    fun registration(context: Context) {
         _validationNameLiveData.value = validateName()
         _validationAgeLiveData.value = validateAge()
         _validationImageLiveData.value = validateImage()
         _validationSexLiveData.value = validateSex()
         _validationBreedLiveData.value = validateBreed()
         _validationDescriptionLiveData.value = validateDescription()
-        registerDog()
+        registerDog(context)
     }
 
     private fun validateName(): Validation {
@@ -154,7 +156,7 @@ class RegistrationViewModel : ViewModel() {
         }
     }
 
-    private fun registerDog() {
+    private fun registerDog(context: Context) {
         val validationName = _validationNameLiveData.value
         val validationAge = _validationAgeLiveData.value
         val validationImage = _validationImageLiveData.value
@@ -171,10 +173,14 @@ class RegistrationViewModel : ViewModel() {
         ) {
             _isLoadingLiveData.value = true
             ioScope.launch {
-
-                repository.saveDog(createDog())
-                _registrationLiveData.postValue(true)
-                _isLoadingLiveData.postValue(false)
+                try {
+                    repository.saveDog(createDog())
+                    _registrationLiveData.postValue(true)
+                    _isLoadingLiveData.postValue(false)
+                } catch (e: Exception) {
+                    _isLoadingLiveData.postValue(false)
+                    Toast.makeText(context, R.string.problem_toast_saving, Toast.LENGTH_SHORT).show()
+                }
             }
         } else {
             _registrationLiveData.value = false

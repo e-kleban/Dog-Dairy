@@ -51,7 +51,7 @@ class RegistrationFragment : Fragment() {
         binding.edtBreed.doAfterTextChanged { breed -> if (breed != null) viewModel.saveBreed(breed.toString()) }
 
         binding.btnCreateDog.setOnClickListener {
-            viewModel.registration()
+            viewModel.registration(requireContext())
         }
 
         viewModel.imageLiveData.observe(viewLifecycleOwner) { uri ->
