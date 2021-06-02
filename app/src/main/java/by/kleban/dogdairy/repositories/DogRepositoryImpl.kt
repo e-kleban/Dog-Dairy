@@ -23,8 +23,13 @@ class DogRepositoryImpl(
         return dogApi.loadBreeds()
     }
 
-    override suspend fun getDog(): Dog {
-        return dogDb.getAllDog().first()
+    override suspend fun getDog(): Dog? {
+        val dogList = dogDb.getAllDog()
+        return if (dogList.isNotEmpty()) {
+            dogList.first()
+        } else {
+            return null
+        }
     }
 
     override suspend fun saveDog(dog: Dog) {
