@@ -8,7 +8,7 @@ interface DogRepository {
 
     suspend fun loadBreeds(): List<DogBreed>
 
-    suspend fun getDog(): Dog
+    suspend fun getDog(): Dog?
 
     suspend fun saveDog(dog: Dog)
 }

@@ -1,5 +1,6 @@
 package by.kleban.dogdairy.dog_db_test
 
+import android.util.Log
 import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
 import by.kleban.dogdairy.database.DogDiaryRoomDatabase
@@ -29,28 +30,12 @@ class DogDbTest {
         repository = DogRepositoryImpl.getDogBreedRepository(context)
     }
 
-    @Test
-    fun saveDog_dogInserted() {
-        val dog = Dog(
-            name = "Dolka",
-            image = "uri",
-            age = 4,
-            sex = "female",
-            breed = "Poodle",
-            description = "The best dog"
-        )
 
+    @Test
+    fun getDog_emptyList() {
         runBlocking {
-            repository.saveDog(dog)
-            val dbDog = repository.getDog()
-            Truth.assertThat(
-                dbDog.age == dog.age &&
-                        dbDog.name == dog.name &&
-                        dbDog.breed == dog.breed &&
-                        dbDog.sex == dog.description &&
-                        dbDog.image == dog.image &&
-                        dbDog.description == dog.description
-            ).isTrue()
+            val dbDog = dogDao.getAllDog().first()
+            Log.e("test_dog", dbDog.toString())
         }
     }
 }
