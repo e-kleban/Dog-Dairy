@@ -71,6 +71,14 @@ class RegistrationFragment : Fragment() {
         viewModel.validationBreedLiveData.observe(viewLifecycleOwner) { validation -> checkValidationBreed(validation) }
         viewModel.validationDescriptionLiveData.observe(viewLifecycleOwner) { validation -> checkValidationDescription(validation) }
 
+        viewModel.isLoadingLiveData.observe(viewLifecycleOwner) {
+            binding.registrationProgressBar.visibility = if (it == true) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+        }
+
         viewModel.registrationLiveData.observe(viewLifecycleOwner) {
             if (it == Registration.POSSIBLE) {
                 findNavController().navigate(R.id.from_registrationFragment_to_dogPageFragment)
