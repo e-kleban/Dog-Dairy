@@ -35,8 +35,9 @@ class SplashScreenFragment : Fragment() {
                     Screen.REGISTRATION -> {
                         findNavController().navigate(R.id.showRegistrationFragment)
                     }
-                    Screen.DOG ->{
-                        findNavController().navigate(R.id.from_splashScreenFragment_to_dogPageFragment)}
+                    Screen.DOG -> {
+                        findNavController().navigate(R.id.from_splashScreenFragment_to_dogPageFragment)
+                    }
                 }
             }
         }

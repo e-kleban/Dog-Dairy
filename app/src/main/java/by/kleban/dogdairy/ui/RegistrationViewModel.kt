@@ -1,12 +1,9 @@
 package by.kleban.dogdairy.ui
 
-import android.content.Context
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import by.kleban.dogdairy.DogDiaryApplication
-import by.kleban.dogdairy.R
 import by.kleban.dogdairy.entities.Dog
 import by.kleban.dogdairy.entities.Validation
 import by.kleban.dogdairy.repositories.DogRepository

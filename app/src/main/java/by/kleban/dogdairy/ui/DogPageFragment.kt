@@ -11,7 +11,7 @@ import by.kleban.dogdairy.databinding.FragmentDogPageBinding
 class DogPageFragment : Fragment() {
 
     private var _binding: FragmentDogPageBinding? = null
-    private val binding get() =  _binding!!
+    private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentDogPageBinding.inflate(inflater, container, false)
