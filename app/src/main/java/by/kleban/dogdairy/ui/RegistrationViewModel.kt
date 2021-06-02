@@ -72,6 +72,10 @@ class RegistrationViewModel : ViewModel() {
     val registrationLiveData: LiveData<Registration>
         get() = _registrationLiveData
 
+    private val _isLoadingLiveData = MutableLiveData<Boolean>()
+    val isLoadingLiveData: LiveData<Boolean>
+        get() = _isLoadingLiveData
+
     fun saveName(name: String) {
         _nameLiveData.value = name
     }
@@ -165,8 +169,13 @@ class RegistrationViewModel : ViewModel() {
             validationBreed == Validation.VALID &&
             validationDescription == Validation.VALID
         ) {
-            _registrationLiveData.value = Registration.POSSIBLE
-            ioScope.launch { repository.saveDog(createDog()) }
+            _isLoadingLiveData.value = true
+            ioScope.launch {
+
+                repository.saveDog(createDog())
+                _registrationLiveData.postValue(Registration.POSSIBLE)
+                _isLoadingLiveData.postValue(false)
+            }
         } else {
             _registrationLiveData.value = Registration.IMPOSSIBLE
         }
