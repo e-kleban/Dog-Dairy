@@ -2,12 +2,10 @@ package by.kleban.dogdairy.ui
 
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import by.kleban.dogdairy.DogDiaryApplication
-import by.kleban.dogdairy.R
 import by.kleban.dogdairy.entities.DogBreed
 import by.kleban.dogdairy.repositories.DogRepository
 import by.kleban.dogdairy.repositories.DogRepositoryImpl
@@ -32,7 +30,11 @@ class ShowBreedsViewModel : ViewModel() {
     val isLoadingLiveData: LiveData<Boolean>
         get() = _isLoadingLiveData
 
-    fun loadListBreed(context: Context) {
+    private val _errorLiveData = MutableLiveData<String>()
+    val errorLiveData: LiveData<String>
+        get() = _errorLiveData
+
+    fun loadListBreed() {
         _isLoadingLiveData.value = true
         ioScope.launch {
             try {
@@ -41,7 +43,7 @@ class ShowBreedsViewModel : ViewModel() {
             } catch (e: Exception) {
                 Log.e(ShowBreedsViewModel::class.java.simpleName, e.message.toString())
                 _isLoadingLiveData.postValue(false)
-                Toast.makeText(context, R.string.problem_toast_loading, Toast.LENGTH_SHORT).show()
+                _errorLiveData.postValue(e.message)
             }
         }
     }

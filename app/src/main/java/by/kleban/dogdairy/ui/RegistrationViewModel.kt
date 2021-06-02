@@ -69,7 +69,6 @@ class RegistrationViewModel : ViewModel() {
     val validationSexLiveData: LiveData<Validation>
         get() = _validationSexLiveData
 
-
     private val _registrationLiveData = MutableLiveData<Boolean>()
     val registrationLiveData: LiveData<Boolean>
         get() = _registrationLiveData
@@ -77,6 +76,10 @@ class RegistrationViewModel : ViewModel() {
     private val _isLoadingLiveData = MutableLiveData<Boolean>()
     val isLoadingLiveData: LiveData<Boolean>
         get() = _isLoadingLiveData
+
+    private val _errorLiveData = MutableLiveData<String>()
+    val errorLiveData: LiveData<String>
+        get() = _errorLiveData
 
     fun saveName(name: String) {
         _nameLiveData.value = name
@@ -102,14 +105,14 @@ class RegistrationViewModel : ViewModel() {
         _breedLiveData.value = breed
     }
 
-    fun registration(context: Context) {
+    fun registration() {
         _validationNameLiveData.value = validateName()
         _validationAgeLiveData.value = validateAge()
         _validationImageLiveData.value = validateImage()
         _validationSexLiveData.value = validateSex()
         _validationBreedLiveData.value = validateBreed()
         _validationDescriptionLiveData.value = validateDescription()
-        registerDog(context)
+        registerDog()
     }
 
     private fun validateName(): Validation {
@@ -156,7 +159,7 @@ class RegistrationViewModel : ViewModel() {
         }
     }
 
-    private fun registerDog(context: Context) {
+    private fun registerDog() {
         val validationName = _validationNameLiveData.value
         val validationAge = _validationAgeLiveData.value
         val validationImage = _validationImageLiveData.value
@@ -179,7 +182,7 @@ class RegistrationViewModel : ViewModel() {
                     _isLoadingLiveData.postValue(false)
                 } catch (e: Exception) {
                     _isLoadingLiveData.postValue(false)
-                    Toast.makeText(context, R.string.problem_toast_saving, Toast.LENGTH_SHORT).show()
+                    _errorLiveData.postValue(e.message)
                 }
             }
         } else {
