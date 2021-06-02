@@ -31,8 +31,8 @@ class SplashScreenViewModel : ViewModel() {
         ioScope.launch {
             delay(3000)
             try {
-                val dogOrEmpty: Dog? = repository.getDog()
-                if (dogOrEmpty != null) {
+                val dog: Dog? = repository.getDog()
+                if (dog != null) {
                     _nextFragmentLiveData.postValue(Screen.DOG)
                 } else {
                     _nextFragmentLiveData.postValue(Screen.REGISTRATION)
