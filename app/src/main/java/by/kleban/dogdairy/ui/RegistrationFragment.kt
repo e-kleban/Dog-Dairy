@@ -80,7 +80,7 @@ class RegistrationFragment : Fragment() {
         }
 
         viewModel.registrationLiveData.observe(viewLifecycleOwner) {
-            if (it == Registration.POSSIBLE) {
+            if (it == true) {
                 findNavController().navigate(R.id.from_registrationFragment_to_dogPageFragment)
             }
         }

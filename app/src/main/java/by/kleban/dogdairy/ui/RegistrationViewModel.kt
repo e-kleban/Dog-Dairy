@@ -68,8 +68,8 @@ class RegistrationViewModel : ViewModel() {
         get() = _validationSexLiveData
 
 
-    private val _registrationLiveData = MutableLiveData<Registration>()
-    val registrationLiveData: LiveData<Registration>
+    private val _registrationLiveData = MutableLiveData<Boolean>()
+    val registrationLiveData: LiveData<Boolean>
         get() = _registrationLiveData
 
     private val _isLoadingLiveData = MutableLiveData<Boolean>()
@@ -173,11 +173,11 @@ class RegistrationViewModel : ViewModel() {
             ioScope.launch {
 
                 repository.saveDog(createDog())
-                _registrationLiveData.postValue(Registration.POSSIBLE)
+                _registrationLiveData.postValue(true)
                 _isLoadingLiveData.postValue(false)
             }
         } else {
-            _registrationLiveData.value = Registration.IMPOSSIBLE
+            _registrationLiveData.value = false
         }
     }
 
