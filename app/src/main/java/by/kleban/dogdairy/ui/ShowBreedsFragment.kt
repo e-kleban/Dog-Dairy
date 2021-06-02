@@ -59,7 +59,7 @@ class ShowBreedsFragment : Fragment(), ShowBreedsAdapter.OnItemClickListener {
             }
         }
         viewModel.errorLiveData.observe(viewLifecycleOwner) {
-            Toast.makeText(requireContext(), "it", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
         viewModel.loadListBreed()
     }
