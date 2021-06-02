@@ -1,11 +1,13 @@
 package by.kleban.dogdairy.ui
 
+import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import by.kleban.dogdairy.DogDiaryApplication
+import by.kleban.dogdairy.R
 import by.kleban.dogdairy.entities.Dog
-import by.kleban.dogdairy.entities.Registration
 import by.kleban.dogdairy.entities.Validation
 import by.kleban.dogdairy.repositories.DogRepository
 import by.kleban.dogdairy.repositories.DogRepositoryImpl
@@ -67,14 +69,17 @@ class RegistrationViewModel : ViewModel() {
     val validationSexLiveData: LiveData<Validation>
         get() = _validationSexLiveData
 
-
-    private val _registrationLiveData = MutableLiveData<Registration>()
-    val registrationLiveData: LiveData<Registration>
+    private val _registrationLiveData = MutableLiveData<Boolean>()
+    val registrationLiveData: LiveData<Boolean>
         get() = _registrationLiveData
 
     private val _isLoadingLiveData = MutableLiveData<Boolean>()
     val isLoadingLiveData: LiveData<Boolean>
         get() = _isLoadingLiveData
+
+    private val _errorLiveData = MutableLiveData<String>()
+    val errorLiveData: LiveData<String>
+        get() = _errorLiveData
 
     fun saveName(name: String) {
         _nameLiveData.value = name
@@ -171,13 +176,17 @@ class RegistrationViewModel : ViewModel() {
         ) {
             _isLoadingLiveData.value = true
             ioScope.launch {
-
-                repository.saveDog(createDog())
-                _registrationLiveData.postValue(Registration.POSSIBLE)
-                _isLoadingLiveData.postValue(false)
+                try {
+                    repository.saveDog(createDog())
+                    _registrationLiveData.postValue(true)
+                    _isLoadingLiveData.postValue(false)
+                } catch (e: Exception) {
+                    _isLoadingLiveData.postValue(false)
+                    _errorLiveData.postValue(e.message)
+                }
             }
         } else {
-            _registrationLiveData.value = Registration.IMPOSSIBLE
+            _registrationLiveData.value = false
         }
     }
 
