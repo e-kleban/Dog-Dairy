@@ -48,6 +48,6 @@
         android:id="@+id/dogPageFragment"
         android:name="by.kleban.dogdairy.ui.DogPageFragment"
         android:label="DogPageFragment"
-        tools:layout="@layout/fragment_dog_page" />
+        tools:layout="@layout/fragment_dog_page_old" />
 
 </navigation>

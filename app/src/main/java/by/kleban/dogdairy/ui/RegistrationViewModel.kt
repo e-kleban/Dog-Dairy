@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 class RegistrationViewModel : ViewModel() {
 
     private val ioScope = CoroutineScope(Dispatchers.IO)
-    private val repository: DogRepository = DogRepositoryImpl.getDogBreedRepository(DogDiaryApplication.instance)
+    private val repository: DogRepository = DogRepositoryImpl.getDogRepository(DogDiaryApplication.instance)
 
     private val _nameLiveData = MutableLiveData<String>()
     val nameLiveData: LiveData<String>
