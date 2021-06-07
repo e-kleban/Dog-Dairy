@@ -3,7 +3,7 @@ package by.kleban.dogdairy.database.entities
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "table_post")
 data class DbPost(
     val dogCreatorId: Int,
     val postImage: String,

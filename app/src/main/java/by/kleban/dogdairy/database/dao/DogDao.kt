@@ -6,6 +6,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import by.kleban.dogdairy.database.entities.DbDog
 import by.kleban.dogdairy.database.entities.DbDogWithPosts
+import by.kleban.dogdairy.database.entities.DbPost
 
 @Dao
 interface DogDao {
@@ -19,4 +20,8 @@ interface DogDao {
     @Transaction
     @Query("SELECT * FROM table_dog")
     suspend fun getDogWithPosts():List<DbDogWithPosts>
+
+    @Insert
+    suspend fun savePost(dbPost: DbPost)
+
 }

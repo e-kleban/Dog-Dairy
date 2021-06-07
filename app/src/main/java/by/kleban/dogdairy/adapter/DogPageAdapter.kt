@@ -1,5 +1,6 @@
 package by.kleban.dogdairy.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,7 @@ import by.kleban.dogdairy.entities.Dog
 import com.squareup.picasso.Picasso
 
 
-class DogPageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class DogPageAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val items = mutableListOf<Item>()
     private val headerMapper = DogToItemHeaderMapper()
@@ -83,10 +84,14 @@ class DogPageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun bind(position: Int) {
             val recyclerViewModel = items[position] as Item.Header
             dogName.text = recyclerViewModel.name
-            dogSex.setImageResource(R.drawable.ic_sex_female)
-            dogAge.text = recyclerViewModel.age.toString()
+            dogAge.text = context.getString(R.string.dog_age,recyclerViewModel.age)
             dogBreed.text = recyclerViewModel.breed
             dogDescription.text = recyclerViewModel.description
+            if (recyclerViewModel.sex == "female") {
+                dogSex.setImageResource(R.drawable.ic_sex_female)
+            } else {
+                dogSex.setImageResource(R.drawable.ic_sex_male)
+            }
             Picasso.get()
                 .load(recyclerViewModel.image)
                 .error(R.drawable.error_image)

@@ -14,11 +14,16 @@ class DogRoomDb(
 
     override suspend fun getAllDog(): List<Dog> {
         return dogDao.getAllDog()
-            .map { dbDogMapper.map(it) }
+            .map {
+                dbDogMapper.map(it).apply {
+                    this.id = it.id
+                }
+            }
     }
 
     override suspend fun saveDog(dog: Dog) {
         val dogDb = dogMapper.map(dog)
         dogDao.saveDog(dogDb)
     }
+
 }
