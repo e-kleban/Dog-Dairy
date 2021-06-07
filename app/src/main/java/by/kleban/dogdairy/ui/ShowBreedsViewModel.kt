@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 class ShowBreedsViewModel : ViewModel() {
 
-    private val repository: DogRepository = DogRepositoryImpl.getDogBreedRepository(DogDiaryApplication.instance)
+    private val repository: DogRepository = DogRepositoryImpl.getDogRepository(DogDiaryApplication.instance)
     private val ioScope = CoroutineScope(Dispatchers.IO)
 
     private val _breedListLiveData = MutableLiveData<List<DogBreed>>()

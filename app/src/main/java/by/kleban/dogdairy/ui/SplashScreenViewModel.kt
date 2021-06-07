@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 class SplashScreenViewModel : ViewModel() {
 
-    private val repository: DogRepository = DogRepositoryImpl.getDogBreedRepository(DogDiaryApplication.instance)
+    private val repository: DogRepository = DogRepositoryImpl.getDogRepository(DogDiaryApplication.instance)
     private val ioScope = CoroutineScope(Dispatchers.IO)
 
     private val _nextFragmentLiveData = MutableLiveData<Screen>()

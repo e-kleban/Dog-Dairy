@@ -39,7 +39,7 @@ class DogRepositoryImpl(
     companion object {
         private var INSTANCE: DogRepositoryImpl? = null
 
-        fun getDogBreedRepository(context: Context): DogRepositoryImpl {
+        fun getDogRepository(context: Context): DogRepositoryImpl {
             return if (INSTANCE == null) {
                 val dogDao = DogDiaryRoomDatabase.getDogDb(context).getDogDao()
                 val dogDb = DogRoomDb(dogDao, DbDogMapper(), DogMapper())
