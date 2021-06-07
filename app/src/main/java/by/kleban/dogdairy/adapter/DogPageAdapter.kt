@@ -15,7 +15,7 @@ import com.squareup.picasso.Picasso
 class DogPageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val items = mutableListOf<Item>()
-    private val mapper = DogToItemHeaderMapper()
+    private val headerMapper = DogToItemHeaderMapper()
 
 //    fun submitData(list: List<Item>) {
 //        items.clear()
@@ -25,7 +25,7 @@ class DogPageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     fun setHeader(dog: Dog) {
         items.removeIf { it is Item.Header }
-        val header = mapper.map(dog)
+        val header = headerMapper.map(dog)
         items.add(POSITION_HEADER, header)
         notifyItemChanged(POSITION_HEADER)
     }

@@ -35,7 +35,7 @@ class DogPageFragment : Fragment() {
 
         val layoutManager = GridLayoutManager(requireContext(), 3)
         recycler.adapter = pageAdapter
-        layoutManager.spanSizeLookup = DogSpanSizeLookup(pageAdapter)
+        layoutManager.spanSizeLookup = DogSpanSizeLookup(pageAdapter, layoutManager.spanCount)
         recycler.layoutManager = layoutManager
         pageAdapter.setHeader(Dog("Dolka", "fgfg", 5, "female", "Poodle", "The best dog"))
     }
