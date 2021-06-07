@@ -11,8 +11,8 @@ data class DbDog(
     val sex: String,
     val breed: String,
     val description: String,
-    @PrimaryKey(autoGenerate = true)
-    val id: Int
-) {
 
+    ) {
+    @PrimaryKey(autoGenerate = true)
+    var id: Int? = null
 }
