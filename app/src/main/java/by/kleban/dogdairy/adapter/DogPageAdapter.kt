@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import by.kleban.dogdairy.R
+import by.kleban.dogdairy.adapter.mapper.DogToItemHeaderMapper
 import by.kleban.dogdairy.entities.Dog
 import com.squareup.picasso.Picasso
 
@@ -14,20 +15,20 @@ import com.squareup.picasso.Picasso
 class DogPageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val items = mutableListOf<Item>()
+    private val mapper = DogToItemHeaderMapper()
 
-    fun submitData(list: List<Item>) {
-        items.clear()
-        items.addAll(list)
-        notifyDataSetChanged()
-    }
-//TODO create mapper
-
-//    fun setHeader(dog: Dog) {
-//        items.removeIf { it is Item.Header }
-//        val header = Item.Header()
-//        items.add(POSITION_HEADER, header)
-//        notifyItemChanged(POSITION_HEADER)
+//    fun submitData(list: List<Item>) {
+//        items.clear()
+//        items.addAll(list)
+//        notifyDataSetChanged()
 //    }
+
+    fun setHeader(dog: Dog) {
+        items.removeIf { it is Item.Header }
+        val header = mapper.map(dog)
+        items.add(POSITION_HEADER, header)
+        notifyItemChanged(POSITION_HEADER)
+    }
 //
 //    fun setPosts() {
 //        notifyDataSetChanged()
