@@ -14,5 +14,5 @@ data class DbDog(
 
     ) {
     @PrimaryKey(autoGenerate = true)
-    var id: Int? = null
+    var id: Long? = null
 }

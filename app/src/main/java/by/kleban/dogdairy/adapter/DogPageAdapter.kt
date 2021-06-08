@@ -1,6 +1,7 @@
 package by.kleban.dogdairy.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import by.kleban.dogdairy.R
 import by.kleban.dogdairy.adapter.mapper.DogToItemHeaderMapper
+import by.kleban.dogdairy.core.picasso.transformation.CircleTransform
 import by.kleban.dogdairy.entities.Dog
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 
 
@@ -84,18 +87,30 @@ class DogPageAdapter(private val context: Context) : RecyclerView.Adapter<Recycl
         fun bind(position: Int) {
             val recyclerViewModel = items[position] as Item.Header
             dogName.text = recyclerViewModel.name
-            dogAge.text = context.getString(R.string.dog_age,recyclerViewModel.age)
+            dogAge.text = context.getString(R.string.dog_age, recyclerViewModel.age)
             dogBreed.text = recyclerViewModel.breed
             dogDescription.text = recyclerViewModel.description
             if (recyclerViewModel.sex == "female") {
                 dogSex.setImageResource(R.drawable.ic_sex_female)
-            } else {
+            } else if (recyclerViewModel.sex == "male") {
                 dogSex.setImageResource(R.drawable.ic_sex_male)
             }
+            Picasso.get().cancelRequest(dogImage)
             Picasso.get()
                 .load(recyclerViewModel.image)
                 .error(R.drawable.error_image)
-                .into(dogImage)
+                .transform(CircleTransform())
+                .into(dogImage, object : Callback {
+                    override fun onSuccess() {
+                        Log.d("onSuccess", "onSuccess: " )
+                    }
+
+                    override fun onError(e: java.lang.Exception?) {
+                        e?.message?.let { Log.d("onError", it) }
+                    }
+
+                })
+
         }
     }
 

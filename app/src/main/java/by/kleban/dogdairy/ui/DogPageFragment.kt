@@ -1,6 +1,8 @@
 package by.kleban.dogdairy.ui
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kleban.dogdairy.adapter.DogPageAdapter
 import by.kleban.dogdairy.adapter.gridlayoutmanager.DogSpanSizeLookup
+import by.kleban.dogdairy.database.mapper.DbDogMapper
 import by.kleban.dogdairy.databinding.FragmentDogPageBinding
 import by.kleban.dogdairy.entities.Dog
 
@@ -39,14 +42,13 @@ class DogPageFragment : Fragment() {
         recycler.adapter = pageAdapter
         layoutManager.spanSizeLookup = DogSpanSizeLookup(pageAdapter, layoutManager.spanCount)
         recycler.layoutManager = layoutManager
-        pageAdapter.setHeader(Dog("Dolka", "fgfg", 5, "female", "Poodle", "The best dog"))
 
-        viewModel.idDogLiveData.observe(viewLifecycleOwner) {
-            prefs.edit().putInt(SHARED_PREF_DOG_ID, it).apply()
+        val id = prefs.getLong(RegistrationFragment.SHARED_PREF_DOG_ID,0)
+        viewModel.getDog(id)
+        viewModel.dogWithPostsLiveData.observe(viewLifecycleOwner){
+            val dog = DbDogMapper().map(it.dbDog)
+            pageAdapter.setHeader(dog)
+
         }
-    }
-
-    companion object {
-        const val SHARED_PREF_DOG_ID = "shared pref dog id"
     }
 }

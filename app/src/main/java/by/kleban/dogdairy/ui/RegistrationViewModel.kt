@@ -156,6 +156,10 @@ class RegistrationViewModel : ViewModel() {
         }
     }
 
+    private val _dogIdLiveData = MutableLiveData<Long>()
+    val dogIdLiveData: LiveData<Long>
+        get() = _dogIdLiveData
+
     private fun registerDog() {
         val validationName = _validationNameLiveData.value
         val validationAge = _validationAgeLiveData.value
@@ -174,7 +178,8 @@ class RegistrationViewModel : ViewModel() {
             _isLoadingLiveData.value = true
             ioScope.launch {
                 try {
-                    repository.saveDog(createDog())
+                    val dogId = repository.saveDog(createDog())
+                    _dogIdLiveData.postValue(dogId)
                     _registrationLiveData.postValue(true)
                     _isLoadingLiveData.postValue(false)
                 } catch (e: Exception) {

@@ -15,13 +15,29 @@ interface DogDao {
     suspend fun getAllDog(): List<DbDog>
 
     @Insert
-    suspend fun saveDog(dogDb: DbDog)
+    suspend fun saveDog(dogDb: DbDog): Long
 
     @Transaction
-    @Query("SELECT * FROM table_dog")
-    suspend fun getDogWithPosts():List<DbDogWithPosts>
+    @Query("SELECT * FROM table_dog WHERE id= :id")
+    suspend fun getDogWithPosts(id: Long): DbDogWithPosts
 
     @Insert
     suspend fun savePost(dbPost: DbPost)
+
+    @Query("DELETE FROM table_dog WHERE id=:id")
+    suspend fun deleteDog(id: Long)
+
+    @Query("DELETE FROM table_post WHERE dogCreatorId=:id")
+    suspend fun deletePost(id: Long)
+
+    @Transaction
+    suspend fun deleteDogWithPosts(id: Long) {
+        deleteDog(id)
+        deletePost(id)
+    }
+
+    @Query("SELECT * FROM table_post")
+    suspend fun getAllPosts(): List<DbPost>
+
 
 }

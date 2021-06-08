@@ -8,6 +8,4 @@ data class Dog(
     val sex: String,
     val breed: String,
     val description: String
-){
-    var id:Int?=null
-}
+)

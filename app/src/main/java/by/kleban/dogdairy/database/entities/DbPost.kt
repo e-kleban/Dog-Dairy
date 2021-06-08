@@ -5,11 +5,11 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "table_post")
 data class DbPost(
-    val dogCreatorId: Int,
+    val dogCreatorId: Long,
     val postImage: String,
     val postDescription: String,
 
     ) {
     @PrimaryKey(autoGenerate = true)
-    var id: Int? = null
+    var id: Long? = null
 }

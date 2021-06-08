@@ -1,5 +1,8 @@
 package by.kleban.dogdairy.ui
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +29,7 @@ class RegistrationFragment : Fragment() {
     private val viewModel by lazy {
         ViewModelProvider(this).get(RegistrationViewModel::class.java)
     }
+    private val prefs by lazy { requireActivity().getSharedPreferences("dog dairy", Context.MODE_PRIVATE) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -87,6 +91,10 @@ class RegistrationFragment : Fragment() {
                 findNavController().navigate(R.id.from_registrationFragment_to_dogPageFragment)
             }
         }
+        viewModel.dogIdLiveData.observe(viewLifecycleOwner) {
+            prefs.edit().clear().apply()
+            prefs.edit().putLong(SHARED_PREF_DOG_ID, it).apply()
+        }
     }
 
     private fun loadImageFromUri(uri: String?) {
@@ -110,17 +118,29 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun setupImagePicker() {
-        val pickImages = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+
+        val pickImages = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
             if (uri != null) {
+                createContentResolver(uri)
                 viewModel.saveImage(uri.toString())
             }
         }
         binding.txtImgLabelRegistration.setOnClickListener {
-            pickImages.launch("image/*")
+            pickImages.launch(arrayOf("image/*"))
         }
         binding.imgRegistration.setOnClickListener {
-            pickImages.launch("image/*")
+            pickImages.launch(arrayOf("image/*"))
         }
+
+    }
+
+    private fun createContentResolver(uri: Uri) {
+        val contentResolver = requireActivity().applicationContext.contentResolver
+
+        val takeFlags: Int = Intent.FLAG_GRANT_READ_URI_PERMISSION or
+                Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+        // Check for the freshest data.
+        contentResolver.takePersistableUriPermission(uri, takeFlags)
     }
 
     private fun checkValidationName(validation: Validation) {
@@ -194,6 +214,6 @@ class RegistrationFragment : Fragment() {
     }
 
     companion object {
-        private val TAG = RegistrationFragment::class.java.simpleName
+        const val SHARED_PREF_DOG_ID = "shared pref dog id"
     }
 }
