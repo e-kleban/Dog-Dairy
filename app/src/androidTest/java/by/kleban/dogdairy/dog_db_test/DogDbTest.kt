@@ -7,6 +7,7 @@ import by.kleban.dogdairy.database.DogDiaryRoomDatabase
 import by.kleban.dogdairy.database.dao.DogDao
 import by.kleban.dogdairy.database.entities.DbDog
 import by.kleban.dogdairy.database.entities.DbPost
+import com.google.common.truth.Truth
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
@@ -27,22 +28,27 @@ class DogDbTest {
     }
 
     @Test
-    fun savePost() {
+    fun savePost_isDeletedDogWithPosts() {
         runBlocking {
-            val l = dogDao.saveDog(DbDog("1Dolka", "ref", 5, "female", "Poodle", "the best"))
-            val s = dogDao.saveDog(DbDog("2Dolkdfa", "ref", 5, "female", "Poodle", "the best"))
-            val third = dogDao.saveDog(DbDog("3Dolkdfa", "ref", 5, "female", "Poodle", "the best"))
+            val dbDog1 = DbDog("1Dolka", "ref", 5, "female", "Poodle", "the best")
+            val dbDog2 = DbDog("2Dolkdfa", "ref", 5, "female", "Poodle", "the best")
+            val dbDog3 = DbDog("3Dolkdfa", "ref", 5, "female", "Poodle", "the best")
+            val idDog1 = dogDao.saveDog(dbDog1)
+            val idDog2 = dogDao.saveDog(dbDog2)
+            val idDog3 = dogDao.saveDog(dbDog3)
 
-            dogDao.savePost(DbPost(l, "1fefe", "defef"))
-            dogDao.savePost(DbPost(s, "2fefe", "defef"))
-            dogDao.savePost(DbPost(third, "3fefe", "defef"))
-            dogDao.deleteDogWithPosts(s)
-            val list = dogDao.getAllDog()
-            val new = dogDao.getAllPosts()
-            list.forEach {  Log.e("Hello", it.toString()) }
-            new.forEach {  Log.e("Hello", it.toString()) }
+            val post1 = DbPost(idDog1, "1fefe", "defef")
+            val post2 = DbPost(idDog2, "2fefe", "defef")
+            val post3 = DbPost(idDog3, "3fefe", "defef")
+            dogDao.savePost(post1)
+            dogDao.savePost(post2)
+            dogDao.savePost(post3)
+            dogDao.deleteDogWithPosts(idDog2)
+            val listDog = dogDao.getAllDog()
+            val listPosts = dogDao.getAllPosts()
 
-
+            Truth.assertThat(listDog).doesNotContain(dbDog2)
+            Truth.assertThat(listPosts).doesNotContain(post2)
         }
     }
 

@@ -1,9 +1,8 @@
 package by.kleban.dogdairy.ui
 
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -121,8 +120,8 @@ class RegistrationFragment : Fragment() {
 
         val pickImages = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
             if (uri != null) {
-                createContentResolver(uri)
-                viewModel.saveImage(uri.toString())
+                Log.e("setupImagePicker: ", uri.toString())
+                viewModel.saveImageFile(uri, requireContext())
             }
         }
         binding.txtImgLabelRegistration.setOnClickListener {
@@ -131,16 +130,6 @@ class RegistrationFragment : Fragment() {
         binding.imgRegistration.setOnClickListener {
             pickImages.launch(arrayOf("image/*"))
         }
-
-    }
-
-    private fun createContentResolver(uri: Uri) {
-        val contentResolver = requireActivity().applicationContext.contentResolver
-
-        val takeFlags: Int = Intent.FLAG_GRANT_READ_URI_PERMISSION or
-                Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-        // Check for the freshest data.
-        contentResolver.takePersistableUriPermission(uri, takeFlags)
     }
 
     private fun checkValidationName(validation: Validation) {

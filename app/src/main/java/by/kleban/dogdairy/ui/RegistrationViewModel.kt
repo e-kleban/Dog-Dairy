@@ -1,5 +1,9 @@
 package by.kleban.dogdairy.ui
 
+import android.content.Context
+import android.net.Uri
+import android.util.Log
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,6 +15,9 @@ import by.kleban.dogdairy.repositories.DogRepositoryImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.File
+import java.net.URI
+import java.util.*
 
 
 class RegistrationViewModel : ViewModel() {
@@ -90,16 +97,31 @@ class RegistrationViewModel : ViewModel() {
         _descriptionLiveData.value = description
     }
 
-    fun saveImage(image: String) {
-        _imageLiveData.value = image
-    }
-
     fun saveSex(sex: String) {
         _sexLiveData.value = sex
     }
 
     fun saveBreed(breed: String) {
         _breedLiveData.value = breed
+    }
+
+    fun saveImageFile(uri: Uri, context: Context){
+     ioScope.launch { val originalImgUri = URI(uri.toString())
+         val originalImgUriAndroid = Uri.parse(originalImgUri.toString())
+         val dataDir = ContextCompat.getDataDir(context) ?: throw java.lang.Exception()
+         val newImgFile = File(dataDir.path, "avatar_${UUID.randomUUID()}")
+         val outputStream = newImgFile.outputStream()
+         val inputStream = context.contentResolver.openInputStream(originalImgUriAndroid) ?: throw java.lang.Exception()
+         try {
+             inputStream.copyTo(outputStream)
+         }catch (e: Exception){
+             e.message?.let { Log.e(TAG, it, ) }
+         }finally {
+             outputStream.close()
+             inputStream.close()
+         }
+         val newImgUri = newImgFile.toURI()
+         _imageLiveData.postValue(newImgUri.toString()) }
     }
 
     fun registration() {
