@@ -4,7 +4,6 @@ import android.content.Context
 import by.kleban.dogdairy.database.DogDb
 import by.kleban.dogdairy.database.DogDiaryRoomDatabase
 import by.kleban.dogdairy.database.DogRoomDb
-import by.kleban.dogdairy.database.entities.DbDogWithPosts
 import by.kleban.dogdairy.database.mapper.DbDogMapper
 import by.kleban.dogdairy.database.mapper.DogMapper
 import by.kleban.dogdairy.entities.Dog
@@ -33,12 +32,8 @@ class DogRepositoryImpl(
         }
     }
 
-    override suspend fun saveDog(dog: Dog): Long {
-        return dogDb.saveDog(dog)
-    }
-
-    override suspend fun getDogWithPosts(id: Long): DbDogWithPosts {
-        return dogDb.getDogWithPosts(id)
+    override suspend fun saveDog(dog: Dog) {
+        dogDb.saveDog(dog)
     }
 
     companion object {

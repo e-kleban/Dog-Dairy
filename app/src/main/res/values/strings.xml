@@ -17,6 +17,4 @@
     <string name="problem_toast_loading">Problem with loading</string>
     <string name="problem_toast_saving">Problem with saving</string>
     <string name="dog_page_age">%1$d years</string>
-    <string name="dog_age">%1$d years</string>
-    <string name="add_post">Add post</string>
 </resources>
