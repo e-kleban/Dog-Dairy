@@ -15,11 +15,7 @@ class DbDogMapper : Mapper<DbDog, Dog> {
             age = from.age,
             breed = from.breed,
             description = from.description,
-            sex = if (from.sex == Sex.FEMALE.ordinal) {
-                Sex.FEMALE
-            } else {
-                Sex.MALE
-            }
+            sex = Sex.values()[from.sex]
         )
     }
 }

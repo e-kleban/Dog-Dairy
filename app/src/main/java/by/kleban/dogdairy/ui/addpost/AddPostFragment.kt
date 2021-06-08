@@ -1,4 +1,4 @@
-package by.kleban.dogdairy.ui
+package by.kleban.dogdairy.ui.addpost
 
 import android.os.Bundle
 import android.view.LayoutInflater

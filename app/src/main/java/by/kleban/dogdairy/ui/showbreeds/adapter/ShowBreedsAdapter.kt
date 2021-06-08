@@ -1,4 +1,4 @@
-package by.kleban.dogdairy.adapter
+package by.kleban.dogdairy.ui.showbreeds.adapter
 
 import android.content.Context
 import android.view.LayoutInflater

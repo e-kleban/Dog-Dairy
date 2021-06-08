@@ -1,11 +1,10 @@
-package by.kleban.dogdairy.ui
+package by.kleban.dogdairy.ui.dogpage
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import by.kleban.dogdairy.DogDiaryApplication
 import by.kleban.dogdairy.database.entities.DbDogWithPosts
-import by.kleban.dogdairy.entities.Validation
 import by.kleban.dogdairy.repositories.DogRepository
 import by.kleban.dogdairy.repositories.DogRepositoryImpl
 import kotlinx.coroutines.CoroutineScope
@@ -22,9 +21,9 @@ class DogPageViewModel : ViewModel() {
     val dogWithPostsLiveData: LiveData<DbDogWithPosts>
         get() = _dogWithPostsLiveData
 
-    fun getDog(id:Long){
+    fun getDog(id: Long) {
         ioScope.launch {
-           _dogWithPostsLiveData.postValue(repository.getDogWithPosts(id))
+            _dogWithPostsLiveData.postValue(repository.getDogWithPosts(id))
         }
     }
 }
