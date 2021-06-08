@@ -30,9 +30,9 @@ class DogDbTest {
     @Test
     fun savePost_isDeletedDogWithPosts() {
         runBlocking {
-            val dbDog1 = DbDog("1Dolka", "ref", 5, "female", "Poodle", "the best")
-            val dbDog2 = DbDog("2Dolkdfa", "ref", 5, "female", "Poodle", "the best")
-            val dbDog3 = DbDog("3Dolkdfa", "ref", 5, "female", "Poodle", "the best")
+            val dbDog1 = DbDog("1Dolka", "ref", 5, 1, "Poodle", "the best")
+            val dbDog2 = DbDog("2Dolkdfa", "ref", 5, 2, "Poodle", "the best")
+            val dbDog3 = DbDog("3Dolkdfa", "ref", 5, 1, "Poodle", "the best")
             val idDog1 = dogDao.saveDog(dbDog1)
             val idDog2 = dogDao.saveDog(dbDog2)
             val idDog3 = dogDao.saveDog(dbDog3)
