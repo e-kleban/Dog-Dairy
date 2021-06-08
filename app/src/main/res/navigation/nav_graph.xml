@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashScreenFragment"
-        android:name="by.kleban.dogdairy.ui.SplashScreenFragment"
+        android:name="by.kleban.dogdairy.ui.splash.SplashScreenFragment"
         android:label="SplashScreenFragment"
         tools:layout="@layout/fragment_splash_screen">
         <action
@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"
-        android:name="by.kleban.dogdairy.ui.RegistrationFragment"
+        android:name="by.kleban.dogdairy.ui.registration.RegistrationFragment"
         android:label="RegistrationFragment"
         tools:layout="@layout/fragment_registration">
         <action
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/showBreedsFragment"
-        android:name="by.kleban.dogdairy.ui.ShowBreedsFragment"
+        android:name="by.kleban.dogdairy.ui.showbreeds.ShowBreedsFragment"
         android:label="show_breeds_fragment"
         tools:layout="@layout/show_breeds_fragment">
         <action
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/dogPageFragment"
-        android:name="by.kleban.dogdairy.ui.DogPageFragment"
+        android:name="by.kleban.dogdairy.ui.dogpage.DogPageFragment"
         android:label="DogPageFragment"
         tools:layout="@layout/fragment_dog_page_old" />
 

@@ -1,4 +1,4 @@
-package by.kleban.dogdairy.ui
+package by.kleban.dogdairy.ui.registration
 
 import android.content.Context
 import android.net.Uri

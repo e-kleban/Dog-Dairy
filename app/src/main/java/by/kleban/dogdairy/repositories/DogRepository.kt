@@ -11,7 +11,7 @@ interface DogRepository {
 
     suspend fun getDog(): Dog?
 
-    suspend fun saveDog(dog: Dog):Long
+    suspend fun saveDog(dog: Dog): Long
 
     suspend fun getDogWithPosts(id: Long): DbDogWithPosts
 }

@@ -1,8 +1,8 @@
 package by.kleban.dogdairy.networking.mappers
 
-import by.kleban.dogdairy.networking.entities.response.DogBreedResponse
-import by.kleban.dogdairy.entities.DogBreed
 import by.kleban.dogdairy.core.Mapper
+import by.kleban.dogdairy.entities.DogBreed
+import by.kleban.dogdairy.networking.entities.response.DogBreedResponse
 
 
 class DogBreedResponseMapper : Mapper<DogBreedResponse, DogBreed> {

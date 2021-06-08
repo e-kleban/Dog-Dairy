@@ -1,4 +1,4 @@
-package by.kleban.dogdairy.ui
+package by.kleban.dogdairy.ui.showbreeds
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,8 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kleban.dogdairy.R
-import by.kleban.dogdairy.adapter.ShowBreedsAdapter
 import by.kleban.dogdairy.databinding.ShowBreedsFragmentBinding
+import by.kleban.dogdairy.ui.showbreeds.adapter.ShowBreedsAdapter
 
 class ShowBreedsFragment : Fragment(), ShowBreedsAdapter.OnItemClickListener {
 

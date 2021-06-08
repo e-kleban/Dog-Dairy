@@ -1,4 +1,4 @@
-package by.kleban.dogdairy.ui
+package by.kleban.dogdairy.ui.splash
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

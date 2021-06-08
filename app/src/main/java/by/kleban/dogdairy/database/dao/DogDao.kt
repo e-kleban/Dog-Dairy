@@ -39,5 +39,4 @@ interface DogDao {
     @Query("SELECT * FROM table_post")
     suspend fun getAllPosts(): List<DbPost>
 
-
 }

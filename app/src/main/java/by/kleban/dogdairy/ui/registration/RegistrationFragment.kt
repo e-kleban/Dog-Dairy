@@ -1,4 +1,4 @@
-package by.kleban.dogdairy.ui
+package by.kleban.dogdairy.ui.registration
 
 import android.content.Context
 import android.os.Bundle
@@ -17,7 +17,7 @@ import by.kleban.dogdairy.databinding.FragmentRegistrationBinding
 import by.kleban.dogdairy.entities.Sex
 import by.kleban.dogdairy.entities.SharedConfig
 import by.kleban.dogdairy.entities.Validation
-import by.kleban.dogdairy.ui.ShowBreedsFragment.Companion.EXTRA_BREED
+import by.kleban.dogdairy.ui.showbreeds.ShowBreedsFragment.Companion.EXTRA_BREED
 import com.squareup.picasso.Picasso
 
 

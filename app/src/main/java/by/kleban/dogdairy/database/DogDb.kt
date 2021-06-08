@@ -8,7 +8,7 @@ interface DogDb {
 
     suspend fun getAllDog(): List<Dog>
 
-    suspend fun saveDog(dog: Dog):Long
+    suspend fun saveDog(dog: Dog): Long
 
     suspend fun getDogWithPosts(id: Long): DbDogWithPosts
 

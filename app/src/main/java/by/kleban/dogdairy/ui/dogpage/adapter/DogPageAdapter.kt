@@ -1,4 +1,4 @@
-package by.kleban.dogdairy.adapter
+package by.kleban.dogdairy.ui.dogpage.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,7 +8,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import by.kleban.dogdairy.R
-import by.kleban.dogdairy.adapter.mapper.DogToItemHeaderMapper
 import by.kleban.dogdairy.core.picasso.transformation.CircleTransform
 import by.kleban.dogdairy.entities.Dog
 import by.kleban.dogdairy.entities.Sex
