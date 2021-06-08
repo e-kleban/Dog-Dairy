@@ -2,7 +2,6 @@ package by.kleban.dogdairy.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +14,8 @@ import androidx.navigation.fragment.findNavController
 import by.kleban.dogdairy.R
 import by.kleban.dogdairy.core.picasso.transformation.CircleTransform
 import by.kleban.dogdairy.databinding.FragmentRegistrationBinding
+import by.kleban.dogdairy.entities.Sex
+import by.kleban.dogdairy.entities.SharedConfig
 import by.kleban.dogdairy.entities.Validation
 import by.kleban.dogdairy.ui.ShowBreedsFragment.Companion.EXTRA_BREED
 import com.squareup.picasso.Picasso
@@ -28,7 +29,7 @@ class RegistrationFragment : Fragment() {
     private val viewModel by lazy {
         ViewModelProvider(this).get(RegistrationViewModel::class.java)
     }
-    private val prefs by lazy { requireActivity().getSharedPreferences("dog dairy", Context.MODE_PRIVATE) }
+    private val prefs by lazy { requireActivity().getSharedPreferences(SharedConfig.NAME_SHARED_PREF, Context.MODE_PRIVATE) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -91,8 +92,7 @@ class RegistrationFragment : Fragment() {
             }
         }
         viewModel.dogIdLiveData.observe(viewLifecycleOwner) {
-            prefs.edit().clear().apply()
-            prefs.edit().putLong(SHARED_PREF_DOG_ID, it).apply()
+            prefs.edit().clear().putLong(SharedConfig.SHARED_PREF_DOG_ID, it).apply()
         }
     }
 
@@ -110,8 +110,8 @@ class RegistrationFragment : Fragment() {
     private fun setRadioGroupOnCheckedChangeListener() {
         binding.radioGroupSexRegistration.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
-                R.id.radio_btn_female -> viewModel.saveSex("female")
-                R.id.radio_btn_male -> viewModel.saveSex("male")
+                R.id.radio_btn_female -> viewModel.saveSex(Sex.FEMALE)
+                R.id.radio_btn_male -> viewModel.saveSex(Sex.MALE)
             }
         }
     }
@@ -120,7 +120,6 @@ class RegistrationFragment : Fragment() {
 
         val pickImages = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
             if (uri != null) {
-                Log.e("setupImagePicker: ", uri.toString())
                 viewModel.saveImageFile(uri, requireContext())
             }
         }
@@ -200,9 +199,5 @@ class RegistrationFragment : Fragment() {
                 binding.txtInputRegistrationDescription.isErrorEnabled = false
             }
         }
-    }
-
-    companion object {
-        const val SHARED_PREF_DOG_ID = "shared pref dog id"
     }
 }

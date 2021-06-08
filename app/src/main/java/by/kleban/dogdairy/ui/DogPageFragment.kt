@@ -15,6 +15,7 @@ import by.kleban.dogdairy.adapter.gridlayoutmanager.DogSpanSizeLookup
 import by.kleban.dogdairy.database.mapper.DbDogMapper
 import by.kleban.dogdairy.databinding.FragmentDogPageBinding
 import by.kleban.dogdairy.entities.Dog
+import by.kleban.dogdairy.entities.SharedConfig
 
 
 class DogPageFragment : Fragment() {
@@ -22,7 +23,7 @@ class DogPageFragment : Fragment() {
     private val viewModel by lazy {
         ViewModelProvider(this).get(DogPageViewModel::class.java)
     }
-    private val prefs by lazy { requireActivity().getSharedPreferences("dog dairy", Context.MODE_PRIVATE) }
+    private val prefs by lazy { requireActivity().getSharedPreferences(SharedConfig.NAME_SHARED_PREF, Context.MODE_PRIVATE) }
 
     private var _binding: FragmentDogPageBinding? = null
     private val binding get() = _binding!!
@@ -43,7 +44,7 @@ class DogPageFragment : Fragment() {
         layoutManager.spanSizeLookup = DogSpanSizeLookup(pageAdapter, layoutManager.spanCount)
         recycler.layoutManager = layoutManager
 
-        val id = prefs.getLong(RegistrationFragment.SHARED_PREF_DOG_ID,0)
+        val id = prefs.getLong(SharedConfig.SHARED_PREF_DOG_ID,0)
         viewModel.getDog(id)
         viewModel.dogWithPostsLiveData.observe(viewLifecycleOwner){
             val dog = DbDogMapper().map(it.dbDog)

@@ -1,7 +1,6 @@
 package by.kleban.dogdairy.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,7 @@ import by.kleban.dogdairy.R
 import by.kleban.dogdairy.adapter.mapper.DogToItemHeaderMapper
 import by.kleban.dogdairy.core.picasso.transformation.CircleTransform
 import by.kleban.dogdairy.entities.Dog
-import com.squareup.picasso.Callback
+import by.kleban.dogdairy.entities.Sex
 import com.squareup.picasso.Picasso
 
 
@@ -90,9 +89,9 @@ class DogPageAdapter(private val context: Context) : RecyclerView.Adapter<Recycl
             dogAge.text = context.getString(R.string.dog_age, recyclerViewModel.age)
             dogBreed.text = recyclerViewModel.breed
             dogDescription.text = recyclerViewModel.description
-            if (recyclerViewModel.sex == "female") {
+            if (recyclerViewModel.sex == Sex.FEMALE) {
                 dogSex.setImageResource(R.drawable.ic_sex_female)
-            } else if (recyclerViewModel.sex == "male") {
+            } else if (recyclerViewModel.sex == Sex.MALE) {
                 dogSex.setImageResource(R.drawable.ic_sex_male)
             }
             Picasso.get().cancelRequest(dogImage)
@@ -100,17 +99,7 @@ class DogPageAdapter(private val context: Context) : RecyclerView.Adapter<Recycl
                 .load(recyclerViewModel.image)
                 .error(R.drawable.error_image)
                 .transform(CircleTransform())
-                .into(dogImage, object : Callback {
-                    override fun onSuccess() {
-                        Log.d("onSuccess", "onSuccess: " )
-                    }
-
-                    override fun onError(e: java.lang.Exception?) {
-                        e?.message?.let { Log.d("onError", it) }
-                    }
-
-                })
-
+                .into(dogImage)
         }
     }
 
@@ -134,7 +123,7 @@ class DogPageAdapter(private val context: Context) : RecyclerView.Adapter<Recycl
             val breed: String,
             val image: String,
             val description: String,
-            val sex: String
+            val sex: Sex
         ) : Item()
 
         class Post(
