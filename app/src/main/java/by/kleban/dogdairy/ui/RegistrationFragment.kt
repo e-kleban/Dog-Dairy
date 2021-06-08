@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import by.kleban.dogdairy.R
 import by.kleban.dogdairy.core.picasso.transformation.CircleTransform
 import by.kleban.dogdairy.databinding.FragmentRegistrationBinding
+import by.kleban.dogdairy.entities.Sex
 import by.kleban.dogdairy.entities.Validation
 import by.kleban.dogdairy.ui.ShowBreedsFragment.Companion.EXTRA_BREED
 import com.squareup.picasso.Picasso
@@ -110,8 +111,8 @@ class RegistrationFragment : Fragment() {
     private fun setRadioGroupOnCheckedChangeListener() {
         binding.radioGroupSexRegistration.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
-                R.id.radio_btn_female -> viewModel.saveSex("female")
-                R.id.radio_btn_male -> viewModel.saveSex("male")
+                R.id.radio_btn_female -> viewModel.saveSex(Sex.FEMALE)
+                R.id.radio_btn_male -> viewModel.saveSex(Sex.MALE)
             }
         }
     }

@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import by.kleban.dogdairy.DogDiaryApplication
 import by.kleban.dogdairy.entities.Dog
+import by.kleban.dogdairy.entities.Sex
 import by.kleban.dogdairy.entities.Validation
 import by.kleban.dogdairy.repositories.DogRepository
 import by.kleban.dogdairy.repositories.DogRepositoryImpl
@@ -41,8 +42,8 @@ class RegistrationViewModel : ViewModel() {
     val descriptionLiveData: LiveData<String>
         get() = _descriptionLiveData
 
-    private val _sexLiveData = MutableLiveData<String>()
-    val sexLiveData: LiveData<String>
+    private val _sexLiveData = MutableLiveData<Sex>()
+    val sexLiveData: LiveData<Sex>
         get() = _sexLiveData
 
     private val _breedLiveData = MutableLiveData<String>()
@@ -97,7 +98,7 @@ class RegistrationViewModel : ViewModel() {
         _descriptionLiveData.value = description
     }
 
-    fun saveSex(sex: String) {
+    fun saveSex(sex: Sex) {
         _sexLiveData.value = sex
     }
 
@@ -105,23 +106,25 @@ class RegistrationViewModel : ViewModel() {
         _breedLiveData.value = breed
     }
 
-    fun saveImageFile(uri: Uri, context: Context){
-     ioScope.launch { val originalImgUri = URI(uri.toString())
-         val originalImgUriAndroid = Uri.parse(originalImgUri.toString())
-         val dataDir = ContextCompat.getDataDir(context) ?: throw java.lang.Exception()
-         val newImgFile = File(dataDir.path, "avatar_${UUID.randomUUID()}")
-         val outputStream = newImgFile.outputStream()
-         val inputStream = context.contentResolver.openInputStream(originalImgUriAndroid) ?: throw java.lang.Exception()
-         try {
-             inputStream.copyTo(outputStream)
-         }catch (e: Exception){
-             e.message?.let { Log.e(TAG, it, ) }
-         }finally {
-             outputStream.close()
-             inputStream.close()
-         }
-         val newImgUri = newImgFile.toURI()
-         _imageLiveData.postValue(newImgUri.toString()) }
+    fun saveImageFile(uri: Uri, context: Context) {
+        ioScope.launch {
+            val originalImgUri = URI(uri.toString())
+            val originalImgUriAndroid = Uri.parse(originalImgUri.toString())
+            val dataDir = ContextCompat.getDataDir(context) ?: throw java.lang.Exception()
+            val newImgFile = File(dataDir.path, "avatar_${UUID.randomUUID()}")
+            val outputStream = newImgFile.outputStream()
+            val inputStream = context.contentResolver.openInputStream(originalImgUriAndroid) ?: throw java.lang.Exception()
+            try {
+                inputStream.copyTo(outputStream)
+            } catch (e: Exception) {
+                e.message?.let { Log.e(TAG, it) }
+            } finally {
+                outputStream.close()
+                inputStream.close()
+            }
+            val newImgUri = newImgFile.toURI()
+            _imageLiveData.postValue(newImgUri.toString())
+        }
     }
 
     fun registration() {
@@ -151,8 +154,8 @@ class RegistrationViewModel : ViewModel() {
     }
 
     private fun validateSex(): Validation {
-        return when {
-            _sexLiveData.value.isNullOrEmpty() -> Validation.EMPTY
+        return when (_sexLiveData.value) {
+            null -> Validation.EMPTY
             else -> Validation.VALID
         }
     }

@@ -8,7 +8,7 @@ data class DbDog(
     val name: String,
     val image: String,
     val age: Int,
-    val sex: String,
+    val sex: Int,
     val breed: String,
     val description: String,
 
