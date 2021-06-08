@@ -3,6 +3,7 @@ package by.kleban.dogdairy.database
 import by.kleban.dogdairy.core.Mapper
 import by.kleban.dogdairy.database.dao.DogDao
 import by.kleban.dogdairy.database.entities.DbDog
+import by.kleban.dogdairy.database.entities.DbDogWithPosts
 import by.kleban.dogdairy.entities.Dog
 
 
@@ -17,8 +18,13 @@ class DogRoomDb(
             .map { dbDogMapper.map(it) }
     }
 
-    override suspend fun saveDog(dog: Dog) {
+    override suspend fun saveDog(dog: Dog): Long {
         val dogDb = dogMapper.map(dog)
-        dogDao.saveDog(dogDb)
+        return dogDao.saveDog(dogDb)
     }
+
+    override suspend fun getDogWithPosts(id: Long): DbDogWithPosts {
+        return dogDao.getDogWithPosts(id)
+    }
+
 }
