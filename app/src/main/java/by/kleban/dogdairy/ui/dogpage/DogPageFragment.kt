@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kleban.dogdairy.R
-import by.kleban.dogdairy.database.mapper.DbDogMapper
 import by.kleban.dogdairy.databinding.FragmentDogPageBinding
 import by.kleban.dogdairy.entities.SharedConfig
 import by.kleban.dogdairy.ui.dogpage.adapter.DogPageAdapter
@@ -47,8 +46,7 @@ class DogPageFragment : Fragment() {
         val id = prefs.getLong(SharedConfig.SHARED_PREF_DOG_ID, 0)
         viewModel.getDog(id)
         viewModel.dogWithPostsLiveData.observe(viewLifecycleOwner) {
-            val dog = DbDogMapper().map(it.dbDog)
-            pageAdapter.setHeader(dog)
+            pageAdapter.setHeader(it.dog)
         }
 
         val toolBar = binding.topAppBarDogPage

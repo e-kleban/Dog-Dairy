@@ -1,10 +1,10 @@
 package by.kleban.dogdairy.repositories
 
 import by.kleban.dogdairy.database.DogDb
-import by.kleban.dogdairy.database.entities.DbDogWithPosts
 import by.kleban.dogdairy.entities.Dog
 import by.kleban.dogdairy.entities.DogBreed
-import by.kleban.dogdairy.entities.DogPost
+import by.kleban.dogdairy.entities.DogWithPosts
+import by.kleban.dogdairy.entities.Post
 import by.kleban.dogdairy.networking.dogbreed.DogApi
 import javax.inject.Inject
 
@@ -31,11 +31,11 @@ class DogRepositoryImpl @Inject constructor(
         return dogDb.saveDog(dog)
     }
 
-    override suspend fun getDogWithPosts(id: Long): DbDogWithPosts {
+    override suspend fun getDogWithPosts(id: Long): DogWithPosts {
         return dogDb.getDogWithPosts(id)
     }
 
-    override suspend fun savePost(post: DogPost) {
+    override suspend fun savePost(post: Post) {
         dogDb.savePost(post)
     }
 }

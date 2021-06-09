@@ -1,9 +1,9 @@
 package by.kleban.dogdairy.repositories
 
-import by.kleban.dogdairy.database.entities.DbDogWithPosts
 import by.kleban.dogdairy.entities.Dog
 import by.kleban.dogdairy.entities.DogBreed
-import by.kleban.dogdairy.entities.DogPost
+import by.kleban.dogdairy.entities.DogWithPosts
+import by.kleban.dogdairy.entities.Post
 
 
 interface DogRepository {
@@ -14,7 +14,7 @@ interface DogRepository {
 
     suspend fun saveDog(dog: Dog): Long
 
-    suspend fun getDogWithPosts(id: Long): DbDogWithPosts
+    suspend fun getDogWithPosts(id: Long): DogWithPosts
 
-    suspend fun savePost(post: DogPost)
+    suspend fun savePost(post: Post)
 }

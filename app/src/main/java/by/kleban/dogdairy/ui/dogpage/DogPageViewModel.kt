@@ -3,7 +3,7 @@ package by.kleban.dogdairy.ui.dogpage
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import by.kleban.dogdairy.database.entities.DbDogWithPosts
+import by.kleban.dogdairy.entities.DogWithPosts
 import by.kleban.dogdairy.repositories.DogRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -19,8 +19,8 @@ class DogPageViewModel @Inject constructor() : ViewModel() {
     @Inject
     lateinit var repository: DogRepository
 
-    private val _dogWithPostsLiveData = MutableLiveData<DbDogWithPosts>()
-    val dogWithPostsLiveData: LiveData<DbDogWithPosts>
+    private val _dogWithPostsLiveData = MutableLiveData<DogWithPosts>()
+    val dogWithPostsLiveData: LiveData<DogWithPosts>
         get() = _dogWithPostsLiveData
 
     fun getDog(id: Long) {

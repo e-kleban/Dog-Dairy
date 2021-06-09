@@ -7,7 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import by.kleban.dogdairy.entities.DogPost
+import by.kleban.dogdairy.entities.Post
 import by.kleban.dogdairy.entities.Validation
 import by.kleban.dogdairy.repositories.DogRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -81,7 +81,7 @@ class AddPostViewModel @Inject constructor() : ViewModel() {
             validateDescription == Validation.VALID
         ) {
             ioScope.launch {
-                val post = DogPost(
+                val post = Post(
                     dogCreatorId = dogCreatorId,
                     postImage = _imagePostLiveData.value!!,
                     postDescription = _descriptionPostLiveData.value!!

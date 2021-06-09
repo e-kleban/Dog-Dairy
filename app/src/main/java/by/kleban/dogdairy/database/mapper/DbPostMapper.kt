@@ -6,10 +6,9 @@ import by.kleban.dogdairy.entities.Post
 import javax.inject.Inject
 
 
-class PostMapper @Inject constructor() : Mapper<Post, DbPost> {
-
-    override fun map(from: Post): DbPost {
-        return DbPost(
+class DbPostMapper @Inject constructor() : Mapper<DbPost, Post> {
+    override fun map(from: DbPost): Post {
+        return Post(
             dogCreatorId = from.dogCreatorId,
             postImage = from.postImage,
             postDescription = from.postDescription

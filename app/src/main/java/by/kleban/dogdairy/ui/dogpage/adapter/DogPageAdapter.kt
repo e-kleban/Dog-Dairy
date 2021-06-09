@@ -69,7 +69,7 @@ class DogPageAdapter(private val context: Context) : RecyclerView.Adapter<Recycl
     override fun getItemViewType(position: Int): Int {
         return when (items[position]) {
             is Item.Header -> TYPE_HEADER
-            is Item.Post -> TYPE_POST
+            is Item.DogPost -> TYPE_POST
         }
     }
 
@@ -107,7 +107,7 @@ class DogPageAdapter(private val context: Context) : RecyclerView.Adapter<Recycl
         private val postImage: ImageView = view.findViewById(R.id.item_post_image)
 
         fun bind(position: Int) {
-            val recyclerViewModel = items[position] as Item.Post
+            val recyclerViewModel = items[position] as Item.DogPost
             Picasso.get()
                 .load(recyclerViewModel.imageUrl)
                 .error(R.drawable.error_image)
@@ -125,7 +125,7 @@ class DogPageAdapter(private val context: Context) : RecyclerView.Adapter<Recycl
             val sex: Sex
         ) : Item()
 
-        class Post(
+        class DogPost(
             val imageUrl: String
         ) : Item()
     }
