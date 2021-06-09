@@ -10,12 +10,12 @@ import by.kleban.dogdairy.database.mapper.DogMapper
 import by.kleban.dogdairy.entities.Dog
 import by.kleban.dogdairy.entities.DogBreed
 import by.kleban.dogdairy.networking.dogbreed.DogApi
-import by.kleban.dogdairy.networking.dogbreed.DogBreedServiceProvider
 import by.kleban.dogdairy.networking.dogbreed.DogRetrofitApi
 import by.kleban.dogdairy.networking.mappers.DogBreedResponseMapper
+import javax.inject.Inject
 
 
-class DogRepositoryImpl(
+class DogRepositoryImpl @Inject constructor(
     private val dogDb: DogDb,
     private val dogApi: DogApi
 ) : DogRepository {
@@ -39,22 +39,5 @@ class DogRepositoryImpl(
 
     override suspend fun getDogWithPosts(id: Long): DbDogWithPosts {
         return dogDb.getDogWithPosts(id)
-    }
-
-    companion object {
-        private var INSTANCE: DogRepositoryImpl? = null
-
-        fun getDogRepository(context: Context): DogRepositoryImpl {
-            return if (INSTANCE == null) {
-                val dogDao = DogDiaryRoomDatabase.getDogDb(context).getDogDao()
-                val dogDb = DogRoomDb(dogDao, DbDogMapper(), DogMapper())
-                val dogBreedService = DogBreedServiceProvider.provideDogBreedService()
-                val dogApi = DogRetrofitApi(dogBreedService, DogBreedResponseMapper())
-                INSTANCE = DogRepositoryImpl(dogDb, dogApi)
-                INSTANCE as DogRepositoryImpl
-            } else {
-                INSTANCE as DogRepositoryImpl
-            }
-        }
     }
 }

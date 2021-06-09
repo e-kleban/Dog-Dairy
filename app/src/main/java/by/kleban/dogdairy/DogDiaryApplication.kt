@@ -1,18 +1,8 @@
 package by.kleban.dogdairy
 
 import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
+import javax.inject.Singleton
 
-
-class DogDiaryApplication : Application() {
-
-    override fun onCreate() {
-        super.onCreate()
-        _instance = this
-    }
-
-    companion object {
-        private lateinit var _instance: Application
-        val instance: Application
-            get() = _instance
-    }
-}
+@HiltAndroidApp
+class DogDiaryApplication : Application()

@@ -3,20 +3,22 @@ package by.kleban.dogdairy.ui.splash
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import by.kleban.dogdairy.DogDiaryApplication
 import by.kleban.dogdairy.entities.Dog
 import by.kleban.dogdairy.entities.Screen
 import by.kleban.dogdairy.repositories.DogRepository
-import by.kleban.dogdairy.repositories.DogRepositoryImpl
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@HiltViewModel
+class SplashScreenViewModel @Inject constructor() : ViewModel() {
 
-class SplashScreenViewModel : ViewModel() {
+    @Inject
+    lateinit var repository: DogRepository
 
-    private val repository: DogRepository = DogRepositoryImpl.getDogRepository(DogDiaryApplication.instance)
     private val ioScope = CoroutineScope(Dispatchers.IO)
 
     private val _nextFragmentLiveData = MutableLiveData<Screen>()

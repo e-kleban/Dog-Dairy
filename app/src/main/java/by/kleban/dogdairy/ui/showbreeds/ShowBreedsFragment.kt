@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import by.kleban.dogdairy.R
 import by.kleban.dogdairy.databinding.ShowBreedsFragmentBinding
 import by.kleban.dogdairy.ui.showbreeds.adapter.ShowBreedsAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ShowBreedsFragment : Fragment(), ShowBreedsAdapter.OnItemClickListener {
 
     private val showBreedAdapter by lazy {

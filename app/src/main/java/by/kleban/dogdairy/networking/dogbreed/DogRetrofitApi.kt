@@ -3,8 +3,9 @@ package by.kleban.dogdairy.networking.dogbreed
 import by.kleban.dogdairy.core.Mapper
 import by.kleban.dogdairy.entities.DogBreed
 import by.kleban.dogdairy.networking.entities.response.DogBreedResponse
+import javax.inject.Inject
 
-class DogRetrofitApi(
+class DogRetrofitApi @Inject constructor(
     private val dogBreedService: DogBreedService,
     private val dogBreedMapper: Mapper<DogBreedResponse, DogBreed>
 ) : DogApi {

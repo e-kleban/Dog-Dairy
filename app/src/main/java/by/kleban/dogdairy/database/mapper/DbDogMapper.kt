@@ -4,9 +4,10 @@ import by.kleban.dogdairy.core.Mapper
 import by.kleban.dogdairy.database.entities.DbDog
 import by.kleban.dogdairy.entities.Dog
 import by.kleban.dogdairy.entities.Sex
+import javax.inject.Inject
 
 
-class DbDogMapper : Mapper<DbDog, Dog> {
+class DbDogMapper @Inject constructor() : Mapper<DbDog, Dog> {
 
     override fun map(from: DbDog): Dog {
         return Dog(

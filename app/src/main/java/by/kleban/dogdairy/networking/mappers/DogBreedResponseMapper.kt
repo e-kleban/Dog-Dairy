@@ -3,9 +3,10 @@ package by.kleban.dogdairy.networking.mappers
 import by.kleban.dogdairy.core.Mapper
 import by.kleban.dogdairy.entities.DogBreed
 import by.kleban.dogdairy.networking.entities.response.DogBreedResponse
+import javax.inject.Inject
 
 
-class DogBreedResponseMapper : Mapper<DogBreedResponse, DogBreed> {
+class DogBreedResponseMapper @Inject constructor() : Mapper<DogBreedResponse, DogBreed> {
     override fun map(from: DogBreedResponse): DogBreed {
         return DogBreed(
             id = from.id,

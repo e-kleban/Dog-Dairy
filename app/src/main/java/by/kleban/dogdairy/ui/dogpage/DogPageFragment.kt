@@ -13,8 +13,9 @@ import by.kleban.dogdairy.databinding.FragmentDogPageBinding
 import by.kleban.dogdairy.entities.SharedConfig
 import by.kleban.dogdairy.ui.dogpage.adapter.DogPageAdapter
 import by.kleban.dogdairy.ui.dogpage.adapter.DogSpanSizeLookup
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class DogPageFragment : Fragment() {
 
     private val viewModel by lazy {

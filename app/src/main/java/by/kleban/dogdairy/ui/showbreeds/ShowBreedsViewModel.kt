@@ -4,17 +4,20 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import by.kleban.dogdairy.DogDiaryApplication
 import by.kleban.dogdairy.entities.DogBreed
 import by.kleban.dogdairy.repositories.DogRepository
-import by.kleban.dogdairy.repositories.DogRepositoryImpl
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ShowBreedsViewModel : ViewModel() {
+@HiltViewModel
+class ShowBreedsViewModel @Inject constructor() : ViewModel() {
 
-    private val repository: DogRepository = DogRepositoryImpl.getDogRepository(DogDiaryApplication.instance)
+    @Inject
+    lateinit var repository: DogRepository
+
     private val ioScope = CoroutineScope(Dispatchers.IO)
 
     private val _breedListLiveData = MutableLiveData<List<DogBreed>>()
