@@ -96,7 +96,7 @@ class AddPostFragment : Fragment() {
 
         val pickImages = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
             if (uri != null) {
-                viewModel.saveImageFile(uri, requireContext())
+                viewModel.savePostImageFile(uri, requireContext())
             }
         }
         binding.imageAddPost.setOnClickListener {

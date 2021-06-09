@@ -55,7 +55,7 @@ class AddPostViewModel @Inject constructor() : ViewModel() {
         _descriptionPostLiveData.value = description
     }
 
-    fun saveImageFile(uri: Uri, context: Context) {
+    fun savePostImageFile(uri: Uri, context: Context) {
         ioScope.launch {
             val originalImgUri = URI(uri.toString())
             val originalImgUriAndroid = Uri.parse(originalImgUri.toString())
