@@ -6,8 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import by.kleban.dogdairy.databinding.FragmentAddPostBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class AddPostFragment : Fragment() {
 
     private var _binding: FragmentAddPostBinding? = null

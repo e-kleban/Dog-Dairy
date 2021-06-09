@@ -7,24 +7,26 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import by.kleban.dogdairy.DogDiaryApplication
 import by.kleban.dogdairy.entities.Dog
 import by.kleban.dogdairy.entities.Sex
 import by.kleban.dogdairy.entities.Validation
 import by.kleban.dogdairy.repositories.DogRepository
-import by.kleban.dogdairy.repositories.DogRepositoryImpl
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
 import java.net.URI
 import java.util.*
+import javax.inject.Inject
 
-
-class RegistrationViewModel : ViewModel() {
+@HiltViewModel
+class RegistrationViewModel @Inject constructor() : ViewModel() {
 
     private val ioScope = CoroutineScope(Dispatchers.IO)
-    private val repository: DogRepository = DogRepositoryImpl.getDogRepository(DogDiaryApplication.instance)
+
+    @Inject
+    lateinit var repository: DogRepository
 
     private val _nameLiveData = MutableLiveData<String>()
     val nameLiveData: LiveData<String>

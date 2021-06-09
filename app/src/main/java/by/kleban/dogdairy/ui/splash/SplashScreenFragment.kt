@@ -10,8 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import by.kleban.dogdairy.R
 import by.kleban.dogdairy.entities.Screen
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class SplashScreenFragment : Fragment() {
 
     private val viewModel by lazy {

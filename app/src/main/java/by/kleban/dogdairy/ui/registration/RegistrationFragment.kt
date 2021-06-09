@@ -19,8 +19,9 @@ import by.kleban.dogdairy.entities.SharedConfig
 import by.kleban.dogdairy.entities.Validation
 import by.kleban.dogdairy.ui.showbreeds.ShowBreedsFragment.Companion.EXTRA_BREED
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class RegistrationFragment : Fragment() {
 
     private var _binding: FragmentRegistrationBinding? = null
