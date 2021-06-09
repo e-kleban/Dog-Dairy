@@ -47,6 +47,10 @@ class AddPostViewModel @Inject constructor() : ViewModel() {
     val isSavedPostLiveData: LiveData<Boolean>
         get() = _isSavedPostLiveData
 
+    private val _newPostLiveData = MutableLiveData<Post>()
+    val newPostLiveData: LiveData<Post>
+        get() = _newPostLiveData
+
     fun saveDescription(description: String) {
         _descriptionPostLiveData.value = description
     }
@@ -75,22 +79,26 @@ class AddPostViewModel @Inject constructor() : ViewModel() {
     fun addPost(dogCreatorId: Long) {
         val validateImage = validateImage()
         val validateDescription = validateDescription()
-        _validationImageLiveData.value=validateImage
-        _validationDescriptionLiveData.value=validateDescription
+        _validationImageLiveData.value = validateImage
+        _validationDescriptionLiveData.value = validateDescription
         if (validateImage == Validation.VALID &&
             validateDescription == Validation.VALID
         ) {
             ioScope.launch {
-                val post = Post(
-                    dogCreatorId = dogCreatorId,
-                    postImage = _imagePostLiveData.value!!,
-                    postDescription = _descriptionPostLiveData.value!!
-                )
+                val post = createPost(dogCreatorId)
+                _newPostLiveData.postValue(post)
                 repository.savePost(post)
                 _isSavedPostLiveData.postValue(true)
             }
         }
+    }
 
+    private fun createPost(dogCreatorId: Long): Post {
+        return Post(
+            dogCreatorId = dogCreatorId,
+            postImage = _imagePostLiveData.value!!,
+            postDescription = _descriptionPostLiveData.value!!
+        )
     }
 
     private fun validateImage(): Validation {

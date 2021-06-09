@@ -23,7 +23,7 @@ class DogPageViewModel @Inject constructor() : ViewModel() {
     val dogWithPostsLiveData: LiveData<DogWithPosts>
         get() = _dogWithPostsLiveData
 
-    fun getDog(id: Long) {
+    fun getDogWithPosts(id: Long) {
         ioScope.launch {
             _dogWithPostsLiveData.postValue(repository.getDogWithPosts(id))
         }

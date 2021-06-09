@@ -54,7 +54,7 @@ class AddPostFragment : Fragment() {
 
         viewModel.isSavedPostLiveData.observe(viewLifecycleOwner) {
             if (it == true) {
-                findNavController().navigate(R.id.from_addPostFragment_to_dogPageFragment)
+                findNavController().navigateUp()
             }
         }
     }
@@ -105,5 +105,9 @@ class AddPostFragment : Fragment() {
         binding.btnAddPostChooseImage.setOnClickListener {
             pickImages.launch(arrayOf("image/*"))
         }
+    }
+
+    companion object {
+        const val ADD_POST = "add post"
     }
 }

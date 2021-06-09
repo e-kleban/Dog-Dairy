@@ -2,6 +2,7 @@ package by.kleban.dogdairy.ui.dogpage
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +12,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kleban.dogdairy.R
 import by.kleban.dogdairy.databinding.FragmentDogPageBinding
+import by.kleban.dogdairy.entities.Post
 import by.kleban.dogdairy.entities.SharedConfig
+import by.kleban.dogdairy.ui.addpost.AddPostFragment.Companion.ADD_POST
 import by.kleban.dogdairy.ui.dogpage.adapter.DogPageAdapter
 import by.kleban.dogdairy.ui.dogpage.adapter.DogSpanSizeLookup
+import by.kleban.dogdairy.ui.registration.RegistrationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -44,9 +48,10 @@ class DogPageFragment : Fragment() {
         recycler.layoutManager = layoutManager
 
         val id = prefs.getLong(SharedConfig.SHARED_PREF_DOG_ID, 0)
-        viewModel.getDog(id)
+        viewModel.getDogWithPosts(id)
         viewModel.dogWithPostsLiveData.observe(viewLifecycleOwner) {
             pageAdapter.setHeader(it.dog)
+            pageAdapter.setPosts(it.posts)
         }
 
         val toolBar = binding.topAppBarDogPage
