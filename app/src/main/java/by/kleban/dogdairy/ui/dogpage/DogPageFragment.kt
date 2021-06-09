@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import by.kleban.dogdairy.R
 import by.kleban.dogdairy.database.mapper.DbDogMapper
 import by.kleban.dogdairy.databinding.FragmentDogPageBinding
 import by.kleban.dogdairy.entities.SharedConfig
@@ -47,7 +49,13 @@ class DogPageFragment : Fragment() {
         viewModel.dogWithPostsLiveData.observe(viewLifecycleOwner) {
             val dog = DbDogMapper().map(it.dbDog)
             pageAdapter.setHeader(dog)
+        }
 
+        val toolBar = binding.topAppBarDogPage
+        val addPostItem = toolBar.menu.findItem(R.id.dog_page_add_post)
+        addPostItem.setOnMenuItemClickListener {
+            findNavController().navigate(R.id.from_dogPageFragment_to_addPostFragment)
+            true
         }
     }
 }
