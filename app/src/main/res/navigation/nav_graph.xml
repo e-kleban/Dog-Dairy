@@ -57,6 +57,10 @@
         android:id="@+id/addPostFragment"
         android:name="by.kleban.dogdairy.ui.addpost.AddPostFragment"
         android:label="AddPostFragment"
-        tools:layout="@layout/fragment_add_post"/>
+        tools:layout="@layout/fragment_add_post">
+        <action
+            android:id="@+id/from_addPostFragment_to_dogPageFragment"
+            app:destination="@id/dogPageFragment" />
+    </fragment>
 
 </navigation>

@@ -23,6 +23,8 @@ import javax.inject.Inject
 class AddPostViewModel @Inject constructor() : ViewModel() {
 
     private val ioScope = CoroutineScope(Dispatchers.IO)
+
+    @Inject
     lateinit var repository: DogRepository
 
     private val _descriptionPostLiveData = MutableLiveData<String>()
@@ -41,9 +43,9 @@ class AddPostViewModel @Inject constructor() : ViewModel() {
     val validationDescriptionLiveData: LiveData<Validation>
         get() = _validationDescriptionLiveData
 
-    private val _savePostLiveData = MutableLiveData<Boolean>()
-    val savePostLiveData: LiveData<Boolean>
-        get() = _savePostLiveData
+    private val _isSavedPostLiveData = MutableLiveData<Boolean>()
+    val isSavedPostLiveData: LiveData<Boolean>
+        get() = _isSavedPostLiveData
 
     fun saveDescription(description: String) {
         _descriptionPostLiveData.value = description
@@ -73,6 +75,8 @@ class AddPostViewModel @Inject constructor() : ViewModel() {
     fun addPost(dogCreatorId: Long) {
         val validateImage = validateImage()
         val validateDescription = validateDescription()
+        _validationImageLiveData.value=validateImage
+        _validationDescriptionLiveData.value=validateDescription
         if (validateImage == Validation.VALID &&
             validateDescription == Validation.VALID
         ) {
@@ -82,8 +86,8 @@ class AddPostViewModel @Inject constructor() : ViewModel() {
                     postImage = _imagePostLiveData.value!!,
                     postDescription = _descriptionPostLiveData.value!!
                 )
-               _savePostLiveData.postValue(true)
-
+                repository.savePost(post)
+                _isSavedPostLiveData.postValue(true)
             }
         }
 
@@ -102,7 +106,6 @@ class AddPostViewModel @Inject constructor() : ViewModel() {
             else -> Validation.VALID
         }
     }
-
 
     companion object {
         private val TAG = AddPostViewModel::class.java.simpleName
