@@ -28,7 +28,10 @@ class DogRepositoryImpl @Inject constructor(
 
     override suspend fun saveDog(dog: Dog) {
         val dogId = dogDb.saveDog(dog)
-        sharedPreferences.edit().clear().putLong(SharedConfig.SHARED_PREF_DOG_ID, dogId).apply()
+        sharedPreferences.edit()
+            .clear()
+            .putLong(SharedConfig.SHARED_PREF_DOG_ID, dogId)
+            .apply()
     }
 
     override suspend fun getDogWithPosts(): DogWithPosts {
