@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
 import by.kleban.dogdairy.R
 import by.kleban.dogdairy.databinding.FragmentAddPostBinding
@@ -23,9 +23,7 @@ class AddPostFragment : Fragment() {
     private var _binding: FragmentAddPostBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by lazy {
-        ViewModelProvider(this).get(AddPostViewModel::class.java)
-    }
+    private val viewModel: AddPostViewModel by hiltNavGraphViewModels(R.id.nav_graph)
 
     private val prefs by lazy { requireActivity().getSharedPreferences(SharedConfig.NAME_SHARED_PREF, Context.MODE_PRIVATE) }
 
@@ -96,7 +94,7 @@ class AddPostFragment : Fragment() {
 
         val pickImages = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
             if (uri != null) {
-                viewModel.savePostImageFile(uri, requireContext())
+                viewModel.savePostImageFile(uri)
             }
         }
         binding.imageAddPost.setOnClickListener {

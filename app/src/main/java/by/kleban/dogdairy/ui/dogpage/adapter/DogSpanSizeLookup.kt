@@ -1,7 +1,6 @@
 package by.kleban.dogdairy.ui.dogpage.adapter
 
 import androidx.recyclerview.widget.GridLayoutManager
-import by.kleban.dogdairy.ui.dogpage.adapter.DogPageAdapter
 
 
 class DogSpanSizeLookup(

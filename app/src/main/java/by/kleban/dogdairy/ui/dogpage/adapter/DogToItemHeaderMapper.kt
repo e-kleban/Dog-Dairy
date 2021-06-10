@@ -1,8 +1,8 @@
 package by.kleban.dogdairy.ui.dogpage.adapter
 
-import by.kleban.dogdairy.ui.dogpage.adapter.DogPageAdapter
 import by.kleban.dogdairy.core.Mapper
 import by.kleban.dogdairy.entities.Dog
+import by.kleban.dogdairy.ui.dogpage.adapter.DogPageAdapter
 
 
 class DogToItemHeaderMapper : Mapper<Dog, DogPageAdapter.Item.Header> {

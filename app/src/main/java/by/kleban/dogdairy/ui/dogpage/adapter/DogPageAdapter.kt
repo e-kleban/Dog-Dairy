@@ -35,7 +35,7 @@ class DogPageAdapter(private val context: Context) : RecyclerView.Adapter<Recycl
     }
 
     fun setPosts(posts: List<Post>) {
-        items.removeIf{it is Item.DogPost}
+        items.removeIf { it is Item.DogPost }
         val listDogPost = posts.map { postMapper.map(it) }
         items.addAll(listDogPost)
         notifyDataSetChanged()
@@ -118,7 +118,7 @@ class DogPageAdapter(private val context: Context) : RecyclerView.Adapter<Recycl
             val recyclerViewModel = items[position] as Item.DogPost
             Picasso.get()
                 .load(recyclerViewModel.postImage)
-                .resize(1000,1000)
+                .resize(1000, 1000)
                 .onlyScaleDown()
                 .centerCrop()
                 .error(R.drawable.error_image)

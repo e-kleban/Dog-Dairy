@@ -2,30 +2,25 @@ package by.kleban.dogdairy.ui.dogpage
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kleban.dogdairy.R
 import by.kleban.dogdairy.databinding.FragmentDogPageBinding
-import by.kleban.dogdairy.entities.Post
 import by.kleban.dogdairy.entities.SharedConfig
-import by.kleban.dogdairy.ui.addpost.AddPostFragment.Companion.ADD_POST
 import by.kleban.dogdairy.ui.dogpage.adapter.DogPageAdapter
 import by.kleban.dogdairy.ui.dogpage.adapter.DogSpanSizeLookup
-import by.kleban.dogdairy.ui.registration.RegistrationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DogPageFragment : Fragment() {
 
-    private val viewModel by lazy {
-        ViewModelProvider(this).get(DogPageViewModel::class.java)
-    }
+    private val viewModel: DogPageViewModel by hiltNavGraphViewModels(R.id.nav_graph)
+
     private val prefs by lazy { requireActivity().getSharedPreferences(SharedConfig.NAME_SHARED_PREF, Context.MODE_PRIVATE) }
 
     private var _binding: FragmentDogPageBinding? = null
