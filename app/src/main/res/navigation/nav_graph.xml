@@ -52,6 +52,9 @@
         <action
             android:id="@+id/from_dogPageFragment_to_addPostFragment"
             app:destination="@id/addPostFragment" />
+        <action
+            android:id="@+id/from_dogPageFragment_to_onePostFragment"
+            app:destination="@id/onePostFragment" />
     </fragment>
     <fragment
         android:id="@+id/addPostFragment"
@@ -62,5 +65,10 @@
             android:id="@+id/from_addPostFragment_to_dogPageFragment"
             app:destination="@id/dogPageFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/onePostFragment"
+        android:name="by.kleban.dogdairy.ui.onepost.OnePostFragment"
+        android:label="OnePostFragment"
+        tools:layout="@layout/fragment_one_post"/>
 
 </navigation>
