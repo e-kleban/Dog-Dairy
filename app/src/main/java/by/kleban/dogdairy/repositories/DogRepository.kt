@@ -12,9 +12,9 @@ interface DogRepository {
 
     suspend fun getDog(): Dog?
 
-    suspend fun saveDog(dog: Dog): Long
+    suspend fun saveDog(dog: Dog)
 
-    suspend fun getDogWithPosts(id: Long): DogWithPosts
+    suspend fun getDogWithPosts(): DogWithPosts
 
     suspend fun savePost(post: Post)
 }

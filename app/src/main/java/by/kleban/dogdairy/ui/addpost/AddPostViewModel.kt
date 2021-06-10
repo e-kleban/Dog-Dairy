@@ -1,10 +1,12 @@
 package by.kleban.dogdairy.ui.addpost
 
+import android.content.SharedPreferences
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import by.kleban.dogdairy.entities.Post
+import by.kleban.dogdairy.entities.SharedConfig
 import by.kleban.dogdairy.entities.Validation
 import by.kleban.dogdairy.entities.file_helper.FileHelper
 import by.kleban.dogdairy.repositories.DogRepository
@@ -15,15 +17,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AddPostViewModel @Inject constructor() : ViewModel() {
+class AddPostViewModel @Inject constructor(
+    private val sharedPreferences: SharedPreferences,
+    private val fileHelper: FileHelper,
+    private val repository: DogRepository
+) : ViewModel() {
 
     private val ioScope = CoroutineScope(Dispatchers.IO)
-
-    @Inject
-    lateinit var fileHelper: FileHelper
-
-    @Inject
-    lateinit var repository: DogRepository
 
     private val _descriptionPostLiveData = MutableLiveData<String>()
     val descriptionPostLiveData: LiveData<String>
@@ -60,7 +60,7 @@ class AddPostViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    fun addPost(dogCreatorId: Long) {
+    fun addPost() {
         val validateImage = validateImage()
         val validateDescription = validateDescription()
         _validationImageLiveData.value = validateImage
@@ -69,7 +69,7 @@ class AddPostViewModel @Inject constructor() : ViewModel() {
             validateDescription == Validation.VALID
         ) {
             ioScope.launch {
-                val post = createPost(dogCreatorId)
+                val post = createPost()
                 _newPostLiveData.postValue(post)
                 repository.savePost(post)
                 _isSavedPostLiveData.postValue(true)
@@ -77,7 +77,8 @@ class AddPostViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    private fun createPost(dogCreatorId: Long): Post {
+    private fun createPost(): Post {
+        val dogCreatorId = sharedPreferences.getLong(SharedConfig.SHARED_PREF_DOG_ID, 0)
         return Post(
             dogCreatorId = dogCreatorId,
             postImage = _imagePostLiveData.value!!,

@@ -29,8 +29,6 @@ class RegistrationFragment : Fragment() {
 
     private val viewModel: RegistrationViewModel by hiltNavGraphViewModels(R.id.nav_graph)
 
-    private val prefs by lazy { requireActivity().getSharedPreferences(SharedConfig.NAME_SHARED_PREF, Context.MODE_PRIVATE) }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -90,9 +88,6 @@ class RegistrationFragment : Fragment() {
             if (it == true) {
                 findNavController().navigate(R.id.from_registrationFragment_to_dogPageFragment)
             }
-        }
-        viewModel.dogIdLiveData.observe(viewLifecycleOwner) {
-            prefs.edit().clear().putLong(SharedConfig.SHARED_PREF_DOG_ID, it).apply()
         }
     }
 

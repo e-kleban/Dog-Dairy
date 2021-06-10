@@ -25,8 +25,6 @@ class AddPostFragment : Fragment() {
 
     private val viewModel: AddPostViewModel by hiltNavGraphViewModels(R.id.nav_graph)
 
-    private val prefs by lazy { requireActivity().getSharedPreferences(SharedConfig.NAME_SHARED_PREF, Context.MODE_PRIVATE) }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentAddPostBinding.inflate(inflater, container, false)
         return binding.root
@@ -39,8 +37,7 @@ class AddPostFragment : Fragment() {
         setupImagePostPicker()
 
         binding.btnAddPostSave.setOnClickListener {
-            val dogId = prefs.getLong(SharedConfig.SHARED_PREF_DOG_ID, 0)
-            viewModel.addPost(dogId)
+            viewModel.addPost()
         }
 
         viewModel.validationDescriptionLiveData.observe(viewLifecycleOwner) { checkValidationDescription(it) }
