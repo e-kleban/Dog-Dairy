@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kleban.dogdairy.R
@@ -22,9 +22,7 @@ class ShowBreedsFragment : Fragment(), ShowBreedsAdapter.OnItemClickListener {
         ShowBreedsAdapter(requireContext(), this)
     }
 
-    private val viewModel by lazy {
-        ViewModelProvider(this).get(ShowBreedsViewModel::class.java)
-    }
+    private val viewModel: ShowBreedsViewModel by hiltNavGraphViewModels(R.id.nav_graph)
 
     private var _binding: ShowBreedsFragmentBinding? = null
     private val binding get() = _binding!!

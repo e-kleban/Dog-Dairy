@@ -6,9 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import by.kleban.dogdairy.database.mapper.DbDogMapper
+import by.kleban.dogdairy.R
 import by.kleban.dogdairy.databinding.FragmentDogPageBinding
 import by.kleban.dogdairy.entities.SharedConfig
 import by.kleban.dogdairy.ui.dogpage.adapter.DogPageAdapter
@@ -18,9 +19,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DogPageFragment : Fragment() {
 
-    private val viewModel by lazy {
-        ViewModelProvider(this).get(DogPageViewModel::class.java)
-    }
+    private val viewModel: DogPageViewModel by hiltNavGraphViewModels(R.id.nav_graph)
+
     private val prefs by lazy { requireActivity().getSharedPreferences(SharedConfig.NAME_SHARED_PREF, Context.MODE_PRIVATE) }
 
     private var _binding: FragmentDogPageBinding? = null
@@ -43,11 +43,17 @@ class DogPageFragment : Fragment() {
         recycler.layoutManager = layoutManager
 
         val id = prefs.getLong(SharedConfig.SHARED_PREF_DOG_ID, 0)
-        viewModel.getDog(id)
+        viewModel.getDogWithPosts(id)
         viewModel.dogWithPostsLiveData.observe(viewLifecycleOwner) {
-            val dog = DbDogMapper().map(it.dbDog)
-            pageAdapter.setHeader(dog)
+            pageAdapter.setHeader(it.dog)
+            pageAdapter.setPosts(it.posts)
+        }
 
+        val toolBar = binding.topAppBarDogPage
+        val addPostItem = toolBar.menu.findItem(R.id.dog_page_add_post)
+        addPostItem.setOnMenuItemClickListener {
+            findNavController().navigate(R.id.from_dogPageFragment_to_addPostFragment)
+            true
         }
     }
 }

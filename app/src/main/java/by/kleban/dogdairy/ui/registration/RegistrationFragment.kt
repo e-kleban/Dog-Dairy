@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
 import by.kleban.dogdairy.R
 import by.kleban.dogdairy.core.picasso.transformation.CircleTransform
@@ -27,10 +27,7 @@ class RegistrationFragment : Fragment() {
     private var _binding: FragmentRegistrationBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by lazy {
-        ViewModelProvider(this).get(RegistrationViewModel::class.java)
-    }
-    private val prefs by lazy { requireActivity().getSharedPreferences(SharedConfig.NAME_SHARED_PREF, Context.MODE_PRIVATE) }
+    private val viewModel: RegistrationViewModel by hiltNavGraphViewModels(R.id.nav_graph)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -92,9 +89,6 @@ class RegistrationFragment : Fragment() {
                 findNavController().navigate(R.id.from_registrationFragment_to_dogPageFragment)
             }
         }
-        viewModel.dogIdLiveData.observe(viewLifecycleOwner) {
-            prefs.edit().clear().putLong(SharedConfig.SHARED_PREF_DOG_ID, it).apply()
-        }
     }
 
     private fun loadImageFromUri(uri: String?) {
@@ -121,7 +115,7 @@ class RegistrationFragment : Fragment() {
 
         val pickImages = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
             if (uri != null) {
-                viewModel.saveImageFile(uri, requireContext())
+                viewModel.saveImageFile(uri)
             }
         }
         binding.txtImgLabelRegistration.setOnClickListener {

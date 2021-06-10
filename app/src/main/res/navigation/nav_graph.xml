@@ -48,6 +48,19 @@
         android:id="@+id/dogPageFragment"
         android:name="by.kleban.dogdairy.ui.dogpage.DogPageFragment"
         android:label="DogPageFragment"
-        tools:layout="@layout/fragment_dog_page_old" />
+        tools:layout="@layout/fragment_dog_page_old" >
+        <action
+            android:id="@+id/from_dogPageFragment_to_addPostFragment"
+            app:destination="@id/addPostFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addPostFragment"
+        android:name="by.kleban.dogdairy.ui.addpost.AddPostFragment"
+        android:label="AddPostFragment"
+        tools:layout="@layout/fragment_add_post">
+        <action
+            android:id="@+id/from_addPostFragment_to_dogPageFragment"
+            app:destination="@id/dogPageFragment" />
+    </fragment>
 
 </navigation>

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import by.kleban.dogdairy.R
 import by.kleban.dogdairy.core.picasso.transformation.CircleTransform
 import by.kleban.dogdairy.entities.Dog
+import by.kleban.dogdairy.entities.Post
 import by.kleban.dogdairy.entities.Sex
 import com.squareup.picasso.Picasso
 
@@ -18,6 +19,7 @@ class DogPageAdapter(private val context: Context) : RecyclerView.Adapter<Recycl
 
     private val items = mutableListOf<Item>()
     private val headerMapper = DogToItemHeaderMapper()
+    private val postMapper = PostToDogPostMapper()
 
 //    fun submitData(list: List<Item>) {
 //        items.clear()
@@ -31,13 +33,19 @@ class DogPageAdapter(private val context: Context) : RecyclerView.Adapter<Recycl
         items.add(POSITION_HEADER, header)
         notifyItemChanged(POSITION_HEADER)
     }
-//
-//    fun setPosts() {
-//        notifyDataSetChanged()
-//    }
-//
-//    fun addPost() {
-//        notifyDataSetChanged()
+
+    fun setPosts(posts: List<Post>) {
+        items.removeIf { it is Item.DogPost }
+        val listDogPost = posts.map { postMapper.map(it) }
+        items.addAll(listDogPost)
+        notifyDataSetChanged()
+    }
+
+//    fun addPost(newPost:Post) {
+//        val newDogPost = postMapper.map(newPost)
+//        items.add(newDogPost)
+//        val position = items.indexOf(newDogPost)
+//       notifyItemChanged(position)
 //    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -69,7 +77,7 @@ class DogPageAdapter(private val context: Context) : RecyclerView.Adapter<Recycl
     override fun getItemViewType(position: Int): Int {
         return when (items[position]) {
             is Item.Header -> TYPE_HEADER
-            is Item.Post -> TYPE_POST
+            is Item.DogPost -> TYPE_POST
         }
     }
 
@@ -107,9 +115,12 @@ class DogPageAdapter(private val context: Context) : RecyclerView.Adapter<Recycl
         private val postImage: ImageView = view.findViewById(R.id.item_post_image)
 
         fun bind(position: Int) {
-            val recyclerViewModel = items[position] as Item.Post
+            val recyclerViewModel = items[position] as Item.DogPost
             Picasso.get()
-                .load(recyclerViewModel.imageUrl)
+                .load(recyclerViewModel.postImage)
+                .resize(1000, 1000)
+                .onlyScaleDown()
+                .centerCrop()
                 .error(R.drawable.error_image)
                 .into(postImage)
         }
@@ -125,8 +136,9 @@ class DogPageAdapter(private val context: Context) : RecyclerView.Adapter<Recycl
             val sex: Sex
         ) : Item()
 
-        class Post(
-            val imageUrl: String
+        class DogPost(
+            val postImage: String,
+            val postDescription: String,
         ) : Item()
     }
 
