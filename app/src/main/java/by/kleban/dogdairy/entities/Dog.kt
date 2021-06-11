@@ -3,7 +3,8 @@ package by.kleban.dogdairy.entities
 
 data class Dog(
     val name: String,
-    val image: String,
+    val bigImage: String,
+    val littleImage: String,
     val age: Int,
     val sex: Sex,
     val breed: String,

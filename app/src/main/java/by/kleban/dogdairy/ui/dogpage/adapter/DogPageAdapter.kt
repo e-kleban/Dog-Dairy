@@ -108,7 +108,7 @@ class DogPageAdapter @Inject constructor(
             }
             Picasso.get().cancelRequest(dogImage)
             Picasso.get()
-                .load(recyclerViewModel.image)
+                .load(recyclerViewModel.thumbnail)
                 .error(R.drawable.error_image)
                 .transform(CircleTransform())
                 .into(dogImage)
@@ -126,10 +126,7 @@ class DogPageAdapter @Inject constructor(
         fun bind(position: Int) {
             val recyclerViewModel = items[position] as Item.DogPost
             Picasso.get()
-                .load(recyclerViewModel.postImage)
-                .resize(560, 560)
-                .onlyScaleDown()
-                .centerCrop()
+                .load(recyclerViewModel.postLittleImage)
                 .error(R.drawable.error_image)
                 .into(postImage)
         }
@@ -150,12 +147,14 @@ class DogPageAdapter @Inject constructor(
             val age: Int,
             val breed: String,
             val image: String,
+            val thumbnail: String,
             val description: String,
             val sex: Sex
         ) : Item()
 
         class DogPost(
-            val postImage: String,
+            val postBigImage: String,
+            val postLittleImage: String,
             val postDescription: String,
             val creatorId: Long
         ) : Item()

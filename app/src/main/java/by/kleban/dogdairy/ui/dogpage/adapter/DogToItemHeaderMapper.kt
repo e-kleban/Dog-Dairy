@@ -2,7 +2,6 @@ package by.kleban.dogdairy.ui.dogpage.adapter
 
 import by.kleban.dogdairy.core.Mapper
 import by.kleban.dogdairy.entities.Dog
-import by.kleban.dogdairy.ui.dogpage.adapter.DogPageAdapter
 import javax.inject.Inject
 
 
@@ -12,9 +11,10 @@ class DogToItemHeaderMapper @Inject constructor() : Mapper<Dog, DogPageAdapter.I
             name = from.name,
             age = from.age,
             breed = from.breed,
-            image = from.image,
             description = from.description,
-            sex = from.sex
+            sex = from.sex,
+            image = from.bigImage,
+            thumbnail = from.littleImage
         )
     }
 }

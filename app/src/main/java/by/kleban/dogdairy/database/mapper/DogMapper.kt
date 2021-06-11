@@ -11,11 +11,12 @@ class DogMapper @Inject constructor() : Mapper<Dog, DbDog> {
     override fun map(from: Dog): DbDog {
         return DbDog(
             name = from.name,
-            image = from.image,
             age = from.age,
             breed = from.breed,
             description = from.description,
-            sex = from.sex.ordinal
+            sex = from.sex.ordinal,
+            bigImage = from.bigImage,
+            littleImage = from.littleImage
         )
     }
 }
