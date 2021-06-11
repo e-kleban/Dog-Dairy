@@ -101,11 +101,6 @@ class AddPostViewModel @Inject constructor(
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        Log.e(TAG, "onCleared: ")
-    }
-
     companion object {
         private val TAG = AddPostViewModel::class.java.simpleName
     }
