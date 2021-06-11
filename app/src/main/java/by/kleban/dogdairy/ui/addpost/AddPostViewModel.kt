@@ -2,7 +2,6 @@ package by.kleban.dogdairy.ui.addpost
 
 import android.content.SharedPreferences
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -30,8 +29,8 @@ class AddPostViewModel @Inject constructor(
     val descriptionPostLiveData: LiveData<String>
         get() = _descriptionPostLiveData
 
-    private val _imagePostLiveData = MutableLiveData<String>()
-    val imagePostLiveData: LiveData<String>
+    private val _imagePostLiveData = MutableLiveData<Pair<String, String>>()
+    val imagePostLiveData: LiveData<Pair<String, String>>
         get() = _imagePostLiveData
 
     private val _validationImageLiveData = MutableLiveData<Validation>()
@@ -56,8 +55,10 @@ class AddPostViewModel @Inject constructor(
 
     fun savePostImageFile(uri: Uri) {
         ioScope.launch {
-            val newImgUri = fileHelper.saveFileIntoAppsDir(uri, "post")
-            _imagePostLiveData.postValue(newImgUri.toString())
+            val pair = fileHelper.saveFileIntoAppsDir(uri, "post")
+            val newImgUriBig = pair.first
+            val newImgUriLittle = pair.second
+            _imagePostLiveData.postValue(newImgUriBig.toString() to newImgUriLittle.toString())
         }
     }
 
@@ -82,14 +83,16 @@ class AddPostViewModel @Inject constructor(
         val dogCreatorId = sharedPreferences.getLong(SharedConfig.SHARED_PREF_DOG_ID, 0)
         return Post(
             dogCreatorId = dogCreatorId,
-            postImage = _imagePostLiveData.value!!,
+            postBigImage = _imagePostLiveData.value!!.first,
+            postLittleImage = _imagePostLiveData.value!!.second,
             postDescription = _descriptionPostLiveData.value!!
         )
     }
 
     private fun validateImage(): Validation {
         return when {
-            _imagePostLiveData.value.isNullOrEmpty() -> Validation.EMPTY
+            (_imagePostLiveData.value?.first.isNullOrEmpty() &&
+                    _imagePostLiveData.value?.second.isNullOrEmpty()) -> Validation.EMPTY
             else -> Validation.VALID
         }
     }

@@ -30,8 +30,8 @@ class RegistrationViewModel @Inject constructor() : ViewModel() {
     val nameLiveData: LiveData<String>
         get() = _nameLiveData
 
-    private val _imageLiveData = MutableLiveData<String>()
-    val imageLiveData: LiveData<String>
+    private val _imageLiveData = MutableLiveData<Pair<String, String>>()
+    val imageLiveData: LiveData<Pair<String, String>>
         get() = _imageLiveData
 
     private val _ageLiveData = MutableLiveData<Int>()
@@ -108,8 +108,10 @@ class RegistrationViewModel @Inject constructor() : ViewModel() {
 
     fun saveImageFile(uri: Uri) {
         ioScope.launch {
-            val newImgUri = fileHelper.saveFileIntoAppsDir(uri, "avatar")
-            _imageLiveData.postValue(newImgUri.toString())
+            val pair = fileHelper.saveFileIntoAppsDir(uri, "avatar")
+            val newImgUriBig = pair.first
+            val newImgUriLittle = pair.second
+            _imageLiveData.postValue(Pair(newImgUriBig.toString(), newImgUriLittle.toString()))
         }
     }
 
@@ -155,7 +157,8 @@ class RegistrationViewModel @Inject constructor() : ViewModel() {
 
     private fun validateImage(): Validation {
         return when {
-            _imageLiveData.value.isNullOrEmpty() -> Validation.EMPTY
+            (_imageLiveData.value?.first.isNullOrEmpty() &&
+                    _imageLiveData.value?.second.isNullOrEmpty()) -> Validation.EMPTY
             else -> Validation.VALID
         }
     }
@@ -201,7 +204,8 @@ class RegistrationViewModel @Inject constructor() : ViewModel() {
     private fun createDog(): Dog {
         return Dog(
             name = _nameLiveData.value!!,
-            image = _imageLiveData.value!!,
+            bigImage = _imageLiveData.value!!.first,
+            littleImage = _imageLiveData.value!!.second,
             age = _ageLiveData.value!!,
             sex = _sexLiveData.value!!,
             breed = _breedLiveData.value!!,

@@ -42,7 +42,7 @@ class AddPostFragment : Fragment() {
         viewModel.validationImageLiveData.observe(viewLifecycleOwner) { checkImageValidation(it) }
 
         viewModel.imagePostLiveData.observe(viewLifecycleOwner) {
-            loadImagePostFromUri(it)
+            loadImagePostFromUri(it.first)
         }
 
         viewModel.isSavedPostLiveData.observe(viewLifecycleOwner) {

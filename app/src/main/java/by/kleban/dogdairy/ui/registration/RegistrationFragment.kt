@@ -54,8 +54,8 @@ class RegistrationFragment : Fragment() {
             viewModel.registration()
         }
 
-        viewModel.imageLiveData.observe(viewLifecycleOwner) { uri ->
-            loadImageFromUri(uri)
+        viewModel.imageLiveData.observe(viewLifecycleOwner) { pair ->
+            loadImageFromUri(pair.first)
         }
 
         findNavController().currentBackStackEntry

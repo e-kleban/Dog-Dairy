@@ -36,7 +36,7 @@ class OnePostFragment : Fragment() {
 
         binding.onePostDescription.text = post.postDescription
         Picasso.get()
-            .load(post.postImage)
+            .load(post.postBigImage)
             .error(R.drawable.error_image)
             .into(binding.onePostImage)
     }

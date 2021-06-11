@@ -6,7 +6,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "table_post")
 data class DbPost(
     val dogCreatorId: Long,
-    val postImage: String,
+    val postBigImage: String,
+    val postLittleImage: String,
     val postDescription: String,
 ) {
     @PrimaryKey(autoGenerate = true)

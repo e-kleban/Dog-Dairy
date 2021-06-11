@@ -5,6 +5,7 @@ import java.io.Serializable
 
 data class Post(
     val dogCreatorId: Long,
-    val postImage: String,
+    val postBigImage: String,
+    val postLittleImage: String,
     val postDescription: String,
 ) : Serializable
