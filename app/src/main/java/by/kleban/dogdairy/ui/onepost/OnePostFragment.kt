@@ -10,8 +10,10 @@ import androidx.navigation.fragment.findNavController
 import by.kleban.dogdairy.R
 import by.kleban.dogdairy.databinding.FragmentOnePostBinding
 import by.kleban.dogdairy.entities.Post
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class OnePostFragment : Fragment() {
@@ -34,11 +36,23 @@ class OnePostFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        binding.onePostDescription.text = post.postDescription
+        binding.onePostDescription.text = post.description
         Picasso.get()
-            .load(post.postBigImage)
+            .load(post.thumbnail)
             .error(R.drawable.error_image)
-            .into(binding.onePostImage)
+            .into(binding.onePostImage, object : Callback {
+                override fun onSuccess() {
+                    Picasso.get()
+                        .load(post.image)
+                        .placeholder(binding.onePostImage.drawable)
+                        .error(R.drawable.error_image)
+                        .into(binding.onePostImage)
+                }
+
+                override fun onError(e: Exception?) {
+                    Timber.e(e)
+                }
+            })
     }
 
     companion object {

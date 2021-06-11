@@ -108,10 +108,9 @@ class RegistrationViewModel @Inject constructor() : ViewModel() {
 
     fun saveImageFile(uri: Uri) {
         ioScope.launch {
-            val pair = fileHelper.saveFileIntoAppsDir(uri, "avatar")
-            val newImgUriBig = pair.first
-            val newImgUriLittle = pair.second
-            _imageLiveData.postValue(Pair(newImgUriBig.toString(), newImgUriLittle.toString()))
+            val image = fileHelper.saveFileIntoAppsDir(uri, "avatar")
+            val thumb = fileHelper.createThumbnail(image, "avatar_thumb")
+            _imageLiveData.postValue(Pair(image.toString(), thumb.toString()))
         }
     }
 

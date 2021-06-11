@@ -55,10 +55,9 @@ class AddPostViewModel @Inject constructor(
 
     fun savePostImageFile(uri: Uri) {
         ioScope.launch {
-            val pair = fileHelper.saveFileIntoAppsDir(uri, "post")
-            val newImgUriBig = pair.first
-            val newImgUriLittle = pair.second
-            _imagePostLiveData.postValue(newImgUriBig.toString() to newImgUriLittle.toString())
+            val image = fileHelper.saveFileIntoAppsDir(uri, "post")
+            val thumb = fileHelper.createThumbnail(image, "post_thumb")
+            _imagePostLiveData.postValue(image.toString() to thumb.toString())
         }
     }
 
@@ -83,9 +82,9 @@ class AddPostViewModel @Inject constructor(
         val dogCreatorId = sharedPreferences.getLong(SharedConfig.SHARED_PREF_DOG_ID, 0)
         return Post(
             dogCreatorId = dogCreatorId,
-            postBigImage = _imagePostLiveData.value!!.first,
-            postLittleImage = _imagePostLiveData.value!!.second,
-            postDescription = _descriptionPostLiveData.value!!
+            image = _imagePostLiveData.value!!.first,
+            thumbnail = _imagePostLiveData.value!!.second,
+            description = _descriptionPostLiveData.value!!
         )
     }
 

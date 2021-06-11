@@ -10,9 +10,9 @@ class DogPostToDogMapper @Inject constructor() : Mapper<DogPageAdapter.Item.DogP
     override fun map(from: DogPageAdapter.Item.DogPost): Post {
         return Post(
             dogCreatorId = from.creatorId,
-            postBigImage = from.postBigImage,
-            postLittleImage = from.postLittleImage,
-            postDescription = from.postDescription
+            image = from.postBigImage,
+            thumbnail = from.postLittleImage,
+            description = from.postDescription
         )
     }
 }
