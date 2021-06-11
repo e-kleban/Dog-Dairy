@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kleban.dogdairy.R
@@ -21,7 +21,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class DogPageFragment : Fragment() {
 
-    private val viewModel: DogPageViewModel by hiltNavGraphViewModels(R.id.nav_graph)
+    private val viewModel: DogPageViewModel by viewModels()
 
     @Inject
     lateinit var dogPageAdapter: DogPageAdapter
@@ -37,8 +37,6 @@ class DogPageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        postponeEnterTransition()
-
         val recycler = binding.dogPageRecycler
         dogPageAdapter.postClickListener = DogPageAdapter.OnPostClickListener { onItemCLick(it) }
         val layoutManager = GridLayoutManager(requireContext(), 3)
@@ -49,7 +47,6 @@ class DogPageFragment : Fragment() {
         viewModel.dogWithPostsLiveData.observe(viewLifecycleOwner) {
             dogPageAdapter.setHeader(it.dog)
             dogPageAdapter.setPosts(it.posts)
-            startPostponedEnterTransition()
         }
 
         val toolBar = binding.topAppBarDogPage
@@ -58,7 +55,6 @@ class DogPageFragment : Fragment() {
             findNavController().navigate(R.id.from_dogPageFragment_to_addPostFragment)
             true
         }
-
         viewModel.getDogWithPosts()
     }
 

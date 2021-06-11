@@ -2,6 +2,7 @@ package by.kleban.dogdairy.ui.addpost
 
 import android.content.SharedPreferences
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -41,7 +42,7 @@ class AddPostViewModel @Inject constructor(
     val validationDescriptionLiveData: LiveData<Validation>
         get() = _validationDescriptionLiveData
 
-    private val _isSavedPostLiveData = MutableLiveData<Boolean>()
+    private val _isSavedPostLiveData = MutableLiveData<Boolean>(false)
     val isSavedPostLiveData: LiveData<Boolean>
         get() = _isSavedPostLiveData
 
@@ -55,10 +56,8 @@ class AddPostViewModel @Inject constructor(
 
     fun savePostImageFile(uri: Uri) {
         ioScope.launch {
-            val newImgUriPair = fileHelper.saveFileIntoAppsDir(uri, "post")
-            val newImgUriBig = newImgUriPair.first
-            val newImgUriLittle = newImgUriPair.second
-            _imagePostLiveData.postValue(newImgUriLittle.toString())
+            val newImgUri = fileHelper.saveFileIntoAppsDir(uri, "post")
+            _imagePostLiveData.postValue(newImgUri.toString())
         }
     }
 
@@ -100,6 +99,11 @@ class AddPostViewModel @Inject constructor(
             _descriptionPostLiveData.value.isNullOrEmpty() -> Validation.EMPTY
             else -> Validation.VALID
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        Log.e(TAG, "onCleared: ")
     }
 
     companion object {

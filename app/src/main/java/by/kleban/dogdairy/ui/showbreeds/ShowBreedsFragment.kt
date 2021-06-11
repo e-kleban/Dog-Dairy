@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kleban.dogdairy.R
@@ -19,7 +19,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ShowBreedsFragment : Fragment() {
 
-    private val viewModel: ShowBreedsViewModel by hiltNavGraphViewModels(R.id.nav_graph)
+    private val viewModel: ShowBreedsViewModel by viewModels()
 
     @Inject
     lateinit var showBreedAdapter: ShowBreedsAdapter

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
-import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kleban.dogdairy.R
 import by.kleban.dogdairy.databinding.FragmentAddPostBinding
@@ -21,7 +21,7 @@ class AddPostFragment : Fragment() {
     private var _binding: FragmentAddPostBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: AddPostViewModel by hiltNavGraphViewModels(R.id.nav_graph)
+    private val viewModel: AddPostViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentAddPostBinding.inflate(inflater, container, false)
@@ -47,7 +47,7 @@ class AddPostFragment : Fragment() {
 
         viewModel.isSavedPostLiveData.observe(viewLifecycleOwner) {
             if (it == true) {
-                findNavController().navigateUp()
+                findNavController().popBackStack()
             }
         }
     }

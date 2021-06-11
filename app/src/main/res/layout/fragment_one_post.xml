@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar_registration"
+            android:id="@+id/topAppBar_one_post"
             style="@style/Widget.MaterialComponents.Toolbar.Primary"
             android:layout_width="match_parent"
             app:navigationIcon="?homeAsUpIndicator"
