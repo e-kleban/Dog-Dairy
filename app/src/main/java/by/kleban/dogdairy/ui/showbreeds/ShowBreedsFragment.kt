@@ -7,22 +7,22 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kleban.dogdairy.R
 import by.kleban.dogdairy.databinding.ShowBreedsFragmentBinding
 import by.kleban.dogdairy.ui.showbreeds.adapter.ShowBreedsAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class ShowBreedsFragment : Fragment(), ShowBreedsAdapter.OnItemClickListener {
+class ShowBreedsFragment : Fragment() {
 
-    private val showBreedAdapter by lazy {
-        ShowBreedsAdapter(requireContext(), this)
-    }
+    private val viewModel: ShowBreedsViewModel by viewModels()
 
-    private val viewModel: ShowBreedsViewModel by hiltNavGraphViewModels(R.id.nav_graph)
+    @Inject
+    lateinit var showBreedAdapter: ShowBreedsAdapter
 
     private var _binding: ShowBreedsFragmentBinding? = null
     private val binding get() = _binding!!
@@ -40,6 +40,7 @@ class ShowBreedsFragment : Fragment(), ShowBreedsAdapter.OnItemClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         val recycler = binding.showRecycler
+        showBreedAdapter.breedClickListener = ShowBreedsAdapter.OnBreedClickListener { onBreedCLick(it) }
         recycler.layoutManager = LinearLayoutManager(requireContext())
         recycler.adapter = showBreedAdapter
 
@@ -84,7 +85,7 @@ class ShowBreedsFragment : Fragment(), ShowBreedsAdapter.OnItemClickListener {
         }
     }
 
-    override fun onItemCLick(breed: String) {
+    private fun onBreedCLick(breed: String) {
         findNavController()
             .previousBackStackEntry
             ?.savedStateHandle

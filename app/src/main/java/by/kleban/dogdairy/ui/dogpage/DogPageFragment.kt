@@ -1,27 +1,30 @@
 package by.kleban.dogdairy.ui.dogpage
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kleban.dogdairy.R
 import by.kleban.dogdairy.databinding.FragmentDogPageBinding
-import by.kleban.dogdairy.entities.SharedConfig
+import by.kleban.dogdairy.entities.Post
 import by.kleban.dogdairy.ui.dogpage.adapter.DogPageAdapter
 import by.kleban.dogdairy.ui.dogpage.adapter.DogSpanSizeLookup
+import by.kleban.dogdairy.ui.onepost.OnePostFragment
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class DogPageFragment : Fragment() {
 
-    private val viewModel: DogPageViewModel by hiltNavGraphViewModels(R.id.nav_graph)
+    private val viewModel: DogPageViewModel by viewModels()
 
-    private val prefs by lazy { requireActivity().getSharedPreferences(SharedConfig.NAME_SHARED_PREF, Context.MODE_PRIVATE) }
+    @Inject
+    lateinit var dogPageAdapter: DogPageAdapter
 
     private var _binding: FragmentDogPageBinding? = null
     private val binding get() = _binding!!
@@ -35,18 +38,15 @@ class DogPageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val recycler = binding.dogPageRecycler
-        val pageAdapter = DogPageAdapter(requireContext())
-
+        dogPageAdapter.postClickListener = DogPageAdapter.OnPostClickListener { onItemCLick(it) }
         val layoutManager = GridLayoutManager(requireContext(), 3)
-        recycler.adapter = pageAdapter
-        layoutManager.spanSizeLookup = DogSpanSizeLookup(pageAdapter, layoutManager.spanCount)
+        recycler.adapter = dogPageAdapter
+        layoutManager.spanSizeLookup = DogSpanSizeLookup(dogPageAdapter, layoutManager.spanCount)
         recycler.layoutManager = layoutManager
 
-        val id = prefs.getLong(SharedConfig.SHARED_PREF_DOG_ID, 0)
-        viewModel.getDogWithPosts(id)
         viewModel.dogWithPostsLiveData.observe(viewLifecycleOwner) {
-            pageAdapter.setHeader(it.dog)
-            pageAdapter.setPosts(it.posts)
+            dogPageAdapter.setHeader(it.dog)
+            dogPageAdapter.setPosts(it.posts)
         }
 
         val toolBar = binding.topAppBarDogPage
@@ -55,5 +55,12 @@ class DogPageFragment : Fragment() {
             findNavController().navigate(R.id.from_dogPageFragment_to_addPostFragment)
             true
         }
+        viewModel.getDogWithPosts()
+    }
+
+    private fun onItemCLick(post: Post) {
+        val bundlePost = bundleOf(OnePostFragment.ONE_POST to post)
+        findNavController()
+            .navigate(R.id.from_dogPageFragment_to_onePostFragment, bundlePost)
     }
 }

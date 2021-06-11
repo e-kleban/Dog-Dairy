@@ -13,12 +13,14 @@ import javax.inject.Inject
 class FileHelperImpl @Inject constructor(@ApplicationContext val context: Context) : FileHelper {
 
     override suspend fun saveFileIntoAppsDir(uri: Uri, name: String): URI {
+
         val originalFileUri = URI(uri.toString())
         val originalFileUriAndroid = Uri.parse(originalFileUri.toString())
         val dataDir = ContextCompat.getDataDir(context) ?: throw java.lang.Exception()
         val newFile = File(dataDir.path, "${name}_${UUID.randomUUID()}")
         val outputStream = newFile.outputStream()
         val inputStream = context.contentResolver.openInputStream(originalFileUriAndroid) ?: throw java.lang.Exception()
+
         try {
             inputStream.copyTo(outputStream)
         } catch (e: Exception) {

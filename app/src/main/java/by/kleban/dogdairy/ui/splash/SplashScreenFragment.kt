@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kleban.dogdairy.R
 import by.kleban.dogdairy.entities.Screen
@@ -15,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SplashScreenFragment : Fragment() {
 
-    private val viewModel: SplashScreenViewModel by hiltNavGraphViewModels(R.id.nav_graph)
+    private val viewModel: SplashScreenViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

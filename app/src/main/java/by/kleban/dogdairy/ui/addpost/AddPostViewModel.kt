@@ -2,6 +2,7 @@ package by.kleban.dogdairy.ui.addpost
 
 import android.content.SharedPreferences
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -41,7 +42,7 @@ class AddPostViewModel @Inject constructor(
     val validationDescriptionLiveData: LiveData<Validation>
         get() = _validationDescriptionLiveData
 
-    private val _isSavedPostLiveData = MutableLiveData<Boolean>()
+    private val _isSavedPostLiveData = MutableLiveData<Boolean>(false)
     val isSavedPostLiveData: LiveData<Boolean>
         get() = _isSavedPostLiveData
 
