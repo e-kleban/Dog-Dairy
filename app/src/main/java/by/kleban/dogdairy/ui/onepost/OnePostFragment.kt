@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.transition.TransitionInflater
 import by.kleban.dogdairy.R
 import by.kleban.dogdairy.databinding.FragmentOnePostBinding
 import by.kleban.dogdairy.entities.Post
