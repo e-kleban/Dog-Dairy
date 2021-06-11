@@ -55,8 +55,10 @@ class AddPostViewModel @Inject constructor(
 
     fun savePostImageFile(uri: Uri) {
         ioScope.launch {
-            val newImgUri = fileHelper.saveFileIntoAppsDir(uri, "post")
-            _imagePostLiveData.postValue(newImgUri.toString())
+            val newImgUriPair = fileHelper.saveFileIntoAppsDir(uri, "post")
+            val newImgUriBig = newImgUriPair.first
+            val newImgUriLittle = newImgUriPair.second
+            _imagePostLiveData.postValue(newImgUriLittle.toString())
         }
     }
 
