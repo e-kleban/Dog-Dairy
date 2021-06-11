@@ -29,7 +29,6 @@ class OnePostFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        postponeEnterTransition()
         val post = arguments?.getSerializable(ONE_POST) as Post
 
         binding.topAppBarRegistration.setNavigationOnClickListener {
@@ -40,15 +39,7 @@ class OnePostFragment : Fragment() {
         Picasso.get()
             .load(post.postImage)
             .error(R.drawable.error_image)
-            .into(binding.onePostImage, object : Callback {
-                override fun onSuccess() {
-                    startPostponedEnterTransition()
-                }
-
-                override fun onError(e: Exception?) {
-                    startPostponedEnterTransition()
-                }
-            })
+            .into(binding.onePostImage)
     }
 
     companion object {
