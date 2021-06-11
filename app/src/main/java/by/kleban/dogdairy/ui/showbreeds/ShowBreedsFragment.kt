@@ -14,15 +14,15 @@ import by.kleban.dogdairy.R
 import by.kleban.dogdairy.databinding.ShowBreedsFragmentBinding
 import by.kleban.dogdairy.ui.showbreeds.adapter.ShowBreedsAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class ShowBreedsFragment : Fragment(), ShowBreedsAdapter.OnItemClickListener {
-
-    private val showBreedAdapter by lazy {
-        ShowBreedsAdapter(requireContext(), this)
-    }
+class ShowBreedsFragment : Fragment() {
 
     private val viewModel: ShowBreedsViewModel by hiltNavGraphViewModels(R.id.nav_graph)
+
+    @Inject
+    lateinit var showBreedAdapter: ShowBreedsAdapter
 
     private var _binding: ShowBreedsFragmentBinding? = null
     private val binding get() = _binding!!
@@ -40,6 +40,7 @@ class ShowBreedsFragment : Fragment(), ShowBreedsAdapter.OnItemClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         val recycler = binding.showRecycler
+        showBreedAdapter.breedClickListener = ShowBreedsAdapter.OnBreedClickListener { onBreedCLick(it) }
         recycler.layoutManager = LinearLayoutManager(requireContext())
         recycler.adapter = showBreedAdapter
 
@@ -84,7 +85,7 @@ class ShowBreedsFragment : Fragment(), ShowBreedsAdapter.OnItemClickListener {
         }
     }
 
-    override fun onItemCLick(breed: String) {
+    private fun onBreedCLick(breed: String) {
         findNavController()
             .previousBackStackEntry
             ?.savedStateHandle

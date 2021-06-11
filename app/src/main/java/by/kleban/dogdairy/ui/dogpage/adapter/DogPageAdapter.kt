@@ -6,26 +6,28 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.RecyclerView
 import by.kleban.dogdairy.R
+import by.kleban.dogdairy.core.Mapper
 import by.kleban.dogdairy.core.picasso.transformation.CircleTransform
 import by.kleban.dogdairy.entities.Dog
 import by.kleban.dogdairy.entities.Post
 import by.kleban.dogdairy.entities.Sex
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
 
-class DogPageAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class DogPageAdapter @Inject constructor(
+    @ApplicationContext private val context: Context,
+    private val headerMapper: Mapper<Dog, Item.Header>,
+    private val postMapper: Mapper<Post, Item.DogPost>,
+    private val dogPostMapper: Mapper<Item.DogPost, Post>
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val items = mutableListOf<Item>()
-    private val headerMapper = DogToItemHeaderMapper()
-    private val postMapper = PostToDogPostMapper()
-
-//    fun submitData(list: List<Item>) {
-//        items.clear()
-//        items.addAll(list)
-//        notifyDataSetChanged()
-//    }
+    var postClickListener: OnPostClickListener? = null
 
     fun setHeader(dog: Dog) {
         items.removeIf { it is Item.Header }
@@ -81,6 +83,10 @@ class DogPageAdapter(private val context: Context) : RecyclerView.Adapter<Recycl
         }
     }
 
+    fun interface OnPostClickListener {
+        fun onItemCLick(post: Post)
+    }
+
     inner class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         private val dogImage: ImageView = view.findViewById(R.id.page_dog_image)
@@ -110,19 +116,32 @@ class DogPageAdapter(private val context: Context) : RecyclerView.Adapter<Recycl
         }
     }
 
-    inner class PostViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class PostViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
 
         private val postImage: ImageView = view.findViewById(R.id.item_post_image)
+
+        init {
+            view.setOnClickListener(this)
+        }
 
         fun bind(position: Int) {
             val recyclerViewModel = items[position] as Item.DogPost
             Picasso.get()
                 .load(recyclerViewModel.postImage)
-                .resize(1000, 1000)
+                .resize(560, 560)
                 .onlyScaleDown()
                 .centerCrop()
                 .error(R.drawable.error_image)
                 .into(postImage)
+        }
+
+        override fun onClick(v: View?) {
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                val dogPost = items[position] as Item.DogPost
+                val post = dogPostMapper.map(dogPost)
+                postClickListener?.onItemCLick(post)
+            }
         }
     }
 
@@ -139,6 +158,7 @@ class DogPageAdapter(private val context: Context) : RecyclerView.Adapter<Recycl
         class DogPost(
             val postImage: String,
             val postDescription: String,
+            val creatorId: Long
         ) : Item()
     }
 

@@ -10,14 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import by.kleban.dogdairy.R
 import by.kleban.dogdairy.entities.DogBreed
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
 
-class ShowBreedsAdapter(
-    private val context: Context,
-    private val listener: OnItemClickListener
+class ShowBreedsAdapter @Inject constructor(
+    @ApplicationContext private val context: Context,
 ) : RecyclerView.Adapter<ShowBreedsAdapter.ShowBreedsViewHolder>() {
 
     private val breedList = mutableListOf<DogBreed>()
+    var breedClickListener: OnBreedClickListener? = null
 
     fun setItems(list: List<DogBreed>) {
         breedList.clear()
@@ -59,7 +61,7 @@ class ShowBreedsAdapter(
         return breedList.size
     }
 
-    interface OnItemClickListener {
+    fun interface OnBreedClickListener {
         fun onItemCLick(breed: String)
     }
 
@@ -79,7 +81,7 @@ class ShowBreedsAdapter(
         override fun onClick(v: View?) {
             val position = adapterPosition
             if (position != RecyclerView.NO_POSITION) {
-                listener.onItemCLick(
+                breedClickListener?.onItemCLick(
                     breedList[position].breed
                 )
             }

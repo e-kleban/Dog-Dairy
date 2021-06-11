@@ -1,6 +1,5 @@
 package by.kleban.dogdairy.ui.addpost
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,6 @@ import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
 import by.kleban.dogdairy.R
 import by.kleban.dogdairy.databinding.FragmentAddPostBinding
-import by.kleban.dogdairy.entities.SharedConfig
 import by.kleban.dogdairy.entities.Validation
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint

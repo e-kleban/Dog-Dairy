@@ -1,5 +1,6 @@
 package by.kleban.dogdairy.repositories
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import by.kleban.dogdairy.database.DogDb
 import by.kleban.dogdairy.entities.*
@@ -26,12 +27,13 @@ class DogRepositoryImpl @Inject constructor(
         }
     }
 
+    @SuppressLint("ApplySharedPref")
     override suspend fun saveDog(dog: Dog) {
         val dogId = dogDb.saveDog(dog)
         sharedPreferences.edit()
             .clear()
             .putLong(SharedConfig.SHARED_PREF_DOG_ID, dogId)
-            .apply()
+            .commit()
     }
 
     override suspend fun getDogWithPosts(): DogWithPosts {
