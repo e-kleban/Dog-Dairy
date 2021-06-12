@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import by.kleban.dogdairy.R
 import by.kleban.dogdairy.core.Mapper
@@ -22,7 +23,8 @@ class DogPageAdapter @Inject constructor(
     @ApplicationContext private val context: Context,
     private val headerMapper: Mapper<Dog, Item.Header>,
     private val postMapper: Mapper<Post, Item.DogPost>,
-    private val dogPostMapper: Mapper<Item.DogPost, Post>
+    private val dogPostMapper: Mapper<Item.DogPost, Post>,
+    private val fragment: Fragment
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val items = mutableListOf<Item>()
@@ -83,7 +85,7 @@ class DogPageAdapter @Inject constructor(
     }
 
     fun interface OnPostClickListener {
-        fun onItemCLick(post: Post, extra: Pair<ImageView,String>)
+        fun onItemCLick(post: Post, extra: Pair<ImageView, String>)
     }
 
     inner class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -124,10 +126,10 @@ class DogPageAdapter @Inject constructor(
         }
 
         fun bind(position: Int) {
-            val recyclerViewModel = items[position] as Item.DogPost
-            postImage.transitionName=recyclerViewModel.postLittleImage
+            val dogPost = items[position] as Item.DogPost
+            postImage.transitionName = dogPost.thumbnail
             Picasso.get()
-                .load(recyclerViewModel.postLittleImage)
+                .load(dogPost.thumbnail)
                 .error(R.drawable.error_image)
                 .into(postImage)
         }
@@ -154,8 +156,8 @@ class DogPageAdapter @Inject constructor(
         ) : Item()
 
         class DogPost(
-            val postBigImage: String,
-            val postLittleImage: String,
+            val image: String,
+            val thumbnail: String,
             val postDescription: String,
             val creatorId: Long
         ) : Item()

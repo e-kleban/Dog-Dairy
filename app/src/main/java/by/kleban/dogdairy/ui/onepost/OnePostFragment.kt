@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.transition.Transition
 import androidx.transition.TransitionInflater
+import androidx.transition.TransitionListenerAdapter
 import by.kleban.dogdairy.R
 import by.kleban.dogdairy.databinding.FragmentOnePostBinding
 import by.kleban.dogdairy.entities.Post
@@ -25,22 +26,31 @@ class OnePostFragment : Fragment() {
     private var _binding: FragmentOnePostBinding? = null
     private val binding get() = _binding!!
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val transitionInflater = TransitionInflater.from(requireContext())
+        sharedElementEnterTransition = transitionInflater.inflateTransition(R.transition.post)
+            .apply { addListener(createTransitionListener()) }
+        sharedElementReturnTransition = transitionInflater.inflateTransition(R.transition.post)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentOnePostBinding.inflate(inflater, container, false)
-        postponeEnterTransition()
-        sharedElementEnterTransition=TransitionInflater.from(requireContext()).inflateTransition(R.transition.enter)
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val post = arguments?.getSerializable(ONE_POST) as Post
-        binding.onePostImage.transitionName=post.thumbnail
+        postponeEnterTransition()
 
         binding.topAppBarOnePost.setNavigationOnClickListener {
-            findNavController().navigateUp()
+            findNavController().popBackStack()
         }
 
+        val post = arguments?.getSerializable(ONE_POST) as Post
+        binding.onePostImage.transitionName = post.thumbnail
         binding.onePostDescription.text = post.description
         Picasso.get()
             .load(post.thumbnail)
@@ -48,11 +58,6 @@ class OnePostFragment : Fragment() {
             .into(binding.onePostImage, object : Callback {
                 override fun onSuccess() {
                     startPostponedEnterTransition()
-                    Picasso.get()
-                        .load(post.image)
-                        .placeholder(binding.onePostImage.drawable)
-                        .error(R.drawable.error_image)
-                        .into(binding.onePostImage)
                 }
 
                 override fun onError(e: Exception?) {
@@ -60,6 +65,19 @@ class OnePostFragment : Fragment() {
                     Timber.e(e)
                 }
             })
+    }
+
+    private fun createTransitionListener(): Transition.TransitionListener {
+        return object : TransitionListenerAdapter() {
+            override fun onTransitionEnd(transition: Transition) {
+                val post = arguments?.getSerializable(ONE_POST) as Post
+                Picasso.get()
+                    .load(post.image)
+                    .placeholder(binding.onePostImage.drawable)
+                    .error(R.drawable.error_image)
+                    .into(binding.onePostImage)
+            }
+        }
     }
 
     companion object {
