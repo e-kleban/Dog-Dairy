@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.transition.Transition
+import androidx.transition.TransitionInflater
 import by.kleban.dogdairy.R
 import by.kleban.dogdairy.databinding.FragmentOnePostBinding
 import by.kleban.dogdairy.entities.Post
@@ -25,12 +27,15 @@ class OnePostFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentOnePostBinding.inflate(inflater, container, false)
+        postponeEnterTransition()
+        sharedElementEnterTransition=TransitionInflater.from(requireContext()).inflateTransition(R.transition.enter)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val post = arguments?.getSerializable(ONE_POST) as Post
+        binding.onePostImage.transitionName=post.thumbnail
 
         binding.topAppBarOnePost.setNavigationOnClickListener {
             findNavController().navigateUp()
@@ -42,6 +47,7 @@ class OnePostFragment : Fragment() {
             .error(R.drawable.error_image)
             .into(binding.onePostImage, object : Callback {
                 override fun onSuccess() {
+                    startPostponedEnterTransition()
                     Picasso.get()
                         .load(post.image)
                         .placeholder(binding.onePostImage.drawable)
@@ -50,6 +56,7 @@ class OnePostFragment : Fragment() {
                 }
 
                 override fun onError(e: Exception?) {
+                    startPostponedEnterTransition()
                     Timber.e(e)
                 }
             })

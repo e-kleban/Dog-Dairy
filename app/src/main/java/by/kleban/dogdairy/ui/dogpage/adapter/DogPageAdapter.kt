@@ -83,7 +83,7 @@ class DogPageAdapter @Inject constructor(
     }
 
     fun interface OnPostClickListener {
-        fun onItemCLick(post: Post)
+        fun onItemCLick(post: Post, extra: Pair<ImageView,String>)
     }
 
     inner class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -125,6 +125,7 @@ class DogPageAdapter @Inject constructor(
 
         fun bind(position: Int) {
             val recyclerViewModel = items[position] as Item.DogPost
+            postImage.transitionName=recyclerViewModel.postLittleImage
             Picasso.get()
                 .load(recyclerViewModel.postLittleImage)
                 .error(R.drawable.error_image)
@@ -136,7 +137,7 @@ class DogPageAdapter @Inject constructor(
             if (position != RecyclerView.NO_POSITION) {
                 val dogPost = items[position] as Item.DogPost
                 val post = dogPostMapper.map(dogPost)
-                postClickListener?.onItemCLick(post)
+                postClickListener?.onItemCLick(post, postImage to postImage.transitionName)
             }
         }
     }
