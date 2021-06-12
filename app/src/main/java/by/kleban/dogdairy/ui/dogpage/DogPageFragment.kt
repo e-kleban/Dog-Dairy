@@ -4,11 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.os.bundleOf
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.transition.TransitionInflater
 import by.kleban.dogdairy.R
 import by.kleban.dogdairy.databinding.FragmentDogPageBinding
 import by.kleban.dogdairy.entities.Post
@@ -37,8 +41,11 @@ class DogPageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        postponeEnterTransition()
+        (view.parent as? ViewGroup)?.doOnPreDraw { startPostponedEnterTransition() }
+
         val recycler = binding.dogPageRecycler
-        dogPageAdapter.postClickListener = DogPageAdapter.OnPostClickListener { onItemCLick(it) }
+        dogPageAdapter.postClickListener = DogPageAdapter.OnPostClickListener { post, extra -> onItemCLick(post, extra) }
         val layoutManager = GridLayoutManager(requireContext(), 3)
         recycler.adapter = dogPageAdapter
         layoutManager.spanSizeLookup = DogSpanSizeLookup(dogPageAdapter, layoutManager.spanCount)
@@ -58,9 +65,10 @@ class DogPageFragment : Fragment() {
         viewModel.getDogWithPosts()
     }
 
-    private fun onItemCLick(post: Post) {
+    private fun onItemCLick(post: Post, extra: Pair<ImageView, String>) {
         val bundlePost = bundleOf(OnePostFragment.ONE_POST to post)
+        val extras = FragmentNavigatorExtras(extra)
         findNavController()
-            .navigate(R.id.from_dogPageFragment_to_onePostFragment, bundlePost)
+            .navigate(R.id.from_dogPageFragment_to_onePostFragment, bundlePost, null, extras)
     }
 }

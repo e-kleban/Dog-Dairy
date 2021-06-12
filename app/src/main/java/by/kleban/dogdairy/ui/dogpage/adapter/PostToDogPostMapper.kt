@@ -11,8 +11,8 @@ class PostToDogPostMapper @Inject constructor() : Mapper<Post, DogPageAdapter.It
         return DogPageAdapter.Item.DogPost(
             postDescription = from.description,
             creatorId = from.dogCreatorId,
-            postBigImage = from.image,
-            postLittleImage = from.thumbnail
+            image = from.image,
+            thumbnail = from.thumbnail
         )
     }
 }
