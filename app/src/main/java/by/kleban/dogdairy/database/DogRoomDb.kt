@@ -38,4 +38,9 @@ class DogRoomDb @Inject constructor(
         dogDao.savePost(postMapper.map(post))
     }
 
+    override suspend fun updatePost(post: Post) {
+        val dbPost = postMapper.map(post)
+        dogDao.updatePost(dbPost.postDescription, dbPost.postBigImage)
+    }
+
 }

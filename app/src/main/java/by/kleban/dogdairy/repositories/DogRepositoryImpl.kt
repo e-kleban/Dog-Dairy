@@ -44,4 +44,8 @@ class DogRepositoryImpl @Inject constructor(
     override suspend fun savePost(post: Post) {
         dogDb.savePost(post)
     }
+
+    override suspend fun updatePost(post: Post) {
+        dogDb.updatePost(post)
+    }
 }

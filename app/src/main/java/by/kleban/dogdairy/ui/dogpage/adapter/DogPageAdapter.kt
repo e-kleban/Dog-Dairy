@@ -24,7 +24,6 @@ class DogPageAdapter @Inject constructor(
     private val headerMapper: Mapper<Dog, Item.Header>,
     private val postMapper: Mapper<Post, Item.DogPost>,
     private val dogPostMapper: Mapper<Item.DogPost, Post>,
-    private val fragment: Fragment
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val items = mutableListOf<Item>()

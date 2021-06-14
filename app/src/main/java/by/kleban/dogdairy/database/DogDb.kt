@@ -15,4 +15,6 @@ interface DogDb {
 
     suspend fun savePost(post: Post)
 
+    suspend fun updatePost(post: Post)
+
 }
