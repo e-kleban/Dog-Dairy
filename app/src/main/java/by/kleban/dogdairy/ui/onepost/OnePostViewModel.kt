@@ -52,13 +52,11 @@ class OnePostViewModel @Inject constructor(
         if (validationDescription == Validation.VALID) {
             ioScope.launch {
                 try {
-                    val oldPost = _postLiveData.value
-                    if (oldPost != null && description != null) {
-                        val post = Post(oldPost.dogCreatorId, oldPost.image, oldPost.thumbnail, description!!)
-                        repository.updatePost(post)
-                        withContext(Dispatchers.Main) {
-                            savedStateHandle.set(OnePostFragment.ONE_POST, post)
-                        }
+                    val oldPost = _postLiveData.value!!
+                    val newPost = oldPost.copy(description = description!!)
+                    repository.updatePost(newPost)
+                    withContext(Dispatchers.Main) {
+                        savedStateHandle.set(OnePostFragment.ONE_POST, newPost)
                     }
                 } catch (e: Exception) {
                     Timber.e(e)

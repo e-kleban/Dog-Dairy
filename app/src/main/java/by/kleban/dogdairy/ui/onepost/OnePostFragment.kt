@@ -28,7 +28,6 @@ class OnePostFragment : Fragment() {
     private var _binding: FragmentOnePostBinding? = null
     private val binding get() = _binding!!
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -45,73 +44,83 @@ class OnePostFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        postponeEnterTransition()
 
-        binding.topAppBarOnePost.setNavigationOnClickListener {
-            findNavController().popBackStack()
-        }
+        postponeEnterTransition()
         initToolbar()
+
         binding.btnOnePostSaveChanges.setOnClickListener {
             viewModel.updatePost()
         }
-        binding.btnOnePostCancelChanges.setOnClickListener {
-            showEdit(true)
-            binding.edtDesc.setText(binding.onePostDescription.text)
-            viewModel.updateDescription(null)
-        }
-        binding.edtDesc.doAfterTextChanged { text -> viewModel.updateDescription(text.toString() ?: "") }
 
-        viewModel.postLiveData.observe(viewLifecycleOwner) { setPost(it) }
+        binding.btnOnePostCancelChanges.setOnClickListener {
+            setEditMode(false)
+            binding.edtDesc.setText(binding.onePostDescription.text)
+        }
+
+        binding.edtDesc.doAfterTextChanged { text -> viewModel.updateDescription(text?.toString()) }
+
+        viewModel.postLiveData.observe(viewLifecycleOwner) {
+            setEditMode(false)
+            setPost(it)
+        }
         viewModel.validationDescriptionLiveData.observe(viewLifecycleOwner) {
             checkValidationDescription(it)
         }
     }
 
     private fun initToolbar() {
-        val toolbar = binding.topAppBarOnePost
-        val editPostItem = toolbar.menu.findItem(R.id.dog_page_edit_post)
+        binding.topAppBarOnePost.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
+        val editPostItem = binding.topAppBarOnePost
+            .menu
+            .findItem(R.id.dog_page_edit_post)
+
         editPostItem.setOnMenuItemClickListener {
-            showEdit(false)
+            setEditMode(true)
             binding.txtOnePostEditDesc.visibility = View.VISIBLE
             true
         }
     }
 
     private fun setPost(it: Post) {
-        Timber.d(it.toString())
-        binding.onePostImage.transitionName = it.thumbnail
-        binding.onePostDescription.text = it.description
-        binding.edtDesc.setText(it.description)
-        showEdit(true)
-        Picasso.get()
-            .load(it.thumbnail)
-            .error(R.drawable.error_image)
-            .into(binding.onePostImage, object : Callback {
-                override fun onSuccess() {
-                    startPostponedEnterTransition()
-                }
+        binding.apply {
+            onePostImage.transitionName = it.thumbnail
+            onePostDescription.text = it.description
+            edtDesc.setText(it.description)
 
-                override fun onError(e: Exception?) {
-                    startPostponedEnterTransition()
-                    Timber.e(e)
-                }
-            })
+            Picasso.get()
+                .load(it.thumbnail)
+                .error(R.drawable.error_image)
+                .into(onePostImage, object : Callback {
+                    override fun onSuccess() {
+                        startPostponedEnterTransition()
+                    }
+
+                    override fun onError(e: Exception?) {
+                        startPostponedEnterTransition()
+                        Timber.e(e)
+                    }
+                })
+        }
     }
 
-    private fun showEdit(isShow: Boolean) {
-        if (isShow) {
-            binding.onePostDescription.visibility = View.VISIBLE
-            binding.btnOnePostSaveChanges.visibility = View.GONE
-            binding.txtOnePostEditDesc.visibility = View.GONE
-            binding.btnOnePostCancelChanges.visibility = View.GONE
+    private fun setEditMode(inEdit: Boolean) {
+        if (inEdit) {
+            binding.apply {
+                onePostDescription.visibility = View.GONE
+                btnOnePostSaveChanges.visibility = View.VISIBLE
+                btnOnePostCancelChanges.visibility = View.VISIBLE
+                txtOnePostEditDesc.visibility = View.VISIBLE
+            }
+        } else {
+            binding.apply {
+                onePostDescription.visibility = View.VISIBLE
+                btnOnePostSaveChanges.visibility = View.GONE
+                txtOnePostEditDesc.visibility = View.GONE
+                btnOnePostCancelChanges.visibility = View.GONE
+            }
         }
-        else{
-            binding.onePostDescription.visibility = View.GONE
-            binding.btnOnePostSaveChanges.visibility = View.VISIBLE
-            binding.btnOnePostCancelChanges.visibility = View.VISIBLE
-            binding.txtOnePostEditDesc.visibility = View.VISIBLE
-        }
-
     }
 
     private fun checkValidationDescription(validation: Validation) {
@@ -122,6 +131,7 @@ class OnePostFragment : Fragment() {
             }
             else -> {
                 binding.txtOnePostEditDesc.isErrorEnabled = false
+                binding.txtOnePostEditDesc.error = ""
             }
         }
     }
@@ -141,6 +151,5 @@ class OnePostFragment : Fragment() {
 
     companion object {
         const val ONE_POST = "one post"
-
     }
 }
