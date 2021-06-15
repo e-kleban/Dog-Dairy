@@ -42,4 +42,6 @@ interface DogDao {
     @Query("UPDATE table_post SET postDescription=:desc WHERE postBigImage=:postBidImage")
     suspend fun updatePost(desc:String, postBidImage: String)
 
+    @Query("DELETE FROM table_post WHERE postBigImage=:postBidImage")
+    suspend fun deletePost(postBidImage: String)
 }

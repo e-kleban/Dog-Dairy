@@ -43,4 +43,7 @@ class DogRoomDb @Inject constructor(
         dogDao.updatePost(dbPost.postDescription, dbPost.postBigImage)
     }
 
+    override suspend fun deletePost(postBidImage: String) {
+        dogDao.deletePost(postBidImage)
+    }
 }
