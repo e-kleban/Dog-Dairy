@@ -13,8 +13,8 @@ class DogToItemHeaderMapper @Inject constructor() : Mapper<Dog, DogPageAdapter.I
             breed = from.breed,
             description = from.description,
             sex = from.sex,
-            image = from.bigImage,
-            thumbnail = from.littleImage
+            image = from.image,
+            thumbnail = from.thumbnail
         )
     }
 }

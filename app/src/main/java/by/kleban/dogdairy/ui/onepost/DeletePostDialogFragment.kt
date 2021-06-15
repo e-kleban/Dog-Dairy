@@ -1,8 +1,8 @@
 package by.kleban.dogdairy.ui.onepost
 
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import by.kleban.dogdairy.R
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -15,24 +15,17 @@ class DeletePostDialogFragment @Inject constructor() : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Do you really want to delete post?")
-            .setPositiveButton("Delete", null)
+            .setTitle(R.string.delete_dialog_title)
+            .setPositiveButton((R.string.delete)) { _, _ ->
+                onClickButtonListener?.onClickPositiveButton()
+                dismiss()
+            }
             .setNeutralButton(R.string.cancel, null)
             .create()
     }
 
     fun interface OnClickButtonListener {
         fun onClickPositiveButton()
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        val alert = dialog as AlertDialog
-        alert.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-            onClickButtonListener?.onClickPositiveButton()
-            dismiss()
-        }
     }
 
     companion object {

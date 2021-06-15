@@ -40,10 +40,10 @@ class DogRoomDb @Inject constructor(
 
     override suspend fun updatePost(post: Post) {
         val dbPost = postMapper.map(post)
-        dogDao.updatePost(dbPost.postDescription, dbPost.postBigImage)
+        dogDao.updatePost(dbPost.description, dbPost.image)
     }
 
-    override suspend fun deletePost(postBidImage: String) {
-        dogDao.deletePost(postBidImage)
+    override suspend fun deletePost(image: String) {
+        dogDao.deletePost(image)
     }
 }

@@ -39,9 +39,9 @@ interface DogDao {
     @Query("SELECT * FROM table_post")
     suspend fun getAllPosts(): List<DbPost>
 
-    @Query("UPDATE table_post SET postDescription=:desc WHERE postBigImage=:postBidImage")
-    suspend fun updatePost(desc:String, postBidImage: String)
+    @Query("UPDATE table_post SET description=:desc WHERE image=:image")
+    suspend fun updatePost(desc:String, image: String)
 
-    @Query("DELETE FROM table_post WHERE postBigImage=:postBidImage")
-    suspend fun deletePost(postBidImage: String)
+    @Query("DELETE FROM table_post WHERE image=:image")
+    suspend fun deletePost(image: String)
 }

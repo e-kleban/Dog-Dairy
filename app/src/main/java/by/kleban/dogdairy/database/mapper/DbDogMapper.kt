@@ -16,8 +16,8 @@ class DbDogMapper @Inject constructor() : Mapper<DbDog, Dog> {
             breed = from.breed,
             description = from.description,
             sex = Sex.values()[from.sex],
-            bigImage = from.bigImage,
-            littleImage = from.littleImage
+            image = from.image,
+            thumbnail = from.thumbnail
         )
     }
 }
