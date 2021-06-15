@@ -1,7 +1,6 @@
 package by.kleban.dogdairy.ui.onepost
 
 import android.app.Dialog
-import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import by.kleban.dogdairy.R

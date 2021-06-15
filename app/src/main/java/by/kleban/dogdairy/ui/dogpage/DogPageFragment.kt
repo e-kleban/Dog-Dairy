@@ -12,7 +12,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.transition.TransitionInflater
 import by.kleban.dogdairy.R
 import by.kleban.dogdairy.databinding.FragmentDogPageBinding
 import by.kleban.dogdairy.entities.Post
