@@ -23,4 +23,7 @@
     <string name="editing_description">editing description</string>
     <string name="save_changes">save changes</string>
     <string name="cancel">cancel</string>
+    <string name="delete_post">Delete post</string>
+    <string name="delete_dialog_title">Do you really want to delete post?</string>
+    <string name="delete">Delete</string>
 </resources>

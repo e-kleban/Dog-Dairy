@@ -19,4 +19,6 @@ interface DogRepository {
     suspend fun savePost(post: Post)
 
     suspend fun updatePost(post: Post)
+
+    suspend fun deletePost(image: String)
 }

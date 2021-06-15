@@ -157,7 +157,7 @@ class DogPageAdapter @Inject constructor(
         class DogPost(
             val image: String,
             val thumbnail: String,
-            val postDescription: String,
+            val description: String,
             val creatorId: Long
         ) : Item()
     }

@@ -12,7 +12,7 @@ class DogPostToDogMapper @Inject constructor() : Mapper<DogPageAdapter.Item.DogP
             dogCreatorId = from.creatorId,
             image = from.image,
             thumbnail = from.thumbnail,
-            description = from.postDescription
+            description = from.description
         )
     }
 }

@@ -203,8 +203,8 @@ class RegistrationViewModel @Inject constructor() : ViewModel() {
     private fun createDog(): Dog {
         return Dog(
             name = _nameLiveData.value!!,
-            bigImage = _imageLiveData.value!!.first,
-            littleImage = _imageLiveData.value!!.second,
+            image = _imageLiveData.value!!.first,
+            thumbnail = _imageLiveData.value!!.second,
             age = _ageLiveData.value!!,
             sex = _sexLiveData.value!!,
             breed = _breedLiveData.value!!,

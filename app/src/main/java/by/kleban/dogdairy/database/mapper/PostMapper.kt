@@ -11,9 +11,9 @@ class PostMapper @Inject constructor() : Mapper<Post, DbPost> {
     override fun map(from: Post): DbPost {
         return DbPost(
             dogCreatorId = from.dogCreatorId,
-            postDescription = from.description,
-            postBigImage = from.image,
-            postLittleImage = from.thumbnail
+            description = from.description,
+            image = from.image,
+            thumbnail = from.thumbnail
         )
     }
 }

@@ -48,4 +48,8 @@ class DogRepositoryImpl @Inject constructor(
     override suspend fun updatePost(post: Post) {
         dogDb.updatePost(post)
     }
+
+    override suspend fun deletePost(image: String) {
+        dogDb.deletePost(image)
+    }
 }

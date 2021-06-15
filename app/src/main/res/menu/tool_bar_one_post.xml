@@ -3,9 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/dog_page_edit_post"
+        android:id="@+id/one_post_edit_post"
         android:icon="@drawable/ic_baseline_edit_24"
         android:title="@string/add_post"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/one_post_delete_post"
+        android:icon="@drawable/ic_outline_delete_24"
+        android:title="@string/delete_post"
+        app:showAsAction="ifRoom"/>
 
 </menu>
