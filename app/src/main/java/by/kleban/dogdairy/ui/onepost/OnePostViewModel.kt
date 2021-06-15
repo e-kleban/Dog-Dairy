@@ -65,7 +65,7 @@ class OnePostViewModel @Inject constructor(
         }
     }
 
-    fun deletePost(){
+    fun deletePost() {
         ioScope.launch {
             repository.deletePost(_postLiveData.value?.image!!)
         }
