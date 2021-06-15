@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -15,8 +15,9 @@
             android:id="@+id/topAppBar_one_post"
             style="@style/Widget.MaterialComponents.Toolbar.Primary"
             android:layout_width="match_parent"
-            app:navigationIcon="?homeAsUpIndicator"
             android:layout_height="?attr/actionBarSize"
+            app:menu="@menu/tool_bar_one_post_edit"
+            app:navigationIcon="?homeAsUpIndicator"
             app:title="Post" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -34,25 +35,70 @@
                 android:id="@+id/one_post_image"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_margin="16dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_margin="16dp"
-                tools:src="@drawable/test_dolka"/>
+                tools:src="@drawable/test_dolka" />
 
             <TextView
                 android:id="@+id/one_post_description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                tools:text="Hello, I am very kind dog"
-                android:textColor="?android:textColorPrimary"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/one_post_image"
                 android:layout_margin="16dp"
-                android:textSize="16sp"/>
+                android:textColor="?android:textColorPrimary"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/one_post_image"
+                tools:text="Hello, I am very kind dog" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txt_one_post_edit_desc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/editing_description"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/btn_one_post_save_changes"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/one_post_image"
+                app:layout_constraintVertical_bias="0">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textNoSuggestions"
+                    android:textColor="?android:textColorPrimary" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btn_one_post_save_changes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/save_changes"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btn_one_post_cancel_changes" />
+
+            <Button
+                android:id="@+id/btn_one_post_cancel_changes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/cancel"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btn_one_post_save_changes"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

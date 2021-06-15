@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -13,6 +14,7 @@ import androidx.transition.TransitionListenerAdapter
 import by.kleban.dogdairy.R
 import by.kleban.dogdairy.databinding.FragmentOnePostBinding
 import by.kleban.dogdairy.entities.Post
+import by.kleban.dogdairy.entities.Validation
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,34 +39,101 @@ class OnePostFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentOnePostBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        postponeEnterTransition()
 
+        postponeEnterTransition()
+        initToolbar()
+
+        binding.btnOnePostSaveChanges.setOnClickListener {
+            viewModel.updatePost()
+        }
+
+        binding.btnOnePostCancelChanges.setOnClickListener {
+            setEditMode(false)
+            binding.edtDesc.setText(binding.onePostDescription.text)
+        }
+
+        binding.edtDesc.doAfterTextChanged { text -> viewModel.updateDescription(text?.toString()) }
+
+        viewModel.postLiveData.observe(viewLifecycleOwner) {
+            setEditMode(false)
+            setPost(it)
+        }
+        viewModel.validationDescriptionLiveData.observe(viewLifecycleOwner) {
+            checkValidationDescription(it)
+        }
+    }
+
+    private fun initToolbar() {
         binding.topAppBarOnePost.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
+        val editPostItem = binding.topAppBarOnePost
+            .menu
+            .findItem(R.id.dog_page_edit_post)
 
-        val post = arguments?.getSerializable(ONE_POST) as Post
-        binding.onePostImage.transitionName = post.thumbnail
-        binding.onePostDescription.text = post.description
-        Picasso.get()
-            .load(post.thumbnail)
-            .error(R.drawable.error_image)
-            .into(binding.onePostImage, object : Callback {
-                override fun onSuccess() {
-                    startPostponedEnterTransition()
-                }
+        editPostItem.setOnMenuItemClickListener {
+            setEditMode(true)
+            binding.txtOnePostEditDesc.visibility = View.VISIBLE
+            true
+        }
+    }
 
-                override fun onError(e: Exception?) {
-                    startPostponedEnterTransition()
-                    Timber.e(e)
-                }
-            })
+    private fun setPost(it: Post) {
+        binding.apply {
+            onePostImage.transitionName = it.thumbnail
+            onePostDescription.text = it.description
+            edtDesc.setText(it.description)
+
+            Picasso.get()
+                .load(it.thumbnail)
+                .error(R.drawable.error_image)
+                .into(onePostImage, object : Callback {
+                    override fun onSuccess() {
+                        startPostponedEnterTransition()
+                    }
+
+                    override fun onError(e: Exception?) {
+                        startPostponedEnterTransition()
+                        Timber.e(e)
+                    }
+                })
+        }
+    }
+
+    private fun setEditMode(inEdit: Boolean) {
+        if (inEdit) {
+            binding.apply {
+                onePostDescription.visibility = View.GONE
+                btnOnePostSaveChanges.visibility = View.VISIBLE
+                btnOnePostCancelChanges.visibility = View.VISIBLE
+                txtOnePostEditDesc.visibility = View.VISIBLE
+            }
+        } else {
+            binding.apply {
+                onePostDescription.visibility = View.VISIBLE
+                btnOnePostSaveChanges.visibility = View.GONE
+                txtOnePostEditDesc.visibility = View.GONE
+                btnOnePostCancelChanges.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun checkValidationDescription(validation: Validation) {
+        when (validation) {
+            Validation.EMPTY -> {
+                binding.txtOnePostEditDesc.isErrorEnabled = true
+                binding.txtOnePostEditDesc.error = "Field can not be empty!"
+            }
+            else -> {
+                binding.txtOnePostEditDesc.isErrorEnabled = false
+                binding.txtOnePostEditDesc.error = ""
+            }
+        }
     }
 
     private fun createTransitionListener(): Transition.TransitionListener {
@@ -82,6 +151,5 @@ class OnePostFragment : Fragment() {
 
     companion object {
         const val ONE_POST = "one post"
-
     }
 }

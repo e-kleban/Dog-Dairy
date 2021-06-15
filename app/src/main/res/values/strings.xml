@@ -19,4 +19,8 @@
     <string name="dog_page_age">%1$d years</string>
     <string name="dog_age">%1$d years</string>
     <string name="add_post">Add post</string>
+    <string name="edit_post">Edit post</string>
+    <string name="editing_description">editing description</string>
+    <string name="save_changes">save changes</string>
+    <string name="cancel">cancel</string>
 </resources>
