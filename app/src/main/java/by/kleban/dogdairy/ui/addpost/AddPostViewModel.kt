@@ -14,6 +14,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -71,9 +72,13 @@ class AddPostViewModel @Inject constructor(
         ) {
             ioScope.launch {
                 val post = createPost()
-                _newPostLiveData.postValue(post)
-                repository.savePost(post)
-                _isSavedPostLiveData.postValue(true)
+                try {
+                    _newPostLiveData.postValue(post)
+                    repository.savePost(post)
+                    _isSavedPostLiveData.postValue(true)
+                } catch (e: Exception) {
+                    Timber.e(e)
+                }
             }
         }
     }

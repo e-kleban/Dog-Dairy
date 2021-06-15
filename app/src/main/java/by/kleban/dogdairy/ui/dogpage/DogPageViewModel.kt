@@ -9,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,7 +26,11 @@ class DogPageViewModel @Inject constructor() : ViewModel() {
 
     fun getDogWithPosts() {
         ioScope.launch {
-            _dogWithPostsLiveData.postValue(repository.getDogWithPosts())
+            try {
+                _dogWithPostsLiveData.postValue(repository.getDogWithPosts())
+            } catch (e: Exception) {
+                Timber.e(e)
+            }
         }
     }
 }
