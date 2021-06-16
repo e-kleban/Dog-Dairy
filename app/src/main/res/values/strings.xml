@@ -26,4 +26,6 @@
     <string name="delete_post">Delete post</string>
     <string name="delete_dialog_title">Do you really want to delete post?</string>
     <string name="delete">Delete</string>
+    <string name="profile">Profile</string>
+    <string name="open_profile">open profile</string>
 </resources>

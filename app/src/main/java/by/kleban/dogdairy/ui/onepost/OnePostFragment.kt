@@ -78,11 +78,11 @@ class OnePostFragment : Fragment() {
         }
         val editPostItem = binding.topAppBarOnePost
             .menu
-            .findItem(R.id.one_post_edit_post)
+            .findItem(R.id.item_menu_one_post_edit_post)
 
         val deletePostItem = binding.topAppBarOnePost
             .menu
-            .findItem(R.id.one_post_delete_post)
+            .findItem(R.id.item_menu_one_post_delete_post)
 
         editPostItem.setOnMenuItemClickListener {
             setEditMode(true)
