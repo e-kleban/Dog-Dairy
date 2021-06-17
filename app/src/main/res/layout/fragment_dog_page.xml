@@ -16,8 +16,8 @@
             android:id="@+id/topAppBar_dog_page"
             style="@style/Widget.MaterialComponents.Toolbar.Primary"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
             app:menu="@menu/tool_bar_dog_page"
+            android:layout_height="?attr/actionBarSize"
             app:title="Dog page" />
 
     </com.google.android.material.appbar.AppBarLayout>

@@ -67,7 +67,7 @@ class ShowBreedsFragment : Fragment() {
 
     private fun setupSearchView() {
         val toolbar = binding.topAppBarBreed
-        val searchItem = toolbar.menu.findItem(R.id.item_menu_search)
+        val searchItem = toolbar.menu.findItem(R.id.search)
         val searchView: SearchView = searchItem?.actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {

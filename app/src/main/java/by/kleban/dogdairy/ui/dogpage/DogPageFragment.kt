@@ -50,26 +50,18 @@ class DogPageFragment : Fragment() {
         layoutManager.spanSizeLookup = DogSpanSizeLookup(dogPageAdapter, layoutManager.spanCount)
         recycler.layoutManager = layoutManager
 
-        initToolBar()
-        viewModel.getDogWithPosts()
         viewModel.dogWithPostsLiveData.observe(viewLifecycleOwner) {
             dogPageAdapter.setHeader(it.dog)
             dogPageAdapter.setPosts(it.posts)
         }
-    }
 
-    private fun initToolBar() {
         val toolBar = binding.topAppBarDogPage
-        val addPostItem = toolBar.menu.findItem(R.id.item_menu_dog_page_add_post)
-        val profileItem = toolBar.menu.findItem(R.id.item_menu_dog_page_profile)
-        profileItem.setOnMenuItemClickListener {
-            findNavController().navigate(R.id.from_dogPageFragment_to_profileFragment)
-            true
-        }
+        val addPostItem = toolBar.menu.findItem(R.id.dog_page_add_post)
         addPostItem.setOnMenuItemClickListener {
             findNavController().navigate(R.id.from_dogPageFragment_to_addPostFragment)
             true
         }
+        viewModel.getDogWithPosts()
     }
 
     private fun onItemCLick(post: Post, extra: Pair<ImageView, String>) {
