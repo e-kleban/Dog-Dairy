@@ -48,11 +48,11 @@ class ProfileFragment : Fragment() {
             txtProfileAge.text = requireContext().getString(R.string.profile_age, dog.age)
             txtProfileBreed.text = requireContext().getString(R.string.profile_breed, dog.breed)
             txtProfileDescription.text = dog.description
-            if (dog.sex == Sex.FEMALE) {
-                imgProfileSex.setImageResource(R.drawable.ic_sex_female)
-            } else if (dog.sex == Sex.MALE) {
-                imgProfileSex.setImageResource(R.drawable.ic_sex_male)
+            val idSex = when (dog.sex) {
+                Sex.FEMALE -> R.drawable.ic_sex_female
+                Sex.MALE -> R.drawable.ic_sex_male
             }
+            imgProfileSex.setImageResource(idSex)
             Picasso.get()
                 .load(dog.thumbnail)
                 .error(R.drawable.error_image)
