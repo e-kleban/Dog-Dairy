@@ -12,6 +12,6 @@
         android:id="@+id/item_menu_one_post_delete_post"
         android:icon="@drawable/ic_outline_delete_24"
         android:title="@string/delete_post"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
 
 </menu>

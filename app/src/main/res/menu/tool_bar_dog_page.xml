@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/item_menu_dog_page_profile"
-        android:icon="@drawable/ic_peekaboo_cute_dog_stroke_by_vexels"
+        android:icon="@drawable/ic_dog_24"
         android:title="@string/open_profile"
         app:showAsAction="ifRoom" />
 

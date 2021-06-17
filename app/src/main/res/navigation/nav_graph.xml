@@ -39,7 +39,7 @@
         android:id="@+id/showBreedsFragment"
         android:name="by.kleban.dogdairy.ui.showbreeds.ShowBreedsFragment"
         android:label="show_breeds_fragment"
-        tools:layout="@layout/show_breeds_fragment"/>
+        tools:layout="@layout/show_breeds_fragment" />
     <fragment
         android:id="@+id/dogPageFragment"
         android:name="by.kleban.dogdairy.ui.dogpage.DogPageFragment"
@@ -69,6 +69,6 @@
         android:id="@+id/profileFragment"
         android:name="by.kleban.dogdairy.ui.profile.ProfileFragment"
         android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile"/>
+        tools:layout="@layout/fragment_profile" />
 
 </navigation>
