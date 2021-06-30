@@ -36,4 +36,5 @@
     <string name="edit_age">Edit age</string>
     <string name="edit_breed">Edit breed</string>
     <string name="edit_description">Edit description</string>
+    <string name="edit_dog">Edit Dog</string>
 </resources>
