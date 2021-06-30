@@ -40,15 +40,15 @@ class RegistrationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.txtInputRegistrationBreed.setOnClickListener { findNavController().navigate(R.id.showShowBreedsFragment) }
-        binding.edtBreed.setOnClickListener { findNavController().navigate(R.id.showShowBreedsFragment) }
+        binding.inputBreed.setOnClickListener { findNavController().navigate(R.id.showShowBreedsFragment) }
         setupImagePicker()
 
         setRadioGroupOnCheckedChangeListener()
 
-        binding.edtName.doAfterTextChanged { name -> if (name != null) viewModel.saveName(name.toString()) }
-        binding.edtAge.doAfterTextChanged { age -> if (age != null) viewModel.saveAge(age.toString().toIntOrNull() ?: -1) }
-        binding.edtDescription.doAfterTextChanged { desc -> if (desc != null) viewModel.saveDescription(desc.toString()) }
-        binding.edtBreed.doAfterTextChanged { breed -> if (breed != null) viewModel.saveBreed(breed.toString()) }
+        binding.inputName.doAfterTextChanged { name -> if (name != null) viewModel.saveName(name.toString()) }
+        binding.inputAge.doAfterTextChanged { age -> if (age != null) viewModel.saveAge(age.toString().toIntOrNull() ?: -1) }
+        binding.inputDescription.doAfterTextChanged { desc -> if (desc != null) viewModel.saveDescription(desc.toString()) }
+        binding.inputBreed.doAfterTextChanged { breed -> if (breed != null) viewModel.saveBreed(breed.toString()) }
 
         binding.btnCreateDog.setOnClickListener {
             viewModel.registration()
@@ -62,7 +62,7 @@ class RegistrationFragment : Fragment() {
             ?.savedStateHandle
             ?.getLiveData<String>(EXTRA_BREED)
             ?.observe(viewLifecycleOwner) { result ->
-                binding.edtBreed.setText(result)
+                binding.inputBreed.setText(result)
             }
         viewModel.validationNameLiveData.observe(viewLifecycleOwner) { validation -> checkValidationName(validation) }
         viewModel.validationAgeLiveData.observe(viewLifecycleOwner) { validation -> checkValidationAge(validation) }
@@ -95,13 +95,13 @@ class RegistrationFragment : Fragment() {
                 .load(uri)
                 .error(R.drawable.error_image)
                 .transform(CircleTransform())
-                .into(binding.imgRegistration)
+                .into(binding.imgRegistrationDog)
             binding.txtImgLabelRegistration.visibility = View.GONE
         }
     }
 
     private fun setRadioGroupOnCheckedChangeListener() {
-        binding.radioGroupSexRegistration.setOnCheckedChangeListener { _, checkedId ->
+        binding.radioGroupSexRegistrationDog.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.radio_btn_female -> viewModel.saveSex(Sex.FEMALE)
                 R.id.radio_btn_male -> viewModel.saveSex(Sex.MALE)
@@ -119,7 +119,7 @@ class RegistrationFragment : Fragment() {
         binding.txtImgLabelRegistration.setOnClickListener {
             pickImages.launch(arrayOf("image/*"))
         }
-        binding.imgRegistration.setOnClickListener {
+        binding.imgRegistrationDog.setOnClickListener {
             pickImages.launch(arrayOf("image/*"))
         }
     }
@@ -151,10 +151,10 @@ class RegistrationFragment : Fragment() {
     private fun checkValidationSex(validation: Validation) {
         when (validation) {
             Validation.EMPTY -> {
-                binding.txtChooseRegistrationSex.setTextColor(resources.getColor(R.color.red, null))
+                binding.txtInputRegistrationSex.setTextColor(resources.getColor(R.color.red, null))
             }
             else -> {
-                binding.txtChooseRegistrationSex.setTextColor(resources.getColor(R.color.black, null))
+                binding.txtInputRegistrationSex.setTextColor(resources.getColor(R.color.black, null))
             }
         }
     }

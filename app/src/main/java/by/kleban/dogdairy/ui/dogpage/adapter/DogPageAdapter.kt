@@ -96,19 +96,19 @@ class DogPageAdapter @Inject constructor(
         private val dogDescription: TextView = view.findViewById(R.id.page_dog_description)
 
         fun bind(position: Int) {
-            val recyclerViewModel = items[position] as Item.Header
-            dogName.text = recyclerViewModel.name
-            dogAge.text = context.getString(R.string.dog_age, recyclerViewModel.age)
-            dogBreed.text = recyclerViewModel.breed
-            dogDescription.text = recyclerViewModel.description
-            if (recyclerViewModel.sex == Sex.FEMALE) {
-                dogSex.setImageResource(R.drawable.ic_sex_female)
-            } else if (recyclerViewModel.sex == Sex.MALE) {
-                dogSex.setImageResource(R.drawable.ic_sex_male)
+            val dog = items[position] as Item.Header
+            dogName.text = dog.name
+            dogAge.text = context.getString(R.string.dog_age, dog.age)
+            dogBreed.text = dog.breed
+            dogDescription.text = dog.description
+            val idSex = when (dog.sex) {
+                Sex.FEMALE -> R.drawable.ic_sex_female
+                Sex.MALE -> R.drawable.ic_sex_male
             }
+                dogSex.setImageResource(idSex)
             Picasso.get().cancelRequest(dogImage)
             Picasso.get()
-                .load(recyclerViewModel.thumbnail)
+                .load(dog.thumbnail)
                 .error(R.drawable.error_image)
                 .transform(CircleTransform())
                 .into(dogImage)

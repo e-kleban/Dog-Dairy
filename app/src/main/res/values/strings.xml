@@ -31,4 +31,10 @@
     <string name="profile_age">I am %1$d years old</string>
     <string name="profile_name">My name is %1$s</string>
     <string name="profile_breed">My breed is %1$s</string>
+    <string name="change_image">change image</string>
+    <string name="edit_name">Edit name</string>
+    <string name="edit_age">Edit age</string>
+    <string name="edit_breed">Edit breed</string>
+    <string name="edit_description">Edit description</string>
+    <string name="edit_dog">Edit Dog</string>
 </resources>
