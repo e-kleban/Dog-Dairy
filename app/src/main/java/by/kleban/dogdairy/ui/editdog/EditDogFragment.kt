@@ -45,6 +45,7 @@ class EditDogFragment : Fragment() {
             viewModel.saveChangedDog()
         }
         setupImagePicker()
+        initToolbar()
 
         binding.edtDogName.doAfterTextChanged { name -> if (name != null) viewModel.changeName(name.toString()) }
         binding.edtDogAge.doAfterTextChanged { age -> if (age != null) viewModel.changeAge(age.toString().toInt()) }
@@ -67,6 +68,34 @@ class EditDogFragment : Fragment() {
         viewModel.dogLiveData.observe(viewLifecycleOwner) { setDog(it) }
         viewModel.dogIsSavedLiveData.observe(viewLifecycleOwner) {
             if (it == true) findNavController().navigateUp()
+        }
+        viewModel.dogIsDeleteLiveData.observe(viewLifecycleOwner) {
+            if (it == true) findNavController().navigate(R.id.from_editDogFragment_to_registrationFragment)
+        }
+    }
+
+    private fun initToolbar() {
+        val toolBar = binding.topAppBarEditDog
+        val itemDeleteDog = toolBar.menu.findItem(R.id.item_menu_edit_dog_delete)
+        itemDeleteDog.setOnMenuItemClickListener {
+            val deleteDogDialogFragment = DeleteDogDialogFragment()
+            deleteDogDialogFragment.show(
+                requireActivity().supportFragmentManager,
+                DeleteDogDialogFragment.TAG
+            )
+            setOnClickDeleteDog(deleteDogDialogFragment)
+            true
+        }
+        val deleteDogDialogFragment = requireActivity().supportFragmentManager
+            .findFragmentByTag(DeleteDogDialogFragment.TAG) as DeleteDogDialogFragment?
+        if (deleteDogDialogFragment != null) {
+            setOnClickDeleteDog(deleteDogDialogFragment)
+        }
+    }
+
+    private fun setOnClickDeleteDog(deleteDogDialogFragment: DeleteDogDialogFragment) {
+        deleteDogDialogFragment.onClickButtonListener = DeleteDogDialogFragment.OnClickButtonListener {
+            viewModel.deleteDog()
         }
     }
 

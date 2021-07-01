@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import by.kleban.dogdairy.entities.Dog
+import by.kleban.dogdairy.entities.Post
 import by.kleban.dogdairy.entities.Sex
 import by.kleban.dogdairy.entities.file_helper.FileHelper
 import by.kleban.dogdairy.repositories.DogRepository
@@ -32,7 +33,12 @@ class EditDogViewModel @Inject constructor(
     val dogIsSavedLiveData: LiveData<Boolean>
         get() = _dogIsSavedLiveData
 
+    private val _dogIsDeleteLiveData = MutableLiveData(false)
+    val dogIsDeleteLiveData: LiveData<Boolean>
+        get() = _dogIsDeleteLiveData
+
     lateinit var originalDog: Dog
+    private val originalPosts = mutableListOf<Post>()
 
     init {
         getDogWithPosts()
@@ -97,13 +103,32 @@ class EditDogViewModel @Inject constructor(
         }
     }
 
+    fun deleteDog() {
+        ioScope.launch {
+            try {
+                fileHelper.deleteImages(originalDog.image)
+                fileHelper.deleteImages(originalDog.thumbnail)
+                originalPosts.forEach {
+                    fileHelper.deleteImages(it.image)
+                    fileHelper.deleteImages(it.thumbnail)
+                }
+                repository.deleteDogWithPosts()
+                _dogIsDeleteLiveData.postValue(true)
+            } catch (e: Exception) {
+                Timber.e(e)
+            }
+        }
+    }
+
     fun getDogWithPosts() {
         ioScope.launch {
             try {
-                val dog = repository.getDogWithPosts().dog
+                val dogWithPosts = repository.getDogWithPosts()
+                val dog = dogWithPosts.dog
                 _dogLiveData.postValue(dog)
                 withContext(Dispatchers.Main) {
                     originalDog = dog
+                    originalPosts.addAll(dogWithPosts.posts)
                 }
             } catch (e: Exception) {
                 Timber.e(e)
@@ -113,8 +138,12 @@ class EditDogViewModel @Inject constructor(
 
     private fun deleteOldImages() {
         ioScope.launch {
-            fileHelper.deleteImages(originalDog.image)
-            fileHelper.deleteImages(originalDog.thumbnail)
+            try {
+                fileHelper.deleteImages(originalDog.image)
+                fileHelper.deleteImages(originalDog.thumbnail)
+            } catch (e: Exception) {
+                Timber.e(e)
+            }
         }
     }
 

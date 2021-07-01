@@ -57,4 +57,13 @@ class DogRepositoryImpl @Inject constructor(
     override suspend fun deletePost(image: String) {
         dogDb.deletePost(image)
     }
+
+    @SuppressLint("ApplySharedPref")
+    override suspend fun deleteDogWithPosts() {
+        val id = sharedPreferences.getLong(SharedConfig.SHARED_PREF_DOG_ID, 0)
+        sharedPreferences.edit()
+            .clear()
+            .commit()
+        dogDb.deleteDogWithPosts(id)
+    }
 }

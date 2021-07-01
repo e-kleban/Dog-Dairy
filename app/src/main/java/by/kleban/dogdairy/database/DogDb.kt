@@ -20,4 +20,6 @@ interface DogDb {
     suspend fun updatePost(post: Post)
 
     suspend fun deletePost(image: String)
+
+    suspend fun deleteDogWithPosts(id: Long)
 }

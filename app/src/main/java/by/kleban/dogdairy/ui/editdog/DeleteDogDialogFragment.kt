@@ -1,4 +1,4 @@
-package by.kleban.dogdairy.ui.onepost
+package by.kleban.dogdairy.ui.editdog
 
 import android.app.Dialog
 import android.os.Bundle
@@ -7,13 +7,13 @@ import by.kleban.dogdairy.R
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
-class DeletePostDialogFragment : DialogFragment() {
+class DeleteDogDialogFragment : DialogFragment() {
 
     var onClickButtonListener: OnClickButtonListener? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.delete_post_dialog_title)
+            .setTitle(R.string.delete_dog_dialog_title)
             .setPositiveButton((R.string.delete)) { _, _ ->
                 onClickButtonListener?.onClickPositiveButton()
                 dismiss()
@@ -27,6 +27,6 @@ class DeletePostDialogFragment : DialogFragment() {
     }
 
     companion object {
-        const val TAG = "DeletePostDialogFragment"
+        const val TAG = "DeleteDogDialogFragment"
     }
 }

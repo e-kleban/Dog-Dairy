@@ -23,4 +23,6 @@ interface DogRepository {
     suspend fun updatePost(post: Post)
 
     suspend fun deletePost(image: String)
+
+    suspend fun deleteDogWithPosts()
 }
