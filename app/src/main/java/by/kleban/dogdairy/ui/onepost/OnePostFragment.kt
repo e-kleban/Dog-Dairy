@@ -19,13 +19,9 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class OnePostFragment : Fragment() {
-
-    @Inject
-    lateinit var deletePostDialogFragment: DeletePostDialogFragment
 
     private val viewModel: OnePostViewModel by viewModels()
 
@@ -91,15 +87,25 @@ class OnePostFragment : Fragment() {
         }
 
         deletePostItem.setOnMenuItemClickListener {
+            val deletePostDialogFragment = DeletePostDialogFragment()
             deletePostDialogFragment.show(
                 requireActivity().supportFragmentManager,
                 DeletePostDialogFragment.TAG
             )
-            deletePostDialogFragment.onClickButtonListener = DeletePostDialogFragment.OnClickButtonListener {
-                viewModel.deletePost()
-                findNavController().navigateUp()
-            }
+            setOnClickDeletePost(deletePostDialogFragment)
             true
+        }
+        val deletePostDialogFragment = requireActivity().supportFragmentManager
+            .findFragmentByTag(DeletePostDialogFragment.TAG) as DeletePostDialogFragment?
+        if (deletePostDialogFragment != null) {
+            setOnClickDeletePost(deletePostDialogFragment)
+        }
+    }
+
+    private fun setOnClickDeletePost(deletePostDialogFragment: DeletePostDialogFragment) {
+        deletePostDialogFragment.onClickButtonListener = DeletePostDialogFragment.OnClickButtonListener {
+            viewModel.deletePost()
+            findNavController().navigateUp()
         }
     }
 

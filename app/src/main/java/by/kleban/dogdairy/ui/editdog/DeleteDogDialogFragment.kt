@@ -5,10 +5,9 @@ import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import by.kleban.dogdairy.R
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import javax.inject.Inject
 
 
-class DeleteDogDialogFragment @Inject constructor():DialogFragment() {
+class DeleteDogDialogFragment : DialogFragment() {
 
     var onClickButtonListener: OnClickButtonListener? = null
 
