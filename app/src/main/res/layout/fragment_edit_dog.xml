@@ -16,6 +16,7 @@
             style="@style/Widget.MaterialComponents.Toolbar.Primary"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            app:menu="@menu/tool_bar_edit_dog"
             app:title="@string/edit_dog" />
 
     </com.google.android.material.appbar.AppBarLayout>

@@ -17,9 +17,13 @@ import by.kleban.dogdairy.entities.Sex
 import by.kleban.dogdairy.ui.showbreeds.ShowBreedsFragment
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class EditDogFragment : Fragment() {
+
+    @Inject
+    lateinit var deleteDogDialogFragment: DeleteDogDialogFragment
 
     private val viewModel: EditDogViewModel by viewModels()
 
@@ -67,6 +71,21 @@ class EditDogFragment : Fragment() {
         viewModel.dogLiveData.observe(viewLifecycleOwner) { setDog(it) }
         viewModel.dogIsSavedLiveData.observe(viewLifecycleOwner) {
             if (it == true) findNavController().navigateUp()
+        }
+
+        val toolBar = binding.topAppBarEditDog
+        val itemDeleteDog = toolBar.menu.findItem(R.id.item_menu_edit_dog_delete)
+        itemDeleteDog.setOnMenuItemClickListener {
+            deleteDogDialogFragment.show(
+                requireActivity().supportFragmentManager,
+                DeleteDogDialogFragment.TAG
+            )
+
+            deleteDogDialogFragment.onClickButtonListener = DeleteDogDialogFragment.OnClickButtonListener {
+                viewModel.deleteDog()
+                findNavController().navigate(R.id.from_editDogFragment_to_registrationFragment)
+            }
+            true
         }
     }
 

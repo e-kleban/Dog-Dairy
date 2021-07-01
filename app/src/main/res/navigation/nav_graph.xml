@@ -82,6 +82,9 @@
         <action
             android:id="@+id/from_editDogFragment_to_showBreedsFragment"
             app:destination="@id/showBreedsFragment" />
+        <action
+            android:id="@+id/from_editDogFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
     </fragment>
 
 </navigation>

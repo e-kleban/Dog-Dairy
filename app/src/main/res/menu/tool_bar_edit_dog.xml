@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/item_menu_edit_dog_delete"
+        android:icon="@drawable/ic_outline_delete_24"
+        android:title="@string/delete_dog"
+        app:showAsAction="ifRoom" />
+
+</menu>
