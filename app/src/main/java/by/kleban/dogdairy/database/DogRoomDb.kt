@@ -29,6 +29,12 @@ class DogRoomDb @Inject constructor(
         return dogDao.saveDog(dogDb)
     }
 
+    override suspend fun updateDog(dog: Dog, id: Long) {
+        val dogDb = dogMapper.map(dog)
+        dogDb.id = id
+        dogDao.updateDog(dogDb)
+    }
+
     override suspend fun getDogWithPosts(id: Long): DogWithPosts {
         val dbDogWithPosts = dogDao.getDogWithPosts(id)
         return dbDogWithPostsMapper.map(dbDogWithPosts)

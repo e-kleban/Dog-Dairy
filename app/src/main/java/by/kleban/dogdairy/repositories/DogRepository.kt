@@ -14,6 +14,8 @@ interface DogRepository {
 
     suspend fun saveDog(dog: Dog)
 
+    suspend fun updateDog(dog: Dog)
+
     suspend fun getDogWithPosts(): DogWithPosts
 
     suspend fun savePost(post: Post)

@@ -69,6 +69,19 @@
         android:id="@+id/profileFragment"
         android:name="by.kleban.dogdairy.ui.profile.ProfileFragment"
         android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/from_profileFragment_to_editDogFragment"
+            app:destination="@id/editDogFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editDogFragment"
+        android:name="by.kleban.dogdairy.ui.editdog.EditDogFragment"
+        android:label="EditDogFragment"
+        tools:layout="@layout/fragment_edit_dog">
+        <action
+            android:id="@+id/from_editDogFragment_to_showBreedsFragment"
+            app:destination="@id/showBreedsFragment" />
+    </fragment>
 
 </navigation>

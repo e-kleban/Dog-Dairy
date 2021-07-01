@@ -36,6 +36,11 @@ class DogRepositoryImpl @Inject constructor(
             .commit()
     }
 
+    override suspend fun updateDog(dog: Dog) {
+        val id = sharedPreferences.getLong(SharedConfig.SHARED_PREF_DOG_ID, 0)
+        dogDb.updateDog(dog, id)
+    }
+
     override suspend fun getDogWithPosts(): DogWithPosts {
         val dogId = sharedPreferences.getLong(SharedConfig.SHARED_PREF_DOG_ID, 0)
         return dogDb.getDogWithPosts(dogId)

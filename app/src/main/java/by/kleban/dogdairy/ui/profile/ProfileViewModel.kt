@@ -12,17 +12,15 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProfileViewModel @Inject constructor() : ViewModel() {
-
-    @Inject
-    lateinit var repository: DogRepository
+class ProfileViewModel @Inject constructor(
+    private val repository: DogRepository
+) : ViewModel() {
 
     private val ioScope = CoroutineScope(Dispatchers.IO)
 
     private val _dogWithPostsLiveData = MutableLiveData<DogWithPosts>()
     val dogWithPostsLiveData: LiveData<DogWithPosts>
         get() = _dogWithPostsLiveData
-
 
     fun getDogWithPosts() {
         ioScope.launch {
