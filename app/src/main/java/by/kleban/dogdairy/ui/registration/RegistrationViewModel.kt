@@ -13,6 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.net.URI
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,29 +27,15 @@ class RegistrationViewModel @Inject constructor() : ViewModel() {
     @Inject
     lateinit var repository: DogRepository
 
-    private val _nameLiveData = MutableLiveData<String>()
-    val nameLiveData: LiveData<String>
-        get() = _nameLiveData
-
-    private val _imageLiveData = MutableLiveData<Pair<String, String>>()
-    val imageLiveData: LiveData<Pair<String, String>>
+    private val _imageLiveData = MutableLiveData<Uri>()
+    val imageLiveData: LiveData<Uri>
         get() = _imageLiveData
 
+    private val _nameLiveData = MutableLiveData<String>()
     private val _ageLiveData = MutableLiveData<Int>()
-    val ageLiveData: LiveData<Int>
-        get() = _ageLiveData
-
     private val _descriptionLiveData = MutableLiveData<String>()
-    val descriptionLiveData: LiveData<String>
-        get() = _descriptionLiveData
-
     private val _sexLiveData = MutableLiveData<Sex>()
-    val sexLiveData: LiveData<Sex>
-        get() = _sexLiveData
-
     private val _breedLiveData = MutableLiveData<String>()
-    val breedLiveData: LiveData<String>
-        get() = _breedLiveData
 
     private val _validationNameLiveData = MutableLiveData<Validation>()
     val validationNameLiveData: LiveData<Validation>
@@ -106,12 +93,8 @@ class RegistrationViewModel @Inject constructor() : ViewModel() {
         _breedLiveData.value = breed
     }
 
-    fun saveImageFile(uri: Uri) {
-        ioScope.launch {
-            val image = fileHelper.saveFileIntoAppsDir(uri, "avatar")
-            val thumb = fileHelper.createThumbnail(image, "avatar_thumb")
-            _imageLiveData.postValue(Pair(image.toString(), thumb.toString()))
-        }
+    fun chooseImage(uri: Uri) {
+        _imageLiveData.value = uri
     }
 
     fun registration() {
@@ -155,9 +138,8 @@ class RegistrationViewModel @Inject constructor() : ViewModel() {
     }
 
     private fun validateImage(): Validation {
-        return when {
-            (_imageLiveData.value?.first.isNullOrEmpty() &&
-                    _imageLiveData.value?.second.isNullOrEmpty()) -> Validation.EMPTY
+        return when (_imageLiveData.value) {
+            null -> Validation.EMPTY
             else -> Validation.VALID
         }
     }
@@ -187,7 +169,9 @@ class RegistrationViewModel @Inject constructor() : ViewModel() {
             _isLoadingLiveData.value = true
             ioScope.launch {
                 try {
-                    repository.saveDog(createDog())
+                    val (image, thumb) = saveImageFiles()
+                    val dog = createDog(image, thumb)
+                    repository.saveDog(dog)
                     _registrationLiveData.postValue(true)
                     _isLoadingLiveData.postValue(false)
                 } catch (e: Exception) {
@@ -200,11 +184,17 @@ class RegistrationViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    private fun createDog(): Dog {
+    private suspend fun saveImageFiles(): Pair<URI, URI> {
+        val image = fileHelper.saveFileIntoAppsDir(_imageLiveData.value!!, "avatar")
+        val thumb = fileHelper.createThumbnail(image, "avatar_thumb")
+        return Pair(image, thumb)
+    }
+
+    private fun createDog(image: URI, thumb: URI): Dog {
         return Dog(
             name = _nameLiveData.value!!,
-            image = _imageLiveData.value!!.first,
-            thumbnail = _imageLiveData.value!!.second,
+            image = image.toString(),
+            thumbnail = thumb.toString(),
             age = _ageLiveData.value!!,
             sex = _sexLiveData.value!!,
             breed = _breedLiveData.value!!,

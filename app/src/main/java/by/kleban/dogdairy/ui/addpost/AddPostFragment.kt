@@ -1,5 +1,6 @@
 package by.kleban.dogdairy.ui.addpost
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -41,8 +42,8 @@ class AddPostFragment : Fragment() {
         viewModel.validationDescriptionLiveData.observe(viewLifecycleOwner) { checkValidationDescription(it) }
         viewModel.validationImageLiveData.observe(viewLifecycleOwner) { checkImageValidation(it) }
 
-        viewModel.imagePostLiveData.observe(viewLifecycleOwner) {
-            loadImagePostFromUri(it.first)
+        viewModel.imageLiveData.observe(viewLifecycleOwner) {
+            loadImagePostFromUri(it)
         }
 
         viewModel.isSavedPostLiveData.observe(viewLifecycleOwner) {
@@ -75,21 +76,19 @@ class AddPostFragment : Fragment() {
         }
     }
 
-    private fun loadImagePostFromUri(uri: String?) {
-        if (!uri.isNullOrEmpty()) {
-            Picasso.get()
-                .load(uri)
-                .error(R.drawable.error_image)
-                .into(binding.imageAddPost)
-            binding.btnAddPostChooseImage.visibility = View.GONE
-        }
+    private fun loadImagePostFromUri(uri: Uri) {
+        Picasso.get()
+            .load(uri)
+            .error(R.drawable.error_image)
+            .into(binding.imageAddPost)
+        binding.btnAddPostChooseImage.visibility = View.GONE
     }
 
     private fun setupImagePostPicker() {
 
         val pickImages = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
             if (uri != null) {
-                viewModel.savePostImageFile(uri)
+                viewModel.chooseImage(uri)
             }
         }
         binding.imageAddPost.setOnClickListener {

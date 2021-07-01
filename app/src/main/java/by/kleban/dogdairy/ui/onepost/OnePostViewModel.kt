@@ -6,6 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import by.kleban.dogdairy.entities.Post
 import by.kleban.dogdairy.entities.Validation
+import by.kleban.dogdairy.entities.file_helper.FileHelper
 import by.kleban.dogdairy.repositories.DogRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -19,6 +20,9 @@ import javax.inject.Inject
 class OnePostViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
+
+    @Inject
+    lateinit var fileHelper: FileHelper
 
     @Inject
     lateinit var repository: DogRepository
@@ -68,6 +72,8 @@ class OnePostViewModel @Inject constructor(
     fun deletePost() {
         ioScope.launch {
             try {
+                fileHelper.deleteImages(_postLiveData.value!!.image)
+                fileHelper.deleteImages(_postLiveData.value!!.thumbnail)
                 repository.deletePost(_postLiveData.value?.image!!)
             } catch (e: Exception) {
                 Timber.e(e)
