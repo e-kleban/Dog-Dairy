@@ -33,6 +33,10 @@ class EditDogViewModel @Inject constructor(
     val dogIsSavedLiveData: LiveData<Boolean>
         get() = _dogIsSavedLiveData
 
+    private val _dogIsDeleteLiveData = MutableLiveData(false)
+    val dogIsDeleteLiveData: LiveData<Boolean>
+        get() = _dogIsDeleteLiveData
+
     lateinit var originalDog: Dog
     private val originalPosts = mutableListOf<Post>()
 
@@ -101,14 +105,15 @@ class EditDogViewModel @Inject constructor(
 
     fun deleteDog() {
         ioScope.launch {
-            fileHelper.deleteImages(originalDog.image)
-            fileHelper.deleteImages(originalDog.thumbnail)
-            originalPosts.forEach {
-                fileHelper.deleteImages(it.image)
-                fileHelper.deleteImages(it.thumbnail)
-            }
             try {
+                fileHelper.deleteImages(originalDog.image)
+                fileHelper.deleteImages(originalDog.thumbnail)
+                originalPosts.forEach {
+                    fileHelper.deleteImages(it.image)
+                    fileHelper.deleteImages(it.thumbnail)
+                }
                 repository.deleteDogWithPosts()
+                _dogIsDeleteLiveData.postValue(true)
             } catch (e: Exception) {
                 Timber.e(e)
             }
@@ -133,8 +138,12 @@ class EditDogViewModel @Inject constructor(
 
     private fun deleteOldImages() {
         ioScope.launch {
-            fileHelper.deleteImages(originalDog.image)
-            fileHelper.deleteImages(originalDog.thumbnail)
+            try {
+                fileHelper.deleteImages(originalDog.image)
+                fileHelper.deleteImages(originalDog.thumbnail)
+            } catch (e: Exception) {
+                Timber.e(e)
+            }
         }
     }
 

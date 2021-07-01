@@ -69,6 +69,9 @@ class EditDogFragment : Fragment() {
         viewModel.dogIsSavedLiveData.observe(viewLifecycleOwner) {
             if (it == true) findNavController().navigateUp()
         }
+        viewModel.dogIsDeleteLiveData.observe(viewLifecycleOwner) {
+            if (it == true) findNavController().navigate(R.id.from_editDogFragment_to_registrationFragment)
+        }
     }
 
     private fun initToolbar() {
@@ -93,7 +96,6 @@ class EditDogFragment : Fragment() {
     private fun setOnClickDeleteDog(deleteDogDialogFragment: DeleteDogDialogFragment) {
         deleteDogDialogFragment.onClickButtonListener = DeleteDogDialogFragment.OnClickButtonListener {
             viewModel.deleteDog()
-            findNavController().navigate(R.id.from_editDogFragment_to_registrationFragment)
         }
     }
 
