@@ -49,4 +49,9 @@ class FileHelperImpl @Inject constructor(@ApplicationContext val context: Contex
         return thumbFile.toURI()
     }
 
+    override suspend fun deleteImages(imageUri: String) {
+        val uri = URI(imageUri)
+        File(uri).delete()
+    }
+
 }

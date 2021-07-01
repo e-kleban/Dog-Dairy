@@ -105,7 +105,7 @@ class DogPageAdapter @Inject constructor(
                 Sex.FEMALE -> R.drawable.ic_sex_female
                 Sex.MALE -> R.drawable.ic_sex_male
             }
-                dogSex.setImageResource(idSex)
+            dogSex.setImageResource(idSex)
             Picasso.get().cancelRequest(dogImage)
             Picasso.get()
                 .load(dog.thumbnail)

@@ -67,7 +67,7 @@
                 app:layout_constraintTop_toBottomOf="@id/img_edit_dog">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_name"
+                    android:id="@+id/edt_dog_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
@@ -88,7 +88,7 @@
                 app:layout_constraintTop_toBottomOf="@id/txt_edit_dog_name">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_age"
+                    android:id="@+id/edt_dog_age"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
@@ -152,7 +152,7 @@
                 app:layout_constraintTop_toBottomOf="@id/radio_group_sex_edit_dog">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_breed"
+                    android:id="@+id/edt_dog_breed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -176,7 +176,7 @@
                 app:layout_constraintTop_toBottomOf="@id/txt_edit_dog_breed">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_description"
+                    android:id="@+id/edt_dog_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lines="2"

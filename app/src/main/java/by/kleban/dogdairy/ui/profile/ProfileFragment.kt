@@ -26,6 +26,7 @@ class ProfileFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        viewModel.getDogWithPosts()
         return binding.root
     }
 
@@ -35,10 +36,19 @@ class ProfileFragment : Fragment() {
         binding.topAppBarProfile.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
+        initToolbar()
 
-        viewModel.getDogWithPosts()
         viewModel.dogWithPostsLiveData.observe(viewLifecycleOwner) {
             setDog(it.dog)
+        }
+    }
+
+    private fun initToolbar() {
+        val toolBar = binding.topAppBarProfile
+        val itemEditDog = toolBar.menu.findItem(R.id.item_menu_profile_edit_dog)
+        itemEditDog.setOnMenuItemClickListener {
+            findNavController().navigate(R.id.from_profileFragment_to_editDogFragment)
+            true
         }
     }
 

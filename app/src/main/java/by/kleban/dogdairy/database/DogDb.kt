@@ -11,6 +11,8 @@ interface DogDb {
 
     suspend fun saveDog(dog: Dog): Long
 
+    suspend fun updateDog(dog: Dog, id: Long)
+
     suspend fun getDogWithPosts(id: Long): DogWithPosts
 
     suspend fun savePost(post: Post)

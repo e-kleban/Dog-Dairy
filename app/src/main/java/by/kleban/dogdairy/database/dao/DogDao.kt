@@ -1,9 +1,6 @@
 package by.kleban.dogdairy.database.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Transaction
+import androidx.room.*
 import by.kleban.dogdairy.database.entities.DbDog
 import by.kleban.dogdairy.database.entities.DbDogWithPosts
 import by.kleban.dogdairy.database.entities.DbPost
@@ -16,6 +13,9 @@ interface DogDao {
 
     @Insert
     suspend fun saveDog(dogDb: DbDog): Long
+
+    @Update
+    suspend fun updateDog(dogDb: DbDog)
 
     @Transaction
     @Query("SELECT * FROM table_dog WHERE id= :id")
