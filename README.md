@@ -30,6 +30,7 @@ Libraries and frameworks
 * Picasso
 * Timber
 * Shared Preference
+* Firebase Crashlytics
 
 Technical details
 -----------------
