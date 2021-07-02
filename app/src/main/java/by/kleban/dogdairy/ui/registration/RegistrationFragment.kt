@@ -1,5 +1,6 @@
 package by.kleban.dogdairy.ui.registration
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -54,8 +55,8 @@ class RegistrationFragment : Fragment() {
             viewModel.registration()
         }
 
-        viewModel.imageLiveData.observe(viewLifecycleOwner) { pair ->
-            loadImageFromUri(pair.first)
+        viewModel.imageLiveData.observe(viewLifecycleOwner) {
+            loadImageFromUri(it)
         }
 
         findNavController().currentBackStackEntry
@@ -89,15 +90,13 @@ class RegistrationFragment : Fragment() {
         }
     }
 
-    private fun loadImageFromUri(uri: String?) {
-        if (!uri.isNullOrEmpty()) {
-            Picasso.get()
-                .load(uri)
-                .error(R.drawable.error_image)
-                .transform(CircleTransform())
-                .into(binding.imgRegistrationDog)
-            binding.txtImgLabelRegistration.visibility = View.GONE
-        }
+    private fun loadImageFromUri(uri: Uri) {
+        Picasso.get()
+            .load(uri)
+            .error(R.drawable.error_image)
+            .transform(CircleTransform())
+            .into(binding.imgRegistrationDog)
+        binding.txtImgLabelRegistration.visibility = View.GONE
     }
 
     private fun setRadioGroupOnCheckedChangeListener() {
@@ -113,7 +112,7 @@ class RegistrationFragment : Fragment() {
 
         val pickImages = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
             if (uri != null) {
-                viewModel.saveImageFile(uri)
+                viewModel.chooseImage(uri)
             }
         }
         binding.txtImgLabelRegistration.setOnClickListener {

@@ -15,6 +15,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.net.URI
 import javax.inject.Inject
 
 @HiltViewModel
@@ -42,24 +43,20 @@ class AddPostViewModel @Inject constructor(
     val validationDescriptionLiveData: LiveData<Validation>
         get() = _validationDescriptionLiveData
 
-    private val _isSavedPostLiveData = MutableLiveData<Boolean>(false)
+    private val _isSavedPostLiveData = MutableLiveData(false)
     val isSavedPostLiveData: LiveData<Boolean>
         get() = _isSavedPostLiveData
 
-    private val _newPostLiveData = MutableLiveData<Post>()
-    val newPostLiveData: LiveData<Post>
-        get() = _newPostLiveData
+    private val _imageLiveData = MutableLiveData<Uri>()
+    val imageLiveData: LiveData<Uri>
+        get() = _imageLiveData
 
     fun saveDescription(description: String) {
         _descriptionPostLiveData.value = description
     }
 
-    fun savePostImageFile(uri: Uri) {
-        ioScope.launch {
-            val image = fileHelper.saveFileIntoAppsDir(uri, "post")
-            val thumb = fileHelper.createThumbnail(image, "post_thumb")
-            _imagePostLiveData.postValue(image.toString() to thumb.toString())
-        }
+    fun chooseImage(uri: Uri) {
+        _imageLiveData.value = uri
     }
 
     fun addPost() {
@@ -70,11 +67,13 @@ class AddPostViewModel @Inject constructor(
         if (validateImage == Validation.VALID &&
             validateDescription == Validation.VALID
         ) {
+            val dogCreatorId = sharedPreferences.getLong(SharedConfig.SHARED_PREF_DOG_ID, 0)
             ioScope.launch {
-                val post = createPost()
+
                 try {
-                    _newPostLiveData.postValue(post)
-                    repository.savePost(post)
+                    val (image, thumb) = saveImages()
+                    val newPost = createPost(dogCreatorId, image, thumb)
+                    repository.savePost(newPost)
                     _isSavedPostLiveData.postValue(true)
                 } catch (e: Exception) {
                     Timber.e(e)
@@ -83,20 +82,24 @@ class AddPostViewModel @Inject constructor(
         }
     }
 
-    private fun createPost(): Post {
-        val dogCreatorId = sharedPreferences.getLong(SharedConfig.SHARED_PREF_DOG_ID, 0)
+    private fun createPost(dogCreatorId: Long, image: URI, thumb: URI): Post {
         return Post(
             dogCreatorId = dogCreatorId,
-            image = _imagePostLiveData.value!!.first,
-            thumbnail = _imagePostLiveData.value!!.second,
+            image = image.toString(),
+            thumbnail = thumb.toString(),
             description = _descriptionPostLiveData.value!!
         )
     }
 
+    private suspend fun saveImages(): Pair<URI, URI> {
+        val image = fileHelper.saveFileIntoAppsDir(_imageLiveData.value!!, "post")
+        val thumb = fileHelper.createThumbnail(image, "post_thumb")
+        return Pair(image, thumb)
+    }
+
     private fun validateImage(): Validation {
-        return when {
-            (_imagePostLiveData.value?.first.isNullOrEmpty() &&
-                    _imagePostLiveData.value?.second.isNullOrEmpty()) -> Validation.EMPTY
+        return when (_imageLiveData.value) {
+            null -> Validation.EMPTY
             else -> Validation.VALID
         }
     }
