@@ -85,7 +85,6 @@ class AddPostFragment : Fragment() {
     }
 
     private fun setupImagePostPicker() {
-
         val pickImages = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
             if (uri != null) {
                 viewModel.chooseImage(uri)
@@ -97,9 +96,5 @@ class AddPostFragment : Fragment() {
         binding.btnAddPostChooseImage.setOnClickListener {
             pickImages.launch(arrayOf("image/*"))
         }
-    }
-
-    companion object {
-        const val ADD_POST = "add post"
     }
 }

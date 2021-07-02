@@ -1,11 +1,12 @@
-package by.kleban.dogdairy.core.wokrmanager
+package by.kleban.dogdairy.workmanager
 
 import android.content.Context
 import androidx.core.app.NotificationManagerCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import by.kleban.dogdairy.core.notification.NotificationHelper
+import by.kleban.dogdairy.helper.NotificationHelper
+import by.kleban.dogdairy.helper.NotificationHelperImpl
 import by.kleban.dogdairy.repositories.DogFactsRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -28,8 +29,8 @@ class LoadWorker @AssistedInject constructor(
                 val builder = notificationHelper.createNotification(dogFact, appContext)
                 with(NotificationManagerCompat.from(appContext)) {
                     notify(
-                        NotificationHelper.NOTIFICATION_TAG,
-                        NotificationHelper.NOTIFICATION_ID,
+                        NotificationHelperImpl.NOTIFICATION_TAG,
+                        NotificationHelperImpl.NOTIFICATION_ID,
                         builder.build()
                     )
                 }

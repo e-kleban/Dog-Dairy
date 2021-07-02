@@ -19,10 +19,10 @@ import timber.log.Timber
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
-    private val viewModel: ProfileViewModel by viewModels()
-
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: ProfileViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)

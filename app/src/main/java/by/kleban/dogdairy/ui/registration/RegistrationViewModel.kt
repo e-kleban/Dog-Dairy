@@ -4,7 +4,7 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import by.kleban.dogdairy.core.file_helper.FileHelper
+import by.kleban.dogdairy.helper.FileHelper
 import by.kleban.dogdairy.entities.Dog
 import by.kleban.dogdairy.entities.Sex
 import by.kleban.dogdairy.entities.Validation
@@ -17,15 +17,12 @@ import java.net.URI
 import javax.inject.Inject
 
 @HiltViewModel
-class RegistrationViewModel @Inject constructor() : ViewModel() {
+class RegistrationViewModel @Inject constructor(
+    private val fileHelper: FileHelper,
+    private val repository: DogRepository
+) : ViewModel() {
 
     private val ioScope = CoroutineScope(Dispatchers.IO)
-
-    @Inject
-    lateinit var fileHelper: FileHelper
-
-    @Inject
-    lateinit var repository: DogRepository
 
     private val _imageLiveData = MutableLiveData<Uri>()
     val imageLiveData: LiveData<Uri>
@@ -200,9 +197,5 @@ class RegistrationViewModel @Inject constructor() : ViewModel() {
             breed = _breedLiveData.value!!,
             description = _descriptionLiveData.value!!
         )
-    }
-
-    companion object {
-        private val TAG = RegistrationViewModel::class.java.simpleName
     }
 }

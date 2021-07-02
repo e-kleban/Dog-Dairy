@@ -19,14 +19,13 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ShowBreedsFragment : Fragment() {
 
+    private var _binding: ShowBreedsFragmentBinding? = null
+    private val binding get() = _binding!!
+
     private val viewModel: ShowBreedsViewModel by viewModels()
 
     @Inject
     lateinit var showBreedAdapter: ShowBreedsAdapter
-
-    private var _binding: ShowBreedsFragmentBinding? = null
-    private val binding get() = _binding!!
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -8,6 +8,6 @@ import javax.inject.Inject
 
 class DogFactResponseMapper @Inject constructor() : Mapper<DogFactResponse, DogFact> {
     override fun map(from: DogFactResponse): DogFact {
-        return DogFact(from.fact.orEmpty())
+        return DogFact(from.fact)
     }
 }

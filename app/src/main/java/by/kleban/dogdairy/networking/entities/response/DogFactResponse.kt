@@ -5,5 +5,5 @@ import com.google.gson.annotations.SerializedName
 
 data class DogFactResponse(
     @SerializedName("fact")
-    val fact: String?
+    val fact: String
 )

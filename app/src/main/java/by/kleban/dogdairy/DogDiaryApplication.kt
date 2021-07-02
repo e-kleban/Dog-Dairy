@@ -6,7 +6,7 @@ import android.app.NotificationManager
 import android.content.Context
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.*
-import by.kleban.dogdairy.core.wokrmanager.LoadWorker
+import by.kleban.dogdairy.workmanager.LoadWorker
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 import java.util.concurrent.TimeUnit

@@ -4,7 +4,7 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import by.kleban.dogdairy.core.file_helper.FileHelper
+import by.kleban.dogdairy.helper.FileHelper
 import by.kleban.dogdairy.entities.Dog
 import by.kleban.dogdairy.entities.Post
 import by.kleban.dogdairy.entities.Sex
@@ -146,5 +146,4 @@ class EditDogViewModel @Inject constructor(
             }
         }
     }
-
 }

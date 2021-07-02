@@ -13,12 +13,11 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class DogPageViewModel @Inject constructor() : ViewModel() {
+class DogPageViewModel @Inject constructor(
+    private val repository: DogRepository
+) : ViewModel() {
 
     private val ioScope = CoroutineScope(Dispatchers.IO)
-
-    @Inject
-    lateinit var repository: DogRepository
 
     private val _dogWithPostsLiveData = MutableLiveData<DogWithPosts>()
     val dogWithPostsLiveData: LiveData<DogWithPosts>
