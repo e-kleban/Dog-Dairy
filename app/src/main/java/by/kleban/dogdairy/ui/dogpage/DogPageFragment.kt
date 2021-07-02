@@ -54,7 +54,8 @@ class DogPageFragment : Fragment() {
         viewModel.getDogWithPosts()
         viewModel.dogWithPostsLiveData.observe(viewLifecycleOwner) {
             dogPageAdapter.setHeader(it.dog)
-            dogPageAdapter.setPosts(it.posts)
+            val reversedPosts = it.posts.reversed()
+            dogPageAdapter.setPosts(reversedPosts)
         }
     }
 
