@@ -1,4 +1,4 @@
-package by.kleban.dogdairy.entities.file_helper
+package by.kleban.dogdairy.core.file_helper
 
 import android.net.Uri
 import java.net.URI

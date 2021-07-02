@@ -2,6 +2,7 @@ package by.kleban.dogdairy.di
 
 import by.kleban.dogdairy.BuildConfig
 import by.kleban.dogdairy.networking.dogbreed.DogBreedService
+import by.kleban.dogdairy.networking.dogfacts.DogFactService
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
@@ -38,5 +39,28 @@ class NetworkModule {
             .build()
 
         return retrofit.create(DogBreedService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideDogFactService(): DogFactService {
+        val interceptor = HttpLoggingInterceptor().apply {
+            if (BuildConfig.DEBUG) {
+                level = HttpLoggingInterceptor.Level.BODY
+            }
+        }
+
+        val client = OkHttpClient.Builder()
+            .addInterceptor(interceptor)
+            .build()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://dog-facts-api.herokuapp.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())
+            .client(client)
+            .build()
+
+        return retrofit.create(DogFactService::class.java)
     }
 }

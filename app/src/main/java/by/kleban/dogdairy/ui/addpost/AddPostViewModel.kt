@@ -5,10 +5,10 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import by.kleban.dogdairy.core.file_helper.FileHelper
 import by.kleban.dogdairy.entities.Post
 import by.kleban.dogdairy.entities.SharedConfig
 import by.kleban.dogdairy.entities.Validation
-import by.kleban.dogdairy.entities.file_helper.FileHelper
 import by.kleban.dogdairy.repositories.DogRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
