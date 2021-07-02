@@ -16,12 +16,11 @@ class NotificationHelper @Inject constructor() {
     }
 
     fun createNotification(fact: DogFact, context: Context): NotificationCompat.Builder {
-        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_baseline_add_24)
+        return NotificationCompat.Builder(context, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_peekaboo_cute_dog_stroke_by_vexels)
             .setContentTitle("New fact")
             .setContentText(fact.fact)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setStyle(NotificationCompat.BigTextStyle())
-        return builder
     }
 }
