@@ -11,7 +11,7 @@ import javax.inject.Inject
 class DogRepositoryImpl @Inject constructor(
     private val dogDb: DogDb,
     private val dogApi: DogApi,
-    private val sharedPreferences: SharedPreferences
+    private val sharedPreferences: SharedPreferences,
 ) : DogRepository {
 
     override suspend fun loadBreeds(): List<DogBreed> {

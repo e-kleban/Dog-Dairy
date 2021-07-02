@@ -23,10 +23,10 @@ import timber.log.Timber
 @AndroidEntryPoint
 class OnePostFragment : Fragment() {
 
-    private val viewModel: OnePostViewModel by viewModels()
-
     private var _binding: FragmentOnePostBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: OnePostViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

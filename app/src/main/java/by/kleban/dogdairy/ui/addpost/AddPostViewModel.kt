@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import by.kleban.dogdairy.entities.Post
 import by.kleban.dogdairy.entities.SharedConfig
 import by.kleban.dogdairy.entities.Validation
-import by.kleban.dogdairy.entities.file_helper.FileHelper
+import by.kleban.dogdairy.helper.FileHelper
 import by.kleban.dogdairy.repositories.DogRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -30,10 +30,6 @@ class AddPostViewModel @Inject constructor(
     private val _descriptionPostLiveData = MutableLiveData<String>()
     val descriptionPostLiveData: LiveData<String>
         get() = _descriptionPostLiveData
-
-    private val _imagePostLiveData = MutableLiveData<Pair<String, String>>()
-    val imagePostLiveData: LiveData<Pair<String, String>>
-        get() = _imagePostLiveData
 
     private val _validationImageLiveData = MutableLiveData<Validation>()
     val validationImageLiveData: LiveData<Validation>
@@ -109,9 +105,5 @@ class AddPostViewModel @Inject constructor(
             _descriptionPostLiveData.value.isNullOrEmpty() -> Validation.EMPTY
             else -> Validation.VALID
         }
-    }
-
-    companion object {
-        private val TAG = AddPostViewModel::class.java.simpleName
     }
 }

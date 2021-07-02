@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import by.kleban.dogdairy.R
 import by.kleban.dogdairy.core.Mapper
-import by.kleban.dogdairy.core.picasso.transformation.CircleTransform
+import by.kleban.dogdairy.utils.picasso.transformation.CircleTransform
 import by.kleban.dogdairy.entities.Dog
 import by.kleban.dogdairy.entities.Post
 import by.kleban.dogdairy.entities.Sex
@@ -41,13 +41,6 @@ class DogPageAdapter @Inject constructor(
         items.addAll(listDogPost)
         notifyDataSetChanged()
     }
-
-//    fun addPost(newPost:Post) {
-//        val newDogPost = postMapper.map(newPost)
-//        items.add(newDogPost)
-//        val position = items.indexOf(newDogPost)
-//       notifyItemChanged(position)
-//    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)

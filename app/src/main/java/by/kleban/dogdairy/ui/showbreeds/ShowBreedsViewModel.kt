@@ -13,10 +13,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ShowBreedsViewModel @Inject constructor() : ViewModel() {
-
-    @Inject
-    lateinit var repository: DogRepository
+class ShowBreedsViewModel @Inject constructor(
+    private val repository: DogRepository
+) : ViewModel() {
 
     private val ioScope = CoroutineScope(Dispatchers.IO)
 
@@ -54,5 +53,4 @@ class ShowBreedsViewModel @Inject constructor() : ViewModel() {
         _breedListWithFilter.value =
             _breedListLiveData.value?.filter { it.breed.startsWith(string, true) }
     }
-
 }

@@ -14,10 +14,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SplashScreenViewModel @Inject constructor() : ViewModel() {
-
-    @Inject
-    lateinit var repository: DogRepository
+class SplashScreenViewModel @Inject constructor(
+    private val repository: DogRepository
+) : ViewModel() {
 
     private val ioScope = CoroutineScope(Dispatchers.IO)
 

@@ -6,6 +6,7 @@ import javax.inject.Inject
 
 
 class DogToItemHeaderMapper @Inject constructor() : Mapper<Dog, DogPageAdapter.Item.Header> {
+
     override fun map(from: Dog): DogPageAdapter.Item.Header {
         return DogPageAdapter.Item.Header(
             name = from.name,

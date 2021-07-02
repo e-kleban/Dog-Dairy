@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kleban.dogdairy.R
-import by.kleban.dogdairy.core.picasso.transformation.CircleTransform
+import by.kleban.dogdairy.utils.picasso.transformation.CircleTransform
 import by.kleban.dogdairy.databinding.FragmentEditDogBinding
 import by.kleban.dogdairy.entities.Dog
 import by.kleban.dogdairy.entities.Sex
@@ -21,10 +21,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class EditDogFragment : Fragment() {
 
-    private val viewModel: EditDogViewModel by viewModels()
-
     private var _binding: FragmentEditDogBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: EditDogViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,7 +100,6 @@ class EditDogFragment : Fragment() {
     }
 
     private fun setupImagePicker() {
-
         val pickImages = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
             if (uri != null) {
                 viewModel.changeImage(uri)

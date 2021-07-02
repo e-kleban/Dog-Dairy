@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kleban.dogdairy.R
-import by.kleban.dogdairy.core.picasso.transformation.CircleTransform
+import by.kleban.dogdairy.utils.picasso.transformation.CircleTransform
 import by.kleban.dogdairy.databinding.FragmentRegistrationBinding
 import by.kleban.dogdairy.entities.Sex
 import by.kleban.dogdairy.entities.Validation
@@ -109,7 +109,6 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun setupImagePicker() {
-
         val pickImages = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
             if (uri != null) {
                 viewModel.chooseImage(uri)

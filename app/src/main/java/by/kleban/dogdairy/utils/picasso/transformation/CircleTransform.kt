@@ -1,10 +1,11 @@
-package by.kleban.dogdairy.core.picasso.transformation
+package by.kleban.dogdairy.utils.picasso.transformation
 
 import android.graphics.*
 import com.squareup.picasso.Transformation
 
 
 class CircleTransform : Transformation {
+
     override fun transform(source: Bitmap?): Bitmap {
         val newSource = source as Bitmap
 
