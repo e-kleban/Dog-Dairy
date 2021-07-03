@@ -1,4 +1,4 @@
-Dog Dairy
+Dog Diary
 =========
 This project is a dog diary android application made for learning purposes.
 
