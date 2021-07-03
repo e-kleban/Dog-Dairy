@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashScreenFragment"
-        android:name="by.kleban.dogdairy.ui.splash.SplashScreenFragment"
+        android:name="by.kleban.dogdiary.ui.splash.SplashScreenFragment"
         android:label="SplashScreenFragment"
         tools:layout="@layout/fragment_splash_screen">
         <action
@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"
-        android:name="by.kleban.dogdairy.ui.registration.RegistrationFragment"
+        android:name="by.kleban.dogdiary.ui.registration.RegistrationFragment"
         android:label="RegistrationFragment"
         tools:layout="@layout/fragment_registration">
         <action
@@ -37,12 +37,12 @@
     </fragment>
     <fragment
         android:id="@+id/showBreedsFragment"
-        android:name="by.kleban.dogdairy.ui.showbreeds.ShowBreedsFragment"
+        android:name="by.kleban.dogdiary.ui.showbreeds.ShowBreedsFragment"
         android:label="show_breeds_fragment"
         tools:layout="@layout/show_breeds_fragment" />
     <fragment
         android:id="@+id/dogPageFragment"
-        android:name="by.kleban.dogdairy.ui.dogpage.DogPageFragment"
+        android:name="by.kleban.dogdiary.ui.dogpage.DogPageFragment"
         android:label="DogPageFragment"
         tools:layout="@layout/fragment_dog_page_old">
         <action
@@ -57,17 +57,17 @@
     </fragment>
     <fragment
         android:id="@+id/addPostFragment"
-        android:name="by.kleban.dogdairy.ui.addpost.AddPostFragment"
+        android:name="by.kleban.dogdiary.ui.addpost.AddPostFragment"
         android:label="AddPostFragment"
         tools:layout="@layout/fragment_add_post" />
     <fragment
         android:id="@+id/onePostFragment"
-        android:name="by.kleban.dogdairy.ui.onepost.OnePostFragment"
+        android:name="by.kleban.dogdiary.ui.onepost.OnePostFragment"
         android:label="OnePostFragment"
         tools:layout="@layout/fragment_one_post" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="by.kleban.dogdairy.ui.profile.ProfileFragment"
+        android:name="by.kleban.dogdiary.ui.profile.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -76,7 +76,7 @@
     </fragment>
     <fragment
         android:id="@+id/editDogFragment"
-        android:name="by.kleban.dogdairy.ui.editdog.EditDogFragment"
+        android:name="by.kleban.dogdiary.ui.editdog.EditDogFragment"
         android:label="EditDogFragment"
         tools:layout="@layout/fragment_edit_dog">
         <action

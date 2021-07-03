@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Dog Dairy</string>
+    <string name="app_name">Dog Diary</string>
     <string name="input_description">Input description</string>
     <string name="create">create</string>
     <string name="input_breed">Input breed</string>

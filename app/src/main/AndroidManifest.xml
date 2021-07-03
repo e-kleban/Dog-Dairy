@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="by.kleban.dogdairy">
+    package="by.kleban.dogdiary">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".DogDiaryApplication"
+        android:name="by.kleban.dogdiary.DogDiaryApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher_dog_dairy"
+        android:icon="@mipmap/ic_launcher_dog_diary"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_dog_dairy_round"
+        android:roundIcon="@mipmap/ic_launcher_dog_diary_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DogDairy">
+        android:theme="@style/Theme.DogDiary">
         <activity
-            android:name=".ui.MainActivity"
+            android:name="by.kleban.dogdiary.ui.MainActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
