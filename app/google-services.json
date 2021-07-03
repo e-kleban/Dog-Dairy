@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "255575537500",
+    "project_id": "dog-diary-d8322",
+    "storage_bucket": "dog-diary-d8322.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:255575537500:android:b6f06e3b592f851e053399",
+        "android_client_info": {
+          "package_name": "by.kleban.dogdiary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "255575537500-11349su7h370or56iend0ocpnllclv3g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBX0X40gZfLZfnSbPXSJz5D8xZOjASOc6o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "255575537500-11349su7h370or56iend0ocpnllclv3g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
