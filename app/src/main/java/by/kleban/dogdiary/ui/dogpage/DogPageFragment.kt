@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
@@ -56,6 +57,9 @@ class DogPageFragment : Fragment() {
             dogPageAdapter.setHeader(it.dog)
             val reversedPosts = it.posts.reversed()
             dogPageAdapter.setPosts(reversedPosts)
+        }
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
     }
 

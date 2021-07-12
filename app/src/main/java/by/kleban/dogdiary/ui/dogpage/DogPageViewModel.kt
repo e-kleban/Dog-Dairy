@@ -23,12 +23,17 @@ class DogPageViewModel @Inject constructor(
     val dogWithPostsLiveData: LiveData<DogWithPosts>
         get() = _dogWithPostsLiveData
 
+    private val _errorLiveData = MutableLiveData<String>()
+    val errorLiveData: LiveData<String>
+        get() = _errorLiveData
+
     fun getDogWithPosts() {
         ioScope.launch {
             try {
                 _dogWithPostsLiveData.postValue(repository.getDogWithPosts())
             } catch (e: Exception) {
                 Timber.e(e)
+                _errorLiveData.postValue(e.message)
             }
         }
     }

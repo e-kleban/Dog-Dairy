@@ -4,10 +4,10 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import by.kleban.dogdiary.helper.FileHelper
 import by.kleban.dogdiary.entities.Dog
 import by.kleban.dogdiary.entities.Sex
 import by.kleban.dogdiary.entities.Validation
+import by.kleban.dogdiary.helper.FileHelper
 import by.kleban.dogdiary.repositories.DogRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope

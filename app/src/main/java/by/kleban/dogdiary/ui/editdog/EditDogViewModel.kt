@@ -4,10 +4,10 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import by.kleban.dogdiary.helper.FileHelper
 import by.kleban.dogdiary.entities.Dog
 import by.kleban.dogdiary.entities.Post
 import by.kleban.dogdiary.entities.Sex
+import by.kleban.dogdiary.helper.FileHelper
 import by.kleban.dogdiary.repositories.DogRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -36,6 +36,10 @@ class EditDogViewModel @Inject constructor(
     private val _dogIsDeleteLiveData = MutableLiveData(false)
     val dogIsDeleteLiveData: LiveData<Boolean>
         get() = _dogIsDeleteLiveData
+
+    private val _errorLiveData = MutableLiveData<String>()
+    val errorLiveData: LiveData<String>
+        get() = _errorLiveData
 
     lateinit var originalDog: Dog
     private val originalPosts = mutableListOf<Post>()
@@ -98,6 +102,7 @@ class EditDogViewModel @Inject constructor(
                     _dogIsSavedLiveData.postValue(true)
                 } catch (e: Exception) {
                     Timber.e(e)
+                    _errorLiveData.postValue(e.message)
                 }
             }
         }
@@ -116,6 +121,7 @@ class EditDogViewModel @Inject constructor(
                 _dogIsDeleteLiveData.postValue(true)
             } catch (e: Exception) {
                 Timber.e(e)
+                _errorLiveData.postValue(e.message)
             }
         }
     }
@@ -132,6 +138,8 @@ class EditDogViewModel @Inject constructor(
                 }
             } catch (e: Exception) {
                 Timber.e(e)
+                _errorLiveData.postValue(e.message)
+
             }
         }
     }
@@ -143,6 +151,7 @@ class EditDogViewModel @Inject constructor(
                 fileHelper.deleteImages(originalDog.thumbnail)
             } catch (e: Exception) {
                 Timber.e(e)
+                _errorLiveData.postValue(e.message)
             }
         }
     }

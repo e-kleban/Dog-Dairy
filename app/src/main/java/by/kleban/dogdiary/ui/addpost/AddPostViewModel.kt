@@ -47,6 +47,10 @@ class AddPostViewModel @Inject constructor(
     val imageLiveData: LiveData<Uri>
         get() = _imageLiveData
 
+    private val _errorLiveData = MutableLiveData<String>()
+    val errorLiveData: LiveData<String>
+        get() = _errorLiveData
+
     fun saveDescription(description: String) {
         _descriptionPostLiveData.value = description
     }
@@ -65,7 +69,6 @@ class AddPostViewModel @Inject constructor(
         ) {
             val dogCreatorId = sharedPreferences.getLong(SharedConfig.SHARED_PREF_DOG_ID, 0)
             ioScope.launch {
-
                 try {
                     val (image, thumb) = saveImages()
                     val newPost = createPost(dogCreatorId, image, thumb)
@@ -73,6 +76,7 @@ class AddPostViewModel @Inject constructor(
                     _isSavedPostLiveData.postValue(true)
                 } catch (e: Exception) {
                     Timber.e(e)
+                    _errorLiveData.postValue(e.message)
                 }
             }
         }
