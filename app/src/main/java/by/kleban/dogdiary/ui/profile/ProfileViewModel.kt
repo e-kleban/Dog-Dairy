@@ -9,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,9 +23,18 @@ class ProfileViewModel @Inject constructor(
     val dogWithPostsLiveData: LiveData<DogWithPosts>
         get() = _dogWithPostsLiveData
 
+    private val _errorLiveData = MutableLiveData<String>()
+    val errorLiveData: LiveData<String>
+        get() = _errorLiveData
+
     fun getDogWithPosts() {
         ioScope.launch {
-            _dogWithPostsLiveData.postValue(repository.getDogWithPosts())
+            try {
+                _dogWithPostsLiveData.postValue(repository.getDogWithPosts())
+            } catch (e: Exception) {
+                Timber.e(e)
+                _errorLiveData.postValue(e.message)
+            }
         }
     }
 }

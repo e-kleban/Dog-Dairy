@@ -4,17 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kleban.dogdiary.R
-import by.kleban.dogdiary.utils.picasso.transformation.CircleTransform
 import by.kleban.dogdiary.databinding.FragmentEditDogBinding
 import by.kleban.dogdiary.entities.Dog
 import by.kleban.dogdiary.entities.Sex
 import by.kleban.dogdiary.ui.showbreeds.ShowBreedsFragment
+import by.kleban.dogdiary.utils.picasso.transformation.CircleTransform
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -71,6 +72,9 @@ class EditDogFragment : Fragment() {
         }
         viewModel.dogIsDeleteLiveData.observe(viewLifecycleOwner) {
             if (it == true) findNavController().navigate(R.id.from_editDogFragment_to_registrationFragment)
+        }
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
     }
 

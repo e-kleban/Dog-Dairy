@@ -9,10 +9,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import by.kleban.dogdiary.R
 import by.kleban.dogdiary.core.Mapper
-import by.kleban.dogdiary.utils.picasso.transformation.CircleTransform
 import by.kleban.dogdiary.entities.Dog
 import by.kleban.dogdiary.entities.Post
 import by.kleban.dogdiary.entities.Sex
+import by.kleban.dogdiary.utils.picasso.transformation.CircleTransform
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject

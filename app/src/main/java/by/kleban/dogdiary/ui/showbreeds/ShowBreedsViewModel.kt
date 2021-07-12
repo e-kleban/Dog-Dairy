@@ -1,6 +1,5 @@
 package by.kleban.dogdiary.ui.showbreeds
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -42,7 +42,7 @@ class ShowBreedsViewModel @Inject constructor(
                 _breedListLiveData.postValue(repository.loadBreeds())
                 _isLoadingLiveData.postValue(false)
             } catch (e: Exception) {
-                Log.e(ShowBreedsViewModel::class.java.simpleName, e.message.toString())
+                Timber.e(e)
                 _isLoadingLiveData.postValue(false)
                 _errorLiveData.postValue(e.message)
             }

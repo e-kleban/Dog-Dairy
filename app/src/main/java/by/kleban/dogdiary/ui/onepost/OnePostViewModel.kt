@@ -33,6 +33,10 @@ class OnePostViewModel @Inject constructor(
     val validationDescriptionLiveData: LiveData<Validation>
         get() = _validationDescriptionLiveData
 
+    private val _errorLiveData = MutableLiveData<String>()
+    val errorLiveData: LiveData<String>
+        get() = _errorLiveData
+
     private var description: String? = null
 
     fun updateDescription(description: String?) {
@@ -60,6 +64,8 @@ class OnePostViewModel @Inject constructor(
                     }
                 } catch (e: Exception) {
                     Timber.e(e)
+                    _errorLiveData.postValue(e.message)
+
                 }
             }
         }
@@ -73,6 +79,7 @@ class OnePostViewModel @Inject constructor(
                 repository.deletePost(_postLiveData.value?.image!!)
             } catch (e: Exception) {
                 Timber.e(e)
+                _errorLiveData.postValue(e.message)
             }
         }
     }

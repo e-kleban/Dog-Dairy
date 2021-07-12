@@ -12,11 +12,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kleban.dogdiary.R
-import by.kleban.dogdiary.utils.picasso.transformation.CircleTransform
 import by.kleban.dogdiary.databinding.FragmentRegistrationBinding
 import by.kleban.dogdiary.entities.Sex
 import by.kleban.dogdiary.entities.Validation
 import by.kleban.dogdiary.ui.showbreeds.ShowBreedsFragment.Companion.EXTRA_BREED
+import by.kleban.dogdiary.utils.picasso.transformation.CircleTransform
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
