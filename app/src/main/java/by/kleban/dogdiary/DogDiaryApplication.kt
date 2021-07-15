@@ -42,12 +42,10 @@ class DogDiaryApplication : Application(), Configuration.Provider {
 
         val workRequest = PeriodicWorkRequest
             .Builder(LoadWorker::class.java, 15, TimeUnit.MINUTES)
-            .addTag(WORK_MANAGER_TAG)
             .setConstraints(constraints)
             .build()
 
-        workManager.cancelAllWorkByTag(WORK_MANAGER_TAG)
-        workManager.enqueue(workRequest)
+        workManager.enqueueUniquePeriodicWork(WORK_MANAGER_NAME, ExistingPeriodicWorkPolicy.KEEP, workRequest)
     }
 
     override fun getWorkManagerConfiguration(): Configuration {
@@ -57,7 +55,7 @@ class DogDiaryApplication : Application(), Configuration.Provider {
     }
 
     companion object {
-        const val WORK_MANAGER_TAG = "work manager tag"
+        const val WORK_MANAGER_NAME = "work manager name"
         const val CHANNEL_ID = "notification channel id"
         const val CHANNEL_NAME = "notification channel name"
     }

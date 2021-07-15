@@ -14,6 +14,7 @@ import by.kleban.dogdiary.R
 import by.kleban.dogdiary.databinding.FragmentEditDogBinding
 import by.kleban.dogdiary.entities.Dog
 import by.kleban.dogdiary.entities.Sex
+import by.kleban.dogdiary.entities.Validation
 import by.kleban.dogdiary.ui.showbreeds.ShowBreedsFragment
 import by.kleban.dogdiary.utils.picasso.transformation.CircleTransform
 import com.squareup.picasso.Picasso
@@ -43,13 +44,13 @@ class EditDogFragment : Fragment() {
         binding.edtDogBreed.setOnClickListener { findNavController().navigate(R.id.from_editDogFragment_to_showBreedsFragment) }
         binding.btnCancel.setOnClickListener { findNavController().navigateUp() }
         binding.btnSaveChanges.setOnClickListener {
-            viewModel.saveChangedDog()
+            viewModel.validateChangedDog()
         }
         setupImagePicker()
         initToolbar()
 
         binding.edtDogName.doAfterTextChanged { name -> if (name != null) viewModel.changeName(name.toString()) }
-        binding.edtDogAge.doAfterTextChanged { age -> if (age != null) viewModel.changeAge(age.toString().toInt()) }
+        binding.edtDogAge.doAfterTextChanged { age -> if (age != null) viewModel.changeAge(age.toString()) }
         binding.edtDogDescription.doAfterTextChanged { text -> if (text != null) viewModel.changeDescription(text.toString()) }
 
         binding.radioGroupSexEditDog.setOnCheckedChangeListener { _, checkedId ->
@@ -66,7 +67,14 @@ class EditDogFragment : Fragment() {
                 viewModel.changeBreed(result)
             }
 
+        viewModel.validationNameLiveData.observe(viewLifecycleOwner) { validation -> checkValidationName(validation) }
+        viewModel.validationAgeLiveData.observe(viewLifecycleOwner) { validation -> checkValidationAge(validation) }
+        viewModel.validationDescriptionLiveData.observe(viewLifecycleOwner) { validation -> checkValidationDescription(validation) }
+
         viewModel.dogLiveData.observe(viewLifecycleOwner) { setDog(it) }
+        viewModel.ageLiveData.observe(viewLifecycleOwner) {
+            if (binding.edtDogAge.text?.toString() != it) binding.edtDogAge.setText(it)
+        }
         viewModel.dogIsSavedLiveData.observe(viewLifecycleOwner) {
             if (it == true) findNavController().navigateUp()
         }
@@ -117,7 +125,6 @@ class EditDogFragment : Fragment() {
     private fun setDog(dog: Dog) {
         binding.apply {
             if (edtDogName.text?.toString() != dog.name) edtDogName.setText(dog.name)
-            if (edtDogAge.text?.toString() != dog.age.toString()) edtDogAge.setText(dog.age.toString())
             if (edtDogBreed.text?.toString() != dog.breed) edtDogBreed.setText(dog.breed)
             if (edtDogDescription.text?.toString() != dog.description) edtDogDescription.setText(dog.description)
             when (dog.sex) {
@@ -135,5 +142,41 @@ class EditDogFragment : Fragment() {
             }
         }
         startPostponedEnterTransition()
+    }
+
+    private fun checkValidationName(validation: Validation) {
+        when (validation) {
+            Validation.EMPTY -> {
+                binding.txtEditDogName.isErrorEnabled = true
+                binding.txtEditDogName.error = "Field can not be empty!"
+            }
+            else -> {
+                binding.txtEditDogName.isErrorEnabled = false
+            }
+        }
+    }
+
+    private fun checkValidationAge(validation: Validation) {
+        when (validation) {
+            Validation.EMPTY -> {
+                binding.txtEditDogAge.isErrorEnabled = true
+                binding.txtEditDogAge.error = "Field can not be empty!"
+            }
+            else -> {
+                binding.txtEditDogAge.isErrorEnabled = false
+            }
+        }
+    }
+
+    private fun checkValidationDescription(validation: Validation) {
+        when (validation) {
+            Validation.EMPTY -> {
+                binding.txtEditDogDescription.isErrorEnabled = true
+                binding.txtEditDogDescription.error = "Field can not be empty!"
+            }
+            else -> {
+                binding.txtEditDogDescription.isErrorEnabled = false
+            }
+        }
     }
 }

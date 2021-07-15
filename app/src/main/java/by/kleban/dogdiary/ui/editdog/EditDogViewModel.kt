@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import by.kleban.dogdiary.entities.Dog
 import by.kleban.dogdiary.entities.Post
 import by.kleban.dogdiary.entities.Sex
+import by.kleban.dogdiary.entities.Validation
 import by.kleban.dogdiary.helper.FileHelper
 import by.kleban.dogdiary.repositories.DogRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,6 +30,10 @@ class EditDogViewModel @Inject constructor(
     val dogLiveData: LiveData<Dog>
         get() = _dogLiveData
 
+    private val _ageLiveData = MutableLiveData<String>()
+    val ageLiveData: LiveData<String>
+        get() = _ageLiveData
+
     private val _dogIsSavedLiveData = MutableLiveData(false)
     val dogIsSavedLiveData: LiveData<Boolean>
         get() = _dogIsSavedLiveData
@@ -41,11 +46,56 @@ class EditDogViewModel @Inject constructor(
     val errorLiveData: LiveData<String>
         get() = _errorLiveData
 
+    private val _validationNameLiveData = MutableLiveData<Validation>()
+    val validationNameLiveData: LiveData<Validation>
+        get() = _validationNameLiveData
+
+    private val _validationAgeLiveData = MutableLiveData<Validation>()
+    val validationAgeLiveData: LiveData<Validation>
+        get() = _validationAgeLiveData
+
+    private val _validationDescriptionLiveData = MutableLiveData<Validation>()
+    val validationDescriptionLiveData: LiveData<Validation>
+        get() = _validationDescriptionLiveData
+
     lateinit var originalDog: Dog
     private val originalPosts = mutableListOf<Post>()
 
     init {
         getDogWithPosts()
+    }
+
+    fun validateChangedDog() {
+        _validationNameLiveData.value = validateName()
+        _validationAgeLiveData.value = validateAge()
+        _validationDescriptionLiveData.value = validateDescription()
+        saveChangedDog()
+    }
+
+    private fun validateName(): Validation {
+        return when {
+            _dogLiveData.value?.name.isNullOrEmpty() -> Validation.EMPTY
+            else -> Validation.VALID
+        }
+    }
+
+    private fun validateAge(): Validation {
+        val age = _ageLiveData.value
+        Timber.e(age.toString())
+            val valid = when {
+                age.isNullOrBlank() -> Validation.EMPTY
+                age.toInt() < 0 -> Validation.EMPTY
+                else -> Validation.VALID
+            }
+        Timber.e(valid.toString())
+        return valid
+    }
+
+    private fun validateDescription(): Validation {
+        return when {
+            _dogLiveData.value?.description.isNullOrEmpty() -> Validation.EMPTY
+            else -> Validation.VALID
+        }
     }
 
     fun changeName(newName: String) {
@@ -55,10 +105,10 @@ class EditDogViewModel @Inject constructor(
         }
     }
 
-    fun changeAge(newAge: Int) {
-        val dog = _dogLiveData.value
-        if (dog != null && dog.age != newAge) {
-            _dogLiveData.value = dog.copy(age = newAge)
+    fun changeAge(newAge: String) {
+        val age = _ageLiveData.value
+        if (age != null && age != newAge) {
+            _ageLiveData.value = newAge
         }
     }
 
@@ -90,19 +140,29 @@ class EditDogViewModel @Inject constructor(
         }
     }
 
-    fun saveChangedDog() {
-        val dog = _dogLiveData.value
-        ioScope.launch {
-            if (dog != originalDog) {
-                val image = fileHelper.saveFileIntoAppsDir(Uri.parse(dog?.image), "avatar")
-                val thumb = fileHelper.createThumbnail(image, "avatar_thumb")
-                deleteOldImages()
-                try {
-                    repository.updateDog(dog!!.copy(image = image.toString(), thumbnail = thumb.toString()))
-                    _dogIsSavedLiveData.postValue(true)
-                } catch (e: Exception) {
-                    Timber.e(e)
-                    _errorLiveData.postValue(e.message)
+    private fun saveChangedDog() {
+        val validationName = _validationNameLiveData.value
+        val validationAge = _validationAgeLiveData.value
+        val validationDescription = _validationDescriptionLiveData.value
+
+        if (validationName == Validation.VALID &&
+            validationAge == Validation.VALID &&
+            validationDescription == Validation.VALID
+        ) {
+            val dog = _dogLiveData.value?.copy(age =_ageLiveData.value!!.toInt() )
+            ioScope.launch {
+                if (dog != originalDog ){
+                    val image = fileHelper.saveFileIntoAppsDir(Uri.parse(dog?.image), "avatar")
+                    val thumb = fileHelper.createThumbnail(image, "avatar_thumb")
+                    val age = _ageLiveData.value!!
+                    deleteOldImages()
+                    try {
+                        repository.updateDog(dog!!.copy(image = image.toString(), thumbnail = thumb.toString(), age =age.toInt() ))
+                        _dogIsSavedLiveData.postValue(true)
+                    } catch (e: Exception) {
+                        Timber.e(e)
+                        _errorLiveData.postValue(e.message)
+                    }
                 }
             }
         }
@@ -134,6 +194,7 @@ class EditDogViewModel @Inject constructor(
                 _dogLiveData.postValue(dog)
                 withContext(Dispatchers.Main) {
                     originalDog = dog
+                    _ageLiveData.postValue(dog.age.toString())
                     originalPosts.addAll(dogWithPosts.posts)
                 }
             } catch (e: Exception) {
