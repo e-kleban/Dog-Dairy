@@ -7,10 +7,10 @@ You can also add posts containing photos and descriptions to it. It is possible 
 
 In addition, the user receives notifications with interesting facts about dogs.
 
-![](screenshorts/registration_little.png)
-![](screenshorts/profile_little.png)
-![](screenshorts/breeds_little.png)
-![](screenshorts/post_little.png)
+![](screenshorts/registration.png)
+![](screenshorts/profile.png)
+![](screenshorts/breeds.png)
+![](screenshorts/post.png)
 
 Programming language
 --------
