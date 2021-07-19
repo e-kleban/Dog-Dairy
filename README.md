@@ -7,6 +7,8 @@ You can also add posts containing photos and descriptions to it. It is possible 
 
 In addition, the user receives notifications with interesting facts about dogs.
 
+![](screenshorts/profile.png)
+
 Programming language
 --------
 Kotlin
