@@ -44,7 +44,7 @@
         android:id="@+id/dogPageFragment"
         android:name="by.kleban.dogdiary.ui.dogpage.DogPageFragment"
         android:label="DogPageFragment"
-        tools:layout="@layout/fragment_dog_page_old">
+        tools:layout="@layout/fragment_dog_page">
         <action
             android:id="@+id/from_dogPageFragment_to_addPostFragment"
             app:destination="@id/addPostFragment" />

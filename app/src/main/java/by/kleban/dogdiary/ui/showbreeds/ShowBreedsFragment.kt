@@ -52,10 +52,14 @@ class ShowBreedsFragment : Fragment() {
             showBreedAdapter.setItems(it)
         }
         viewModel.isLoadingLiveData.observe(viewLifecycleOwner) {
-            binding.showBreedsProgressBar.visibility = if (it == true) {
-                View.VISIBLE
-            } else {
-                View.GONE
+            binding.apply {
+                if (it == true) {
+                    showBreedsProgressBar.visibility = View.VISIBLE
+                    topAppBarBreed.menu.findItem(R.id.item_menu_search).isVisible = false
+                } else {
+                    showBreedsProgressBar.visibility = View.GONE
+                    topAppBarBreed.menu.findItem(R.id.item_menu_search).isVisible = true
+                }
             }
         }
         viewModel.errorLiveData.observe(viewLifecycleOwner) {
